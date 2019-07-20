@@ -21,7 +21,7 @@ class ApplicationGUI(Frame):
         self.ListOfSelctedVariables=[]
         self.Method=StringVar()
         self.CheckboxList=[]
-        self.FactorExtractionNumber=[]
+        self.FactorExtractionNumber=1
         self.IterationNumber = 0
 
 
@@ -87,7 +87,15 @@ class ApplicationGUI(Frame):
         frame3 = Frame(self.newwin, width=200, height=50)
         frame3.place(x=160, y=250)
 
-        backButton = Button(frame3, text="  Nazad  ", bg="red", fg="white", command=self.newwin.destroy)
+        def Reinitialize():
+            self.ListOfSelctedVariables = []
+            self.Method = StringVar()
+            self.CheckboxList = []
+            self.FactorExtractionNumber = 1
+            self.IterationNumber = 0
+            self.newwin.destroy()
+
+        backButton = Button(frame3, text="  Nazad  ", bg="red", fg="white", command=Reinitialize)
         #backButton.place(x=40, y=250)
         backButton.pack(side=LEFT)
 
@@ -97,8 +105,6 @@ class ApplicationGUI(Frame):
 
         frameMiddle=Frame(self.newwin, width=58, height=40)
         frameMiddle.place(x=225, y=120)
-
-
 
         def ForwardVariables():
             if listbox1.curselection():
@@ -113,9 +119,6 @@ class ApplicationGUI(Frame):
                 self.ListOfSelctedVariables.remove(listbox2.get(listbox2.curselection()))
                 listbox2.delete(listbox2.curselection())
 
-
-
-
         forwardButton = Button(frameMiddle, text=" > ", bg="red", fg="white", command=ForwardVariables)
         forwardButton.pack()
         deleteButton = Button(frameMiddle, text=" < ", bg="red", fg="white", command=DeleteVariables)
@@ -128,7 +131,8 @@ class ApplicationGUI(Frame):
 
     def ExtractionWindow(self):
 
-        self.newwin.destroy()
+        if self.newwin != NONE:
+            self.newwin.destroy()
         self.newwin = Toplevel(root)
         self.newwin.title("Faktorska analiza: Ekstrakcija")
         self.newwin.geometry("500x300")
@@ -174,16 +178,29 @@ class ApplicationGUI(Frame):
         frame3.pack(side=TOP)
         Label(frame3, text="Faktori koji će biti ekstraktovani:").grid(row=0, column=0)
 
-        def updateAll(): #defining the extraction rule (eigenvalue>1 or N first values)
-            self.FactorExtractionNumber=[ EigenValueCheck.get(), ConcreteValueCheck.get()]
-            print(self.FactorExtractionNumber)
+        def updateExtractionOption1(): #defining the extraction rule (eigenvalue>1)
+            #self.FactorExtractionNumber=[ EigenValueCheck.get(), ConcreteValueCheck.get()]
+            #print(self.FactorExtractionNumber)
+            if EigenValueCheck.get():
+                secondOption.deselect()
+                self.FactorExtractionNumber = 1
+
+        def updateExtractionOption2(): #defining the extraction rule (N first values)
+            #self.FactorExtractionNumber=[ EigenValueCheck.get(), ConcreteValueCheck.get()]
+            #print(self.FactorExtractionNumber)
+            if ConcreteValueCheck.get():
+                firstOption.deselect()
+                self.FactorExtractionNumber = 1.34
 
         EigenValueCheck = BooleanVar()
-        Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
-                    variable=EigenValueCheck, command=updateAll).grid(row=0, column=1) #extract all the factors whose eigenvalue is greter than 1
+        firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
+                    variable=EigenValueCheck, command=updateExtractionOption1) #extract all the factors whose eigenvalue is greter than 1
+        firstOption.grid(row=0, column=1)
+        firstOption.select()
         ConcreteValueCheck = BooleanVar()
-        Checkbutton(frame3, text="Unos broja faktora koji će biti zadržani",
-                    variable=ConcreteValueCheck, command=updateAll).grid(row=1, column=1)
+        secondOption = Checkbutton(frame3, text="Unos broja faktora koji će biti zadržani",
+                    variable=ConcreteValueCheck, command=updateExtractionOption2)
+        secondOption.grid(row=1, column=1)
 
         frame4 = Frame(self.newwin)
         frame4.pack(side=TOP)
@@ -201,13 +218,28 @@ class ApplicationGUI(Frame):
         IterationNumber.grid(row=0, column=1)
         self.IterationNumber = IterationNumber.get()
 
-        frame5 = Frame(self.newwin)
-        frame5.pack(side=BOTTOM)
+        frame5 = Frame(self.newwin, width=300, height=5)
+        frame5.place(x=175, y=250)
 
-        BackButton = Button(self.newwin, text="Nazad", bg="red", fg="white", command=self.DataWindow)
-        BackButton.pack(side=BOTTOM)
+        BackButton = Button(frame5, text="  Nazad ", bg="red", fg="white", command=self.DataWindow)
+        BackButton.pack(side=LEFT)
+
+        NextButton = Button(frame5, text="Nastavi", bg="red", fg="white", command=self.RotationWindow)
+        NextButton.pack(side=RIGHT)
+
+
 
         self.newwin.mainloop()
+
+    def RotationWindow(self):
+
+        if self.newwin != NONE:
+            self.newwin.destroy()
+        self.newwin = Toplevel(root)
+        self.newwin.title("Faktorska analiza: Rotacija")
+        self.newwin.geometry("500x300")
+
+
 
     def browse(self):
         """ Browses a .png file or all files and then puts it on the entry.
