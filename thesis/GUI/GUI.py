@@ -2,8 +2,7 @@ from tkinter import *
 
 from tkinter import filedialog as fd
 
-a = ""
-str1 = "e"
+
 
 
 class ApplicationGUI(Frame):
@@ -22,6 +21,8 @@ class ApplicationGUI(Frame):
         self.ListOfSelctedVariables=[]
         self.Method=StringVar()
         self.CheckboxList=[]
+        self.FactorExtractionNumber=[]
+        self.IterationNumber = 0
 
 
     def _create_widgets(self):
@@ -44,6 +45,9 @@ class ApplicationGUI(Frame):
 
     def DataWindow(self):
         self.retrieve_input()
+        #print(self.newwin)
+        if self.newwin != NONE:
+            self.newwin.destroy()
         self.newwin = Toplevel(root)
 
         self.newwin.title("Faktorska analiza: Odabir varijabli")
@@ -75,6 +79,10 @@ class ApplicationGUI(Frame):
          #   listbox2.insert(END, str(i))
         listbox2.pack(side=LEFT, fill=BOTH)
         scrollbar2.config(command=listbox2.yview)
+
+        if self.ListOfSelctedVariables:
+            for i in range(len(self.ListOfSelctedVariables)):
+                listbox2.insert(END, (self.ListOfSelctedVariables[i]))
 
         frame3 = Frame(self.newwin, width=200, height=50)
         frame3.place(x=160, y=250)
@@ -121,13 +129,12 @@ class ApplicationGUI(Frame):
     def ExtractionWindow(self):
 
         self.newwin.destroy()
-        print(self.ListOfSelctedVariables)
         self.newwin = Toplevel(root)
         self.newwin.title("Faktorska analiza: Ekstrakcija")
         self.newwin.geometry("500x300")
         # label = Label(newwin, text="Faktorska analiza", fg="black", height=3, font=("bold", 14))
 
-        frame1=Frame(self.newwin)
+        frame1=Frame(self.newwin, width=500, height=300)
         frame1.pack(side=TOP)
 
         # Create a Tkinter variable
@@ -142,24 +149,24 @@ class ApplicationGUI(Frame):
         popupMenu.pack(side=LEFT)
 
         # on change dropdown value
-        def updateAll():
-            print(tkvar.get())
+        def updateMethod(*args):
             self.Method.set(tkvar.get())
 
+
         # link function to change dropdown
-        tkvar.trace('w', updateAll)
+        tkvar.trace('w', updateMethod)
 
         frame2 = Frame(self.newwin)
         frame2.pack(side=TOP)
         Label(frame2, text="Prikaži sljedeće:").grid(row=1, column=0)
 
         CorrelationMDisplay = BooleanVar()
-        Checkbutton(frame2, text="Korelaciona matrica               ", variable=CorrelationMDisplay, command=updateAll).grid(row=1, column=1)
+        Checkbutton(frame2, text="Korelaciona matrica               ", variable=CorrelationMDisplay).grid(row=1, column=1)
         #print(CorrelationMDisplay.get())
         UnrotatedFSDisplay = BooleanVar()
-        Checkbutton(frame2, text="Nerotirana faktorska rješenja", variable=UnrotatedFSDisplay, command=updateAll).grid(row=2, column=1)
+        Checkbutton(frame2, text="Nerotirana faktorska rješenja", variable=UnrotatedFSDisplay).grid(row=2, column=1)
         ScreePlotDisplay = BooleanVar()
-        Checkbutton(frame2, text="Scree plot                               ", variable=ScreePlotDisplay, command=updateAll).grid(row=3, column=1)
+        Checkbutton(frame2, text="Scree plot                               ", variable=ScreePlotDisplay).grid(row=3, column=1)
 
         self.CheckboxList=[CorrelationMDisplay.get(), UnrotatedFSDisplay.get(), ScreePlotDisplay.get()]
 
@@ -167,15 +174,38 @@ class ApplicationGUI(Frame):
         frame3.pack(side=TOP)
         Label(frame3, text="Faktori koji će biti ekstraktovani:").grid(row=0, column=0)
 
+        def updateAll(): #defining the extraction rule (eigenvalue>1 or N first values)
+            self.FactorExtractionNumber=[ EigenValueCheck.get(), ConcreteValueCheck.get()]
+            print(self.FactorExtractionNumber)
+
         EigenValueCheck = BooleanVar()
-        Checkbutton(frame3, text="Gutman-Kaiser pravilo (zadrži faktore čija svojstvena vrijednost je veća od 1)",
-                    variable=EigenValueCheck, command=updateAll).grid(row=0, column=1)
+        Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
+                    variable=EigenValueCheck, command=updateAll).grid(row=0, column=1) #extract all the factors whose eigenvalue is greter than 1
         ConcreteValueCheck = BooleanVar()
         Checkbutton(frame3, text="Unos broja faktora koji će biti zadržani",
                     variable=ConcreteValueCheck, command=updateAll).grid(row=1, column=1)
 
-        #if EigenValueCheck.get():
-        #    a.de
+        frame4 = Frame(self.newwin)
+        frame4.pack(side=TOP)
+        Label(frame4, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
+
+        def callback(P): #making sure that the entry is a positive interger
+            if str.isdigit(P) or P == "":
+                return True
+            else:
+                return False
+
+        vcmd = (frame4.register(callback))
+
+        IterationNumber = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'))
+        IterationNumber.grid(row=0, column=1)
+        self.IterationNumber = IterationNumber.get()
+
+        frame5 = Frame(self.newwin)
+        frame5.pack(side=BOTTOM)
+
+        BackButton = Button(self.newwin, text="Nazad", bg="red", fg="white", command=self.DataWindow)
+        BackButton.pack(side=BOTTOM)
 
         self.newwin.mainloop()
 
