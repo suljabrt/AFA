@@ -18,11 +18,13 @@ class ApplicationGUI(Frame):
         self._create_widgets()
         self._display_widgets()
         self.newwin = NONE
-        self.ListOfSelctedVariables=[]
-        self.Method=StringVar()
-        self.CheckboxList=[]
-        self.FactorExtractionNumber=1
-        self.IterationNumber = 0
+        self.ListOfSelctedVariables=[] #selected variables for factor analysis
+        self.Method=StringVar() #PCA, PAF or ML
+        self.CheckboxList=[] #What needs to be displayed: Correlation matrix, Unrotated factor solutions nad Scree plot
+        self.FactorExtractionNumber=1 #treshold for the extraction of factors
+        self.IterationNumber = 0 #number of iterations for extraction
+        self.RotationMethod = "None" #None, Varimax, Quartimax or Equimax
+        self.RotationIterationNumber = 0 #rotation iteration number
 
 
     def _create_widgets(self):
@@ -239,6 +241,107 @@ class ApplicationGUI(Frame):
         self.newwin.title("Faktorska analiza: Rotacija")
         self.newwin.geometry("500x300")
 
+        frame1 = Frame(self.newwin)
+        frame1.pack(side=TOP)
+
+        Label(frame1, text="Odaberi metodu rotacije:").pack(side=TOP)
+        def updateRotationMethod1(): #settin the Rotation Method to "None"
+            if RotationMethod1Check.get():
+                secondOption.deselect()
+                thirdOption.deselect()
+                fourthOption.deselect()
+                self.RotationMethod = "None"
+
+        def updateRotationMethod2(): #settin the Rotation Method to "Varimax"
+            if RotationMethod2Check.get():
+                firstOption.deselect()
+                thirdOption.deselect()
+                fourthOption.deselect()
+                self.RotationMethod = "Varimax                    "
+
+        def updateRotationMethod3(): #settin the Rotation Method to "Quartimax"
+            if RotationMethod3Check.get():
+                secondOption.deselect()
+                firstOption.deselect()
+                fourthOption.deselect()
+                self.RotationMethod = "Quartimax"
+
+        def updateRotationMethod4(): #settin the Rotation Method to "Equimax"
+            if RotationMethod4Check.get():
+                secondOption.deselect()
+                thirdOption.deselect()
+                firstOption.deselect()
+                self.RotationMethod = "Equimax"
+
+        RotationMethod1Check = BooleanVar()
+        firstOption = Checkbutton(frame1, text="None         ",
+                    variable=RotationMethod1Check, command=updateRotationMethod1) #extract all the factors whose eigenvalue is greter than 1
+        firstOption.select()
+        RotationMethod2Check = BooleanVar()
+        secondOption = Checkbutton(frame1, text="Varimax   ",
+                    variable=RotationMethod2Check, command=updateRotationMethod2)
+
+        RotationMethod3Check = BooleanVar()
+        thirdOption = Checkbutton(frame1, text="Quartimax",
+                                  variable=RotationMethod3Check,
+                                  command=updateRotationMethod3)  # extract all the factors whose eigenvalue is greter than 1
+
+        RotationMethod4Check = BooleanVar()
+        fourthOption = Checkbutton(frame1, text="Equimax   ",
+                                   variable=RotationMethod4Check, command=updateRotationMethod4)
+
+        firstOption.pack(side=TOP)
+        secondOption.pack(side=TOP)
+        thirdOption.pack(side=TOP)
+        fourthOption.pack(side=TOP)
+
+        frame2 = Frame(self.newwin)
+        frame2.place(x=150, y=120)
+
+        def updateDisplayingOptions():
+            if DisplayRotationCheck.get():
+                self.CheckboxList.append(DisplayRotationCheck.get())
+
+        DisplayRotationCheck = BooleanVar()
+        Checkbutton(frame2, text="Prikaži rotirana rješenja",
+                                   variable=DisplayRotationCheck, command=updateDisplayingOptions).pack()
+
+        frame4 = Frame(self.newwin)
+        frame4.place(x=80, y=150)
+        Label(frame4, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
+
+        def callback(P):  # making sure that the entry is a positive interger
+            if str.isdigit(P) or P == "":
+                return True
+            else:
+                return False
+
+        vcmd = (frame4.register(callback))
+
+        IterationNumber = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'))
+        IterationNumber.grid(row=0, column=1)
+        self.RotationIterationNumber = IterationNumber.get()
+
+        frame5 = Frame(self.newwin, width=300, height=5)
+        frame5.place(x=175, y=250)
+
+        BackButton = Button(frame5, text="  Nazad ", bg="red", fg="white", command=self.ExtractionWindow)
+        BackButton.pack(side=LEFT)
+
+        NextButton = Button(frame5, text="Nastavi", bg="red", fg="white", command=self.ResultsWindow)
+        NextButton.pack(side=RIGHT)
+
+        self.newwin.mainloop()
+
+    def ResultsWindow(self):
+
+        if self.newwin != NONE:
+            self.newwin.destroy()
+        self.newwin = Toplevel(root)
+        self.newwin.title("Faktorska analiza: Rezultati")
+        self.newwin.geometry("{0}x{1}+0+0".format(
+            self.newwin.winfo_screenwidth()-3, self.newwin.winfo_screenheight()-3))
+        #master.bind('<Escape>',self.toggle_geom)
 
 
     def browse(self):

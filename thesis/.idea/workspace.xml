@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUI/GUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="238" column="56" lean-forward="true" selection-start-line="238" selection-start-column="56" selection-end-line="238" selection-end-column="56" />
+            <state relative-caret-position="795">
+              <caret line="337" column="31" lean-forward="true" selection-start-line="337" selection-start-column="31" selection-end-line="337" selection-end-column="31" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -41,6 +41,8 @@
       <find>entry</find>
       <find>change drop</find>
       <find>change</find>
+      <find>factorExtra</find>
+      <find>check</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -67,22 +69,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="thesis" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/BosniaThesis/thesis" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="thesis" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/BosniaThesis/thesis" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="GUI" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -94,6 +80,22 @@
               <item name="thesis" type="b2602c69:ProjectViewProjectNode" />
               <item name="thesis" type="462c0819:PsiDirectoryNode" />
               <item name="GUI" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="thesis" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/BosniaThesis/thesis" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="thesis" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/BosniaThesis/thesis" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="GUI" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -205,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563637254376</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fixed mutually exclusive checkboxes and created a Rotation window.">
+      <created>1563643448674</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1563643448674</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -221,19 +230,19 @@
     <frame x="49" y="25" width="1317" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16129032" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49878934" visible="true" weight="0.16286388" />
+      <window_info id="Structure" order="1" sideWeight="0.50121063" side_tool="true" visible="true" weight="0.16286388" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7450826" visible="true" weight="0.32736155" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49488592" weight="0.3990228" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7427223" visible="true" weight="0.32736155" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49331236" weight="0.39739415" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32954547" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996066" weight="0.32899022" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49881983" weight="0.32954547" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.25491738" side_tool="true" visible="true" weight="0.32736155" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.25727773" side_tool="true" visible="true" weight="0.32736155" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4996066" weight="0.32792208" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -255,7 +264,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="testing commiting from IDE" />
     <MESSAGE value="Added several widgets, linked windows." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added several widgets, linked windows." />
+    <MESSAGE value="Fixed mutually exclusive checkboxes and created a Rotation window." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed mutually exclusive checkboxes and created a Rotation window." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/ide/ide-scripting.groovy">
@@ -278,8 +288,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GUI/GUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="238" column="56" lean-forward="true" selection-start-line="238" selection-start-column="56" selection-end-line="238" selection-end-column="56" />
+        <state relative-caret-position="795">
+          <caret line="337" column="31" lean-forward="true" selection-start-line="337" selection-start-column="31" selection-end-line="337" selection-end-column="31" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
