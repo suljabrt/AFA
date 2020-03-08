@@ -1,49 +1,51 @@
 from tkinter import *
-
 from tkinter import filedialog as fd
-
-
-
+import io
+import pandas as pd
+from factor_analyzer import FactorAnalyzer
 
 class ApplicationGUI(Frame):
     """ Creates a frame that contains a button when clicked lets the user to select
     a file and put its filepath into an entry.
     """
 
-    def __init__(self, master, initialdir='', filetypes=()):
+    def __init__(self, master, initialdir):
         super().__init__(master)
         self.filepath = StringVar()
         self._initaldir = initialdir
-        self._filetypes = filetypes
         self._create_widgets()
         self._display_widgets()
         self.newwin = NONE
-        self.ListOfSelctedVariables=[] #selected variables for factor analysis
+        self.ListOfSelctedVariables = [] #selected variables for factor analysis
         self.Method=StringVar() #PCA, PAF or ML
-        self.CheckboxList=[] #What needs to be displayed: Correlation matrix, Unrotated factor solutions nad Scree plot
-        self.FactorExtractionNumber=1 #treshold for the extraction of factors
+        self.CheckboxList = [] #What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
+        self.FactorExtractionNumber = 1 #treshold for the extraction of factors
         self.IterationNumber = 0 #number of iterations for extraction
         self.RotationMethod = "None" #None, Varimax, Quartimax or Equimax
         self.RotationIterationNumber = 0 #rotation iteration number
 
+        self._filetypes = (
+            ('Comma-Separated Values', '*.csv'),
+            ("All files", "*.*")
+        )
 
     def _create_widgets(self):
-        self._entry = Entry(self, textvariable=self.filepath, font=("bold", 10))
+        self._entry = Entry(self, textvariable=self.filepath, width=40, font=("bold", 10))
         self._button1 = Button(self, text="Učitaj...", bg="red", fg="white", command=self.browse)
         self._button2 = Button(self, text="Nastavi", bg="red", fg="white", command=self.DataWindow)
         self._label = Label(self, text="Učitaj csv fajl", fg="black", height=3,
                                font=("bold", 14))
 
+
     def _display_widgets(self):
         self._label.pack(fill='y')
         self._entry.pack(fill='x', expand=True)
         self._button1.pack(side=LEFT, fill='y')
-        #self.retrieve_input()
         self._button2.pack(side=RIGHT, fill='y')
 
     def retrieve_input(self):
-        self.filepath.set(self._entry.get())
-        #print(self.filepath.get())
+        self.filepath = self._entry.get()
+        print(self.filepath)
 
     def DataWindow(self):
         self.retrieve_input()
@@ -95,6 +97,8 @@ class ApplicationGUI(Frame):
             self.CheckboxList = []
             self.FactorExtractionNumber = 1
             self.IterationNumber = 0
+            self.RotationMethod = "None"
+            self.RotationIterationNumber = 0
             self.newwin.destroy()
 
         backButton = Button(frame3, text="  Nazad  ", bg="red", fg="white", command=Reinitialize)
@@ -229,8 +233,6 @@ class ApplicationGUI(Frame):
         NextButton = Button(frame5, text="Nastavi", bg="red", fg="white", command=self.RotationWindow)
         NextButton.pack(side=RIGHT)
 
-
-
         self.newwin.mainloop()
 
     def RotationWindow(self):
@@ -275,7 +277,7 @@ class ApplicationGUI(Frame):
 
         RotationMethod1Check = BooleanVar()
         firstOption = Checkbutton(frame1, text="None         ",
-                    variable=RotationMethod1Check, command=updateRotationMethod1) #extract all the factors whose eigenvalue is greter than 1
+                    variable=RotationMethod1Check, command=updateRotationMethod1) #extract all the factors whose eigenvalue is greater than 1
         firstOption.select()
         RotationMethod2Check = BooleanVar()
         secondOption = Checkbutton(frame1, text="Varimax   ",
@@ -284,7 +286,7 @@ class ApplicationGUI(Frame):
         RotationMethod3Check = BooleanVar()
         thirdOption = Checkbutton(frame1, text="Quartimax",
                                   variable=RotationMethod3Check,
-                                  command=updateRotationMethod3)  # extract all the factors whose eigenvalue is greter than 1
+                                  command=updateRotationMethod3)  # extract all the factors whose eigenvalue is greater than 1
 
         RotationMethod4Check = BooleanVar()
         fourthOption = Checkbutton(frame1, text="Equimax   ",
@@ -334,36 +336,80 @@ class ApplicationGUI(Frame):
         self.newwin.mainloop()
 
     def ResultsWindow(self):
-
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
         self.newwin.title("Faktorska analiza: Rezultati")
         self.newwin.geometry("{0}x{1}+0+0".format(
             self.newwin.winfo_screenwidth()-3, self.newwin.winfo_screenheight()-3))
-        #master.bind('<Escape>',self.toggle_geom)
+        frame1 = Frame(self.newwin, width=self.newwin.winfo_screenwidth()-3, height=self.newwin.winfo_screenheight()-3)
+        frame1.pack(fill=BOTH)
+        label1 = Label(frame1, text="Rezultati", fg="black")
+        label1.pack(fill=BOTH)
+        scrollbar1 = Scrollbar(frame1)
+        scrollbar1.pack(side=RIGHT, fill=Y)
 
+        buffer = io.StringIO()
+
+        text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-50)
+        output = buffer.getvalue()
+        text.insert(END, output)
+        text.pack()
+
+        frame5 = Frame(self.newwin, width=300, height=5)
+        frame5.place(x=0.42*(self.newwin.winfo_screenwidth()-3), y=(self.newwin.winfo_screenheight()-3)*0.85)
+        #print( self.newwin.winfo_screenwidth()-3)
+
+        BackButton = Button(frame5, text="  Nazad ", bg="red", fg="white", command=self.RotationWindow)
+        BackButton.pack(side=LEFT, fill=BOTH)
+
+        def SaveResults():
+            print("Data is saved.")
+
+        SaveButton = Button(frame5, text="Sačuvaj", bg="red", fg="white", command=SaveResults)
+        SaveButton.pack(side=RIGHT, fill=BOTH)
+
+        def ExitWindow():
+            self.ListOfSelctedVariables = []
+            self.Method = StringVar()
+            self.CheckboxList = []
+            self.FactorExtractionNumber = 1
+            self.IterationNumber = 0
+            self.RotationMethod = "None"
+            self.RotationIterationNumber = 0
+            self.newwin.destroy()
+
+        frame6 = Frame(self.newwin, width=30, height=5)
+        frame6.place(x=0.84 * (self.newwin.winfo_screenwidth() - 3), y=(self.newwin.winfo_screenheight() - 3) * 0.85)
+
+        ExitButton = Button(frame6, text="   Izađi   ", bg="red", fg="white", command=ExitWindow)
+        #ExitButton.place(x=0.82*(self.newwin.winfo_screenwidth()-3), y=(self.newwin.winfo_screenheight()-3)*0.85)
+        ExitButton.pack(fill=BOTH)
+
+        self.newwin.mainloop()
 
     def browse(self):
-        """ Browses a .png file or all files and then puts it on the entry.
-        """
 
         self.filepath.set(fd.askopenfilename(initialdir=self._initaldir,
                                              filetypes=self._filetypes))
 
-
+    def Factor(self):
+        df = pd.read_csv(self.filepath)
+        # X, = load_digits(return_X_y=True)
+        # transformer = FactorAnalysis(n_components=23, random_state=0)
+        # X_transformed = transformer.fit_transform(data[1:,:])
+        # X_transformed.shape()
+        # df.info()
+        fa = FactorAnalyzer()
+        fa.analyze(df, 4, rotation="varimax")
+        print(fa.loadings)
 
 if __name__ == '__main__':
     root = Tk()
     root.title("Aplikacija za faktorsku analizu podataka")
     labelfont = ('times', 10, 'bold')
-    root.geometry("400x200")
-    filetypes = (
-        ('Comma-Separated Values', '*.csv'),
-        ("All files", "*.*")
-    )
+    root.geometry("500x200")
+    AppObject = ApplicationGUI(root, initialdir=r"/home/haris/Desktop/Teza") #r"/home"
+    AppObject.pack(fill='y')
 
-    file_browser = ApplicationGUI(root, initialdir=r"C:\Users",
-                          filetypes=filetypes)
-    file_browser.pack(fill='y')
     root.mainloop()
