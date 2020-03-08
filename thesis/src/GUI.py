@@ -349,6 +349,7 @@ class ApplicationGUI(Frame):
         scrollbar1 = Scrollbar(frame1)
         scrollbar1.pack(side=RIGHT, fill=Y)
 
+        Label(frame1, text=self.Factor()).pack()
         buffer = io.StringIO()
 
         text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-50)
@@ -402,7 +403,7 @@ class ApplicationGUI(Frame):
         # df.info()
         fa = FactorAnalyzer()
         fa.analyze(df, 4, rotation="varimax")
-        print(fa.loadings)
+        return fa.loadings
 
 if __name__ == '__main__':
     root = Tk()
