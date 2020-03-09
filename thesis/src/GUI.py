@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import filedialog as fd
 import io
 import pandas as pd
-from factor_analyzer import FactorAnalyzer
+from factor_analyzer import *
 
 class ApplicationGUI(Frame):
     """ Creates a frame that contains a button when clicked lets the user to select
@@ -23,6 +23,8 @@ class ApplicationGUI(Frame):
         self.IterationNumber = 0 #number of iterations for extraction
         self.RotationMethod = "None" #None, Varimax, Quartimax or Equimax
         self.RotationIterationNumber = 0 #rotation iteration number
+        self.df = [] #Data frame
+     #   self.SelectedVariables = [] #List of variables to be included in FA
 
         self._filetypes = (
             ('Comma-Separated Values', '*.csv'),
@@ -45,10 +47,10 @@ class ApplicationGUI(Frame):
 
     def retrieve_input(self):
         self.filepath = self._entry.get()
-        print(self.filepath)
 
     def DataWindow(self):
         self.retrieve_input()
+        self.df = pd.read_csv(self.filepath)
         #print(self.newwin)
         if self.newwin != NONE:
             self.newwin.destroy()
@@ -66,7 +68,8 @@ class ApplicationGUI(Frame):
         scrollbar1.pack(side=RIGHT, fill=Y)
 
         listbox1 = Listbox(frame1, yscrollcommand=scrollbar1.set, selectmode=EXTENDED)
-        for i in range(50, 1000):
+        #print(self.df.iloc[0])
+        for i in self.df.columns:
             listbox1.insert(END, str(i))
         listbox1.pack(side=LEFT, fill=BOTH)
 
@@ -160,8 +163,13 @@ class ApplicationGUI(Frame):
 
         # on change dropdown value
         def updateMethod(*args):
-            self.Method.set(tkvar.get())
-
+            tempMethod = tkvar.get()
+            if (tempMethod == 'Principal Components Analysis'):
+                self.Method.set('minres')
+            elif (tempMethod == 'Principal Axis Factoring            '):
+                self.Method.set('principal')
+            elif (tempMethod == 'Maximum Likelihood                '):
+                self.Method.set('ml')
 
         # link function to change dropdown
         tkvar.trace('w', updateMethod)
@@ -236,7 +244,7 @@ class ApplicationGUI(Frame):
         self.newwin.mainloop()
 
     def RotationWindow(self):
-
+        #print(self.ListOfSelctedVariables)
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
@@ -259,21 +267,21 @@ class ApplicationGUI(Frame):
                 firstOption.deselect()
                 thirdOption.deselect()
                 fourthOption.deselect()
-                self.RotationMethod = "Varimax                    "
+                self.RotationMethod = "varimax"
 
         def updateRotationMethod3(): #settin the Rotation Method to "Quartimax"
             if RotationMethod3Check.get():
                 secondOption.deselect()
                 firstOption.deselect()
                 fourthOption.deselect()
-                self.RotationMethod = "Quartimax"
+                self.RotationMethod = "quartimax"
 
         def updateRotationMethod4(): #settin the Rotation Method to "Equimax"
             if RotationMethod4Check.get():
                 secondOption.deselect()
                 thirdOption.deselect()
                 firstOption.deselect()
-                self.RotationMethod = "Equimax"
+                self.RotationMethod = "equamax"
 
         RotationMethod1Check = BooleanVar()
         firstOption = Checkbutton(frame1, text="None         ",
@@ -342,19 +350,22 @@ class ApplicationGUI(Frame):
         self.newwin.title("Faktorska analiza: Rezultati")
         self.newwin.geometry("{0}x{1}+0+0".format(
             self.newwin.winfo_screenwidth()-3, self.newwin.winfo_screenheight()-3))
-        frame1 = Frame(self.newwin, width=self.newwin.winfo_screenwidth()-3, height=self.newwin.winfo_screenheight()-3)
+        frame1 = Frame(self.newwin, width=self.newwin.winfo_screenwidth()-300, height=self.newwin.winfo_screenheight()-300)
         frame1.pack(fill=BOTH)
         label1 = Label(frame1, text="Rezultati", fg="black")
         label1.pack(fill=BOTH)
         scrollbar1 = Scrollbar(frame1)
         scrollbar1.pack(side=RIGHT, fill=Y)
 
-        Label(frame1, text=self.Factor()).pack()
-        buffer = io.StringIO()
+        buffer = self.Factor()
 
-        text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-50)
-        output = buffer.getvalue()
-        text.insert(END, output)
+        text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-300)
+       # output = buffer.getvalue()
+        text.insert(END, buffer)
+        text.insert(END, buffer)
+        text.insert(END, buffer)
+        text.insert(END, buffer)
+        text.insert(END, buffer)
         text.pack()
 
         frame5 = Frame(self.newwin, width=300, height=5)
@@ -395,15 +406,20 @@ class ApplicationGUI(Frame):
                                              filetypes=self._filetypes))
 
     def Factor(self):
-        df = pd.read_csv(self.filepath)
         # X, = load_digits(return_X_y=True)
         # transformer = FactorAnalysis(n_components=23, random_state=0)
         # X_transformed = transformer.fit_transform(data[1:,:])
         # X_transformed.shape()
         # df.info()
+        #Create a data frame of only selected variables
+        SelectedDF = self.df[self.ListOfSelctedVariables]
         fa = FactorAnalyzer()
-        fa.analyze(df, 4, rotation="varimax")
-        return fa.loadings
+        fa.analyze(SelectedDF, 4, rotation=None, method=self.Method)
+        UnrotatedLoadings = fa.loadings
+        rotator = Rotator()
+        return [ fa.get_eigenvalues(), UnrotatedLoadings,'/n', fa.get_factor_variance(), '/n', rotator.rotate(UnrotatedLoadings, method=self.RotationMethod, max_iter=25)] #total variance (rotation sums of factors)
+
+
 
 if __name__ == '__main__':
     root = Tk()
