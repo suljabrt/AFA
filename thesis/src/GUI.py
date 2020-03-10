@@ -4,10 +4,25 @@ import io
 import pandas as pd
 from factor_analyzer import *
 
+class FormattedPrint():
+
+    def __init__(self, PObject, Text):
+        self.PObject = PObject
+        self.Text = Text
+        self.Output  = ''
+        self.Output += str(Text) + '\n\n'
+        self.Output += str(PObject) + '\n\n'
+
+    def AppendPObject(self, PObject, Text):
+        self.Output += str(Text) + '\n\n'
+        self.Output += str(PObject) + '\n\n'
+
+    def getOutput(self):
+        return self.Output
+
+
+
 class ApplicationGUI(Frame):
-    """ Creates a frame that contains a button when clicked lets the user to select
-    a file and put its filepath into an entry.
-    """
 
     def __init__(self, master, initialdir):
         super().__init__(master)
@@ -24,6 +39,10 @@ class ApplicationGUI(Frame):
         self.RotationMethod = "None" #None, Varimax, Quartimax or Equimax
         self.RotationIterationNumber = 0 #rotation iteration number
         self.df = [] #Data frame
+        self.printObject = FormattedPrint( '', 'FACTOR ANALYSIS')
+        self.ShowCorrMatrix = 1
+        self.ShowUnrotatedFS = 1
+        self.ShowScreePlot = 0
      #   self.SelectedVariables = [] #List of variables to be included in FA
 
         self._filetypes = (
@@ -180,13 +199,19 @@ class ApplicationGUI(Frame):
 
         CorrelationMDisplay = BooleanVar()
         Checkbutton(frame2, text="Korelaciona matrica               ", variable=CorrelationMDisplay).grid(row=1, column=1)
-        #print(CorrelationMDisplay.get())
+        print(CorrelationMDisplay.get())
+        if (CorrelationMDisplay.get() == 1):
+            self.ShowCorrMatrix = 1
         UnrotatedFSDisplay = BooleanVar()
         Checkbutton(frame2, text="Nerotirana faktorska rješenja", variable=UnrotatedFSDisplay).grid(row=2, column=1)
+        if (UnrotatedFSDisplay.get() == 1):
+            self.ShowUnrotatedFS = 1
         ScreePlotDisplay = BooleanVar()
         Checkbutton(frame2, text="Scree plot                               ", variable=ScreePlotDisplay).grid(row=3, column=1)
+        if (ScreePlotDisplay == 1):
+            self.ShowScreePlot = 1
 
-        self.CheckboxList=[CorrelationMDisplay.get(), UnrotatedFSDisplay.get(), ScreePlotDisplay.get()]
+        self.CheckboxList = [CorrelationMDisplay.get(), UnrotatedFSDisplay.get(), ScreePlotDisplay.get()]
 
         frame3 = Frame(self.newwin)
         frame3.pack(side=TOP)
@@ -357,14 +382,9 @@ class ApplicationGUI(Frame):
         scrollbar1 = Scrollbar(frame1)
         scrollbar1.pack(side=RIGHT, fill=Y)
 
-        buffer = self.Factor()
+        buffer = self.FactorProcessing()
 
         text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-300)
-       # output = buffer.getvalue()
-        text.insert(END, buffer)
-        text.insert(END, buffer)
-        text.insert(END, buffer)
-        text.insert(END, buffer)
         text.insert(END, buffer)
         text.pack()
 
@@ -405,7 +425,7 @@ class ApplicationGUI(Frame):
         self.filepath.set(fd.askopenfilename(initialdir=self._initaldir,
                                              filetypes=self._filetypes))
 
-    def Factor(self):
+    def FactorProcessing(self):
         # X, = load_digits(return_X_y=True)
         # transformer = FactorAnalysis(n_components=23, random_state=0)
         # X_transformed = transformer.fit_transform(data[1:,:])
@@ -415,9 +435,16 @@ class ApplicationGUI(Frame):
         SelectedDF = self.df[self.ListOfSelctedVariables]
         fa = FactorAnalyzer()
         fa.analyze(SelectedDF, 4, rotation=None, method=self.Method)
-        UnrotatedLoadings = fa.loadings
         rotator = Rotator()
-        return [ fa.get_eigenvalues(), UnrotatedLoadings,'/n', fa.get_factor_variance(), '/n', rotator.rotate(UnrotatedLoadings, method=self.RotationMethod, max_iter=25)] #total variance (rotation sums of factors)
+        if (bool(self.ShowCorrMatrix)):
+            self.printObject.AppendPObject(fa.corr, "Correlation matrix")
+        if (bool(self.ShowUnrotatedFS)):
+            self.printObject.AppendPObject(fa.loadings, "Unrotated extractes factors:")
+
+        self.printObject.AppendPObject(fa.get_eigenvalues()[0], "Eigenvalues:")
+        self.printObject.AppendPObject(fa.get_eigenvalues()[1], "New eigenvalues:")
+        return self.printObject.getOutput()
+        #return [ fa.get_eigenvalues(), UnrotatedLoadings,'/n', fa.get_factor_variance(), '/n', rotator.rotate(UnrotatedLoadings, method=self.RotationMethod, max_iter=25)] #total variance (rotation sums of factors)
 
 
 
