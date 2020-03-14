@@ -35,14 +35,15 @@ class ApplicationGUI(Frame):
         self.Method=StringVar() #PCA, PAF or ML
         self.CheckboxList = [] #What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
         self.FactorExtractionNumber = 1 #treshold for the extraction of factors
-        self.IterationNumber = 0 #number of iterations for extraction
-        self.RotationMethod = "None" #None, Varimax, Quartimax or Equimax
-        self.RotationIterationNumber = 0 #rotation iteration number
+        self.IterationNumber = 30 #number of iterations for extraction
+        self.RotationMethod = None  #None, Varimax, Quartimax or Equimax
+        self.RotationIterationNumber = 30 #rotation iteration number
         self.df = [] #Data frame
         self.printObject = FormattedPrint( '', 'FACTOR ANALYSIS')
         self.ShowCorrMatrix = 1
         self.ShowUnrotatedFS = 1
-        self.ShowScreePlot = 0
+        self.ShowScreePlot = 1
+        self.ShowRotatedFS = 1
      #   self.SelectedVariables = [] #List of variables to be included in FA
 
         self._filetypes = (
@@ -119,7 +120,7 @@ class ApplicationGUI(Frame):
             self.CheckboxList = []
             self.FactorExtractionNumber = 1
             self.IterationNumber = 0
-            self.RotationMethod = "None"
+            self.RotationMethod = None
             self.RotationIterationNumber = 0
             self.newwin.destroy()
 
@@ -197,21 +198,11 @@ class ApplicationGUI(Frame):
         frame2.pack(side=TOP)
         Label(frame2, text="Prikaži sljedeće:").grid(row=1, column=0)
 
-        CorrelationMDisplay = BooleanVar()
-        Checkbutton(frame2, text="Korelaciona matrica               ", variable=CorrelationMDisplay).grid(row=1, column=1)
-        print(CorrelationMDisplay.get())
-        if (CorrelationMDisplay.get() == 1):
-            self.ShowCorrMatrix = 1
-        UnrotatedFSDisplay = BooleanVar()
-        Checkbutton(frame2, text="Nerotirana faktorska rješenja", variable=UnrotatedFSDisplay).grid(row=2, column=1)
-        if (UnrotatedFSDisplay.get() == 1):
-            self.ShowUnrotatedFS = 1
-        ScreePlotDisplay = BooleanVar()
-        Checkbutton(frame2, text="Scree plot                               ", variable=ScreePlotDisplay).grid(row=3, column=1)
-        if (ScreePlotDisplay == 1):
-            self.ShowScreePlot = 1
+        Checkbutton(frame2, text="Korelaciona matrica               ", variable=self.ShowCorrMatrix).grid(row=1, column=1)
 
-        self.CheckboxList = [CorrelationMDisplay.get(), UnrotatedFSDisplay.get(), ScreePlotDisplay.get()]
+        Checkbutton(frame2, text="Nerotirana faktorska rješenja", variable=self.ShowUnrotatedFS).grid(row=2, column=1)
+
+        Checkbutton(frame2, text="Scree plot                               ", variable=self.ShowScreePlot).grid(row=3, column=1)
 
         frame3 = Frame(self.newwin)
         frame3.pack(side=TOP)
@@ -269,7 +260,7 @@ class ApplicationGUI(Frame):
         self.newwin.mainloop()
 
     def RotationWindow(self):
-        #print(self.ListOfSelctedVariables)
+
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
@@ -285,7 +276,7 @@ class ApplicationGUI(Frame):
                 secondOption.deselect()
                 thirdOption.deselect()
                 fourthOption.deselect()
-                self.RotationMethod = "None"
+                self.RotationMethod = None
 
         def updateRotationMethod2(): #settin the Rotation Method to "Varimax"
             if RotationMethod2Check.get():
@@ -310,20 +301,29 @@ class ApplicationGUI(Frame):
 
         RotationMethod1Check = BooleanVar()
         firstOption = Checkbutton(frame1, text="None         ",
-                    variable=RotationMethod1Check, command=updateRotationMethod1) #extract all the factors whose eigenvalue is greater than 1
-        firstOption.select()
+                    variable=RotationMethod1Check, command=updateRotationMethod1)
+
         RotationMethod2Check = BooleanVar()
         secondOption = Checkbutton(frame1, text="Varimax   ",
                     variable=RotationMethod2Check, command=updateRotationMethod2)
 
         RotationMethod3Check = BooleanVar()
         thirdOption = Checkbutton(frame1, text="Quartimax",
-                                  variable=RotationMethod3Check,
-                                  command=updateRotationMethod3)  # extract all the factors whose eigenvalue is greater than 1
+                    variable=RotationMethod3Check, command=updateRotationMethod3)
 
         RotationMethod4Check = BooleanVar()
-        fourthOption = Checkbutton(frame1, text="Equimax   ",
-                                   variable=RotationMethod4Check, command=updateRotationMethod4)
+        fourthOption = Checkbutton(frame1, text="Equamax   ",
+                    variable=RotationMethod4Check, command=updateRotationMethod4)
+
+        #Reinitialize checkbox
+        if self.RotationMethod == None:
+            firstOption.select()
+        elif self.RotationMethod == 'varimax':
+            secondOption.select()
+        elif self.RotationMethod == 'quartimax':
+            thirdOption.select()
+        elif self.RotationMethod == 'equamax':
+            fourthOption.select()
 
         firstOption.pack(side=TOP)
         secondOption.pack(side=TOP)
@@ -332,14 +332,8 @@ class ApplicationGUI(Frame):
 
         frame2 = Frame(self.newwin)
         frame2.place(x=150, y=120)
-
-        def updateDisplayingOptions():
-            if DisplayRotationCheck.get():
-                self.CheckboxList.append(DisplayRotationCheck.get())
-
-        DisplayRotationCheck = BooleanVar()
         Checkbutton(frame2, text="Prikaži rotirana rješenja",
-                                   variable=DisplayRotationCheck, command=updateDisplayingOptions).pack()
+                                   variable=self.ShowRotatedFS).pack()
 
         frame4 = Frame(self.newwin)
         frame4.place(x=80, y=150)
@@ -354,8 +348,10 @@ class ApplicationGUI(Frame):
         vcmd = (frame4.register(callback))
 
         IterationNumber = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'))
+        IterationNumber.insert(0, str(self.RotationIterationNumber))
+        IterationNumber["textvariable"] = self.RotationIterationNumber
+        IterationNumber.bind('<Key-Return>')
         IterationNumber.grid(row=0, column=1)
-        self.RotationIterationNumber = IterationNumber.get()
 
         frame5 = Frame(self.newwin, width=300, height=5)
         frame5.place(x=175, y=250)
@@ -407,7 +403,7 @@ class ApplicationGUI(Frame):
             self.CheckboxList = []
             self.FactorExtractionNumber = 1
             self.IterationNumber = 0
-            self.RotationMethod = "None"
+            self.RotationMethod = None
             self.RotationIterationNumber = 0
             self.newwin.destroy()
 
