@@ -3,6 +3,7 @@ from tkinter import filedialog as fd
 import io
 import pandas as pd
 from factor_analyzer import *
+import csv
 
 class FormattedPrint():
 
@@ -20,8 +21,6 @@ class FormattedPrint():
     def getOutput(self):
         return self.Output
 
-
-
 class ApplicationGUI(Frame):
 
     def __init__(self, master, initialdir):
@@ -33,17 +32,26 @@ class ApplicationGUI(Frame):
         self.newwin = NONE
         self.ListOfSelctedVariables = [] #selected variables for factor analysis
         self.Method=StringVar() #PCA, PAF or ML
+        self.Method.set('minres')
         self.CheckboxList = [] #What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
         self.FactorExtractionNumber = 1 #treshold for the extraction of factors
-        self.IterationNumber = 30 #number of iterations for extraction
+        self.IterationNumber = StringVar()
+        self.IterationNumber.set(25) #number of iterations for extraction
         self.RotationMethod = None  #None, Varimax, Quartimax or Equimax
-        self.RotationIterationNumber = 30 #rotation iteration number
+        self.RotationIterationNumber = StringVar()
+        self.RotationIterationNumber.set(30) #rotation iteration number
         self.df = [] #Data frame
         self.printObject = FormattedPrint( '', 'FACTOR ANALYSIS')
         self.ShowCorrMatrix = 1
         self.ShowUnrotatedFS = 1
         self.ShowScreePlot = 1
         self.ShowRotatedFS = 1
+        self.GutmanKaiser = BooleanVar()
+        self.GutmanKaiser.set(True)
+        self.ManualInput = BooleanVar()
+        self.ManualInput.set(False)
+        self.NumberOfFactors = StringVar()
+        self.NumberOfFactors.set(0)
      #   self.SelectedVariables = [] #List of variables to be included in FA
 
         self._filetypes = (
@@ -86,12 +94,19 @@ class ApplicationGUI(Frame):
         label1.pack()
         scrollbar1 = Scrollbar(frame1)
         scrollbar1.pack(side=RIGHT, fill=Y)
+        def SelectAllL1():
+            listbox1.select_set(0, END)
+            listbox1.event_generate("<<ListboxSelect>>")
+        def SelectAllL2():
+            listbox2.select_set(0, END)
+            listbox2.event_generate("<<ListboxSelect>>")
 
         listbox1 = Listbox(frame1, yscrollcommand=scrollbar1.set, selectmode=EXTENDED)
         #print(self.df.iloc[0])
         for i in self.df.columns:
             listbox1.insert(END, str(i))
         listbox1.pack(side=LEFT, fill=BOTH)
+        listbox1.bind("<Control-a>", lambda x: SelectAllL1())
 
         scrollbar1.config(command=listbox1.yview)
 
@@ -105,6 +120,7 @@ class ApplicationGUI(Frame):
         #for i in range(len(self.ListOfSelctedVariables)):
          #   listbox2.insert(END, str(i))
         listbox2.pack(side=LEFT, fill=BOTH)
+        listbox2.bind("<Control-a>", lambda x: SelectAllL2())
         scrollbar2.config(command=listbox2.yview)
 
         if self.ListOfSelctedVariables:
@@ -114,17 +130,7 @@ class ApplicationGUI(Frame):
         frame3 = Frame(self.newwin, width=200, height=50)
         frame3.place(x=160, y=250)
 
-        def Reinitialize():
-            self.ListOfSelctedVariables = []
-            self.Method = StringVar()
-            self.CheckboxList = []
-            self.FactorExtractionNumber = 1
-            self.IterationNumber = 0
-            self.RotationMethod = None
-            self.RotationIterationNumber = 0
-            self.newwin.destroy()
-
-        backButton = Button(frame3, text="  Nazad  ", bg="red", fg="white", command=Reinitialize)
+        backButton = Button(frame3, text="  Nazad  ", bg="red", fg="white", command=self.newwin.destroy)
         #backButton.place(x=40, y=250)
         backButton.pack(side=LEFT)
 
@@ -137,26 +143,26 @@ class ApplicationGUI(Frame):
 
         def ForwardVariables():
             if listbox1.curselection():
-                for i in range(len(listbox1.curselection())):
-                    if  not (listbox1.get(listbox1.curselection()[i]) in self.ListOfSelctedVariables):
-                        listbox2.insert(END, str(listbox1.get(listbox1.curselection()[i])))
-                        self.ListOfSelctedVariables.append(listbox1.get(listbox1.curselection()[i]))
-
+                for i in listbox1.curselection():
+                    if  not (listbox1.get(i) in self.ListOfSelctedVariables):
+                        listbox2.insert(END, str(listbox1.get(i)))
+                        self.ListOfSelctedVariables.append(listbox1.get(i))
 
         def DeleteVariables():
             if listbox2.curselection():
-                self.ListOfSelctedVariables.remove(listbox2.get(listbox2.curselection()))
-                listbox2.delete(listbox2.curselection())
+                start = listbox2.curselection()[0]
+                end = listbox2.curselection()[-1]
+                for i in listbox2.curselection():
+                    self.ListOfSelctedVariables.remove(listbox2.get(i))
+                listbox2.delete(start,end)
+
 
         forwardButton = Button(frameMiddle, text=" > ", bg="red", fg="white", command=ForwardVariables)
         forwardButton.pack()
         deleteButton = Button(frameMiddle, text=" < ", bg="red", fg="white", command=DeleteVariables)
         deleteButton.pack()
-        #print(listbox1.get(0,1))
 
         self.newwin.mainloop()
-
-
 
     def ExtractionWindow(self):
 
@@ -184,7 +190,7 @@ class ApplicationGUI(Frame):
         # on change dropdown value
         def updateMethod(*args):
             tempMethod = tkvar.get()
-            if (tempMethod == 'Principal Components Analysis'):
+            if (tempMethod == 'Minimum Residual'):
                 self.Method.set('minres')
             elif (tempMethod == 'Principal Axis Factoring            '):
                 self.Method.set('principal')
@@ -194,59 +200,87 @@ class ApplicationGUI(Frame):
         # link function to change dropdown
         tkvar.trace('w', updateMethod)
 
+        #Reinitialize Method
+        if self.Method.get() == 'minres':
+            tkvar.set('Minimum Residual')
+            popupMenu = OptionMenu(frame1, tkvar, *choices)
+        elif self.Method.get() == 'principal':
+            tkvar.set('Principal Axis Factoring            ')
+            popupMenu = OptionMenu(frame1, tkvar, *choices)
+        elif self.Method.get() == 'ml':
+            tkvar.set('Maximum Likelihood                ')
+            popupMenu = OptionMenu(frame1, tkvar, *choices)
+
         frame2 = Frame(self.newwin)
         frame2.pack(side=TOP)
         Label(frame2, text="Prikaži sljedeće:").grid(row=1, column=0)
-
-        Checkbutton(frame2, text="Korelaciona matrica               ", variable=self.ShowCorrMatrix).grid(row=1, column=1)
-
-        Checkbutton(frame2, text="Nerotirana faktorska rješenja", variable=self.ShowUnrotatedFS).grid(row=2, column=1)
-
-        Checkbutton(frame2, text="Scree plot                               ", variable=self.ShowScreePlot).grid(row=3, column=1)
+        def updateSelection():
+            self.ShowCorrMatrix = CorrelationMDisplay.get()
+            self.ShowUnrotatedFS = UnrotatedFSDisplay.get()
+            self.ShowScreePlot = ScreePlotDisplay.get()
+        CorrelationMDisplay = BooleanVar()
+        Button1 = Checkbutton(frame2, text="Korelaciona matrica               ",
+                              variable = CorrelationMDisplay, command = updateSelection)
+        Button1.grid(row=1, column=1)
+        UnrotatedFSDisplay = BooleanVar()
+        Button2 = Checkbutton(frame2, text="Nerotirana faktorska rješenja",
+                              variable = UnrotatedFSDisplay, command = updateSelection)
+        Button2.grid(row=2, column=1)
+        ScreePlotDisplay = BooleanVar()
+        Button3 = Checkbutton(frame2, text="Scree plot                               ",
+                              variable = ScreePlotDisplay, command = updateSelection)
+        Button3.grid(row=3, column=1)
+        #Reinitialize checkbox
+        if self.ShowCorrMatrix == 1:
+            Button1.select()
+        if self.ShowUnrotatedFS == 1:
+            Button2.select()
+        if self.ShowScreePlot == 1:
+            Button3.select()
 
         frame3 = Frame(self.newwin)
         frame3.pack(side=TOP)
         Label(frame3, text="Faktori koji će biti ekstraktovani:").grid(row=0, column=0)
 
         def updateExtractionOption1(): #defining the extraction rule (eigenvalue>1)
-            #self.FactorExtractionNumber=[ EigenValueCheck.get(), ConcreteValueCheck.get()]
-            #print(self.FactorExtractionNumber)
-            if EigenValueCheck.get():
+            if self.GutmanKaiser.get():
                 secondOption.deselect()
-                self.FactorExtractionNumber = 1
+                self.NumberOfFactors = 0
+                #self.ManualInput.set(False)
+
 
         def updateExtractionOption2(): #defining the extraction rule (N first values)
-            #self.FactorExtractionNumber=[ EigenValueCheck.get(), ConcreteValueCheck.get()]
-            #print(self.FactorExtractionNumber)
-            if ConcreteValueCheck.get():
+            if self.ManualInput.get():
                 firstOption.deselect()
-                self.FactorExtractionNumber = 1.34
+                #self.GutmanKaiser.set(False)
 
-        EigenValueCheck = BooleanVar()
-        firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
-                    variable=EigenValueCheck, command=updateExtractionOption1) #extract all the factors whose eigenvalue is greter than 1
-        firstOption.grid(row=0, column=1)
-        firstOption.select()
-        ConcreteValueCheck = BooleanVar()
-        secondOption = Checkbutton(frame3, text="Unos broja faktora koji će biti zadržani",
-                    variable=ConcreteValueCheck, command=updateExtractionOption2)
-        secondOption.grid(row=1, column=1)
-
-        frame4 = Frame(self.newwin)
-        frame4.pack(side=TOP)
-        Label(frame4, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
-
-        def callback(P): #making sure that the entry is a positive interger
+        def callback(P):  # making sure that the entry is a positive interger
             if str.isdigit(P) or P == "":
                 return True
             else:
                 return False
 
-        vcmd = (frame4.register(callback))
+        #EigenValueCheck = BooleanVar()
+        firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
+                    variable=self.GutmanKaiser, command=updateExtractionOption1) #extract all the factors whose eigenvalue is greter than 1
+        firstOption.grid(row=0, column=1)
 
-        IterationNumber = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'))
-        IterationNumber.grid(row=0, column=1)
-        self.IterationNumber = IterationNumber.get()
+        #ConcreteValueCheck = BooleanVar()
+        secondOption = Checkbutton(frame3, text="Unos broja faktora koji će biti zadržani",
+                    variable=self.ManualInput, command=updateExtractionOption2)
+        secondOption.grid(row=1, column=1)
+
+        vcmd = (frame3.register(callback))
+
+        NumberOfFactors = Entry(frame3, validate='all', validatecommand=(vcmd, '%P'), textvariable=self.NumberOfFactors)
+        NumberOfFactors.grid(row=2, column=1)
+
+        frame4 = Frame(self.newwin)
+        frame4.pack(side=TOP)
+        Label(frame4, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
+
+        IterationNumber1 = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'), textvariable=self.IterationNumber)
+        IterationNumber1.grid(row=0, column=1)
 
         frame5 = Frame(self.newwin, width=300, height=5)
         frame5.place(x=175, y=250)
@@ -260,7 +294,6 @@ class ApplicationGUI(Frame):
         self.newwin.mainloop()
 
     def RotationWindow(self):
-
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
@@ -335,23 +368,20 @@ class ApplicationGUI(Frame):
         Checkbutton(frame2, text="Prikaži rotirana rješenja",
                                    variable=self.ShowRotatedFS).pack()
 
-        frame4 = Frame(self.newwin)
-        frame4.place(x=80, y=150)
-        Label(frame4, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
+        frame3 = Frame(self.newwin)
+        frame3.place(x=80, y=150)
+        Label(frame3, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
 
-        def callback(P):  # making sure that the entry is a positive interger
+        def callback1(P):  # making sure that the entry is a positive interger
             if str.isdigit(P) or P == "":
                 return True
             else:
                 return False
 
-        vcmd = (frame4.register(callback))
+        vcmd2 = (frame3.register(callback1))
 
-        IterationNumber = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'))
-        IterationNumber.insert(0, str(self.RotationIterationNumber))
-        IterationNumber["textvariable"] = self.RotationIterationNumber
-        IterationNumber.bind('<Key-Return>')
-        IterationNumber.grid(row=0, column=1)
+        IterationNumber2 = Entry(frame3, validate='all', validatecommand=(vcmd2, '%P'), textvariable=self.RotationIterationNumber)
+        IterationNumber2.grid(row=0, column=1)
 
         frame5 = Frame(self.newwin, width=300, height=5)
         frame5.place(x=175, y=250)
@@ -382,6 +412,7 @@ class ApplicationGUI(Frame):
 
         text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-300)
         text.insert(END, buffer)
+        text.config(state=DISABLED)
         text.pack()
 
         frame5 = Frame(self.newwin, width=300, height=5)
@@ -392,26 +423,17 @@ class ApplicationGUI(Frame):
         BackButton.pack(side=LEFT, fill=BOTH)
 
         def SaveResults():
-            print("Data is saved.")
+            with open('Results.csv', 'a') as f:
+                w = csv.writer(f, quoting=csv.QUOTE_ALL)
+                w.writerow(text.get("1.0",END))
 
         SaveButton = Button(frame5, text="Sačuvaj", bg="red", fg="white", command=SaveResults)
         SaveButton.pack(side=RIGHT, fill=BOTH)
 
-        def ExitWindow():
-            self.ListOfSelctedVariables = []
-            self.Method = StringVar()
-            self.CheckboxList = []
-            self.FactorExtractionNumber = 1
-            self.IterationNumber = 0
-            self.RotationMethod = None
-            self.RotationIterationNumber = 0
-            self.newwin.destroy()
-
         frame6 = Frame(self.newwin, width=30, height=5)
         frame6.place(x=0.84 * (self.newwin.winfo_screenwidth() - 3), y=(self.newwin.winfo_screenheight() - 3) * 0.85)
 
-        ExitButton = Button(frame6, text="   Izađi   ", bg="red", fg="white", command=ExitWindow)
-        #ExitButton.place(x=0.82*(self.newwin.winfo_screenwidth()-3), y=(self.newwin.winfo_screenheight()-3)*0.85)
+        ExitButton = Button(frame6, text="   Izađi   ", bg="red", fg="white", command=self.newwin.destroy)
         ExitButton.pack(fill=BOTH)
 
         self.newwin.mainloop()
@@ -422,11 +444,6 @@ class ApplicationGUI(Frame):
                                              filetypes=self._filetypes))
 
     def FactorProcessing(self):
-        # X, = load_digits(return_X_y=True)
-        # transformer = FactorAnalysis(n_components=23, random_state=0)
-        # X_transformed = transformer.fit_transform(data[1:,:])
-        # X_transformed.shape()
-        # df.info()
         #Create a data frame of only selected variables
         SelectedDF = self.df[self.ListOfSelctedVariables]
         fa = FactorAnalyzer()
@@ -440,9 +457,6 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(fa.get_eigenvalues()[0], "Eigenvalues:")
         self.printObject.AppendPObject(fa.get_eigenvalues()[1], "New eigenvalues:")
         return self.printObject.getOutput()
-        #return [ fa.get_eigenvalues(), UnrotatedLoadings,'/n', fa.get_factor_variance(), '/n', rotator.rotate(UnrotatedLoadings, method=self.RotationMethod, max_iter=25)] #total variance (rotation sums of factors)
-
-
 
 if __name__ == '__main__':
     root = Tk()
