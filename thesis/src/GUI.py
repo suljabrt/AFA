@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import filedialog as fd
 import io
 import pandas as pd
+import scipy as sp
 from factor_analyzer import *
 import csv
 
@@ -41,7 +42,8 @@ class ApplicationGUI(Frame):
         self.RotationIterationNumber = StringVar()
         self.RotationIterationNumber.set(30) #rotation iteration number
         self.df = [] #Data frame
-        self.printObject = FormattedPrint( '', 'FACTOR ANALYSIS')
+        self.printObject = FormattedPrint( '_____________________________________',
+                                           'Ispis aplikacije za faktorsku analizu')
         self.ShowCorrMatrix = 1
         self.ShowUnrotatedFS = 1
         self.ShowScreePlot = 1
@@ -52,8 +54,6 @@ class ApplicationGUI(Frame):
         self.ManualInput.set(False)
         self.NumberOfFactors = StringVar()
         self.NumberOfFactors.set(0)
-     #   self.SelectedVariables = [] #List of variables to be included in FA
-
         self._filetypes = (
             ('Comma-Separated Values', '*.csv'),
             ("All files", "*.*")
@@ -102,7 +102,6 @@ class ApplicationGUI(Frame):
             listbox2.event_generate("<<ListboxSelect>>")
 
         listbox1 = Listbox(frame1, yscrollcommand=scrollbar1.set, selectmode=EXTENDED)
-        #print(self.df.iloc[0])
         for i in self.df.columns:
             listbox1.insert(END, str(i))
         listbox1.pack(side=LEFT, fill=BOTH)
@@ -245,14 +244,14 @@ class ApplicationGUI(Frame):
         def updateExtractionOption1(): #defining the extraction rule (eigenvalue>1)
             if self.GutmanKaiser.get():
                 secondOption.deselect()
-                self.NumberOfFactors = 0
+                self.NumberOfFactors.set(0)
                 #self.ManualInput.set(False)
 
 
         def updateExtractionOption2(): #defining the extraction rule (N first values)
             if self.ManualInput.get():
                 firstOption.deselect()
-                #self.GutmanKaiser.set(False)
+                self.GutmanKaiser.set(False)
 
         def callback(P):  # making sure that the entry is a positive interger
             if str.isdigit(P) or P == "":
@@ -447,15 +446,41 @@ class ApplicationGUI(Frame):
         #Create a data frame of only selected variables
         SelectedDF = self.df[self.ListOfSelctedVariables]
         fa = FactorAnalyzer()
-        fa.analyze(SelectedDF, 4, rotation=None, method=self.Method)
-        rotator = Rotator()
-        if (bool(self.ShowCorrMatrix)):
-            self.printObject.AppendPObject(fa.corr, "Correlation matrix")
-        if (bool(self.ShowUnrotatedFS)):
-            self.printObject.AppendPObject(fa.loadings, "Unrotated extractes factors:")
+        #Get correlation matrix with Pearson method
+        CMatrix = SelectedDF.corr()
+        #Get Eigenvalues
+        EV, _ = sp.linalg.eigh(CMatrix)
+        ev = pd.DataFrame(EV[::-1], columns=['Originalne svojstvene vrijednosti:'])
+        self.printObject.AppendPObject((self.Method).get(), 'Metoda ekstrakcije faktora:')
+        #Kaiser-Gutman rule for number of factors
+        if ((self.GutmanKaiser).get()):
+            # Get Kaiser-Gutman number of factors
+            (self.NumberOfFactors).set((EV > 1).sum())
+            self.printObject.AppendPObject((self.NumberOfFactors).get(), 'Kaiser-Gutman broj faktora:')
+        else:
+            if (int((self.NumberOfFactors).get()) > len(self.ListOfSelctedVariables)):
+                return ('Broj faktora mora biti manji od broja varijabli!')
+            self.printObject.AppendPObject((self.NumberOfFactors).get(), 'Uneseni broj faktora:')
+        self.printObject.AppendPObject((self.IterationNumber).get(), 'Uneseni broj iteracija:')
+        self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
 
-        self.printObject.AppendPObject(fa.get_eigenvalues()[0], "Eigenvalues:")
-        self.printObject.AppendPObject(fa.get_eigenvalues()[1], "New eigenvalues:")
+        fa.analyze(SelectedDF, int((self.NumberOfFactors).get()), rotation=None, method=(self.Method).get())
+        rotator = Rotator()
+
+        self.printObject.AppendPObject(fa.get_communalities(),'')
+        self.printObject.AppendPObject(ev, '')
+        if (bool(self.ShowCorrMatrix)):
+            self.printObject.AppendPObject(CMatrix, "Korelaciona matrica:")
+        if (bool(self.ShowUnrotatedFS)):
+            self.printObject.AppendPObject(fa.loadings, "Ekstraktovani faktori bez rotacije:")
+        if (self.ShowRotatedFS):
+            if (self.RotationMethod == None):
+                RotatedM = (fa.loadings, 0)
+            else:
+                RotatedM = rotator.rotate(fa.loadings, method = self.RotationMethod)
+
+            self.printObject.AppendPObject(RotatedM[0], 'Rotirani faktori:')
+
         return self.printObject.getOutput()
 
 if __name__ == '__main__':
