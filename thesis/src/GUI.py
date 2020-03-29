@@ -445,29 +445,53 @@ class ApplicationGUI(Frame):
     def FactorProcessing(self):
         #Create a data frame of only selected variables
         SelectedDF = self.df[self.ListOfSelctedVariables]
+        SelectedDF.fillna(SelectedDF.mean())
+
+        #Testing the adequacy of the data frame
+        #Bartlett's adequacy test
+        chi_square_value, p_value = calculate_bartlett_sphericity(SelectedDF)
+        if (p_value > 0.05):
+            self.printObject.AppendPObject(p_value, 'Podaci nisu statistički značajni ni adekvatni po Bartlett testu!')
+        else:
+            self.printObject.AppendPObject(p_value, 'Podaci su statistički značajni i adekvatni po Bartlett testu!')
+
+        # Kaiser-Meyer-Olkin adequacy test
+        kmo_all, kmo_model = calculate_kmo(SelectedDF)
+        if (kmo_model < 0.6):
+            self.printObject.AppendPObject(kmo_model, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
+        else:
+            self.printObject.AppendPObject(kmo_model, 'Podaci su adekvatni po Kaiser-Meyer-Olkin testu!')
+
         fa = FactorAnalyzer()
         #Get correlation matrix with Pearson method
         CMatrix = SelectedDF.corr()
+
         #Get Eigenvalues
         EV, _ = sp.linalg.eigh(CMatrix)
         ev = pd.DataFrame(EV[::-1], columns=['Originalne svojstvene vrijednosti:'])
+
         self.printObject.AppendPObject((self.Method).get(), 'Metoda ekstrakcije faktora:')
+        self.printObject.AppendPObject(self.IterationNumber.get(), 'Uneseni broj iteracija za ekstrakciju:')
+
         #Kaiser-Gutman rule for number of factors
         if ((self.GutmanKaiser).get()):
             # Get Kaiser-Gutman number of factors
             (self.NumberOfFactors).set((EV > 1).sum())
-            self.printObject.AppendPObject((self.NumberOfFactors).get(), 'Kaiser-Gutman broj faktora:')
+            self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Kaiser-Gutman broj faktora:')
         else:
             if (int((self.NumberOfFactors).get()) > len(self.ListOfSelctedVariables)):
                 return ('Broj faktora mora biti manji od broja varijabli!')
-            self.printObject.AppendPObject((self.NumberOfFactors).get(), 'Uneseni broj faktora:')
-        self.printObject.AppendPObject((self.IterationNumber).get(), 'Uneseni broj iteracija:')
-        self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
+            self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Uneseni broj faktora:')
 
-        fa.analyze(SelectedDF, int((self.NumberOfFactors).get()), rotation=None, method=(self.Method).get())
+        self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
+        self.printObject.AppendPObject(self.RotationIterationNumber.get(), 'Uneseni broj iteracija za rotaciju:')
+
+        fa.analyze(SelectedDF, int(self.NumberOfFactors.get()), rotation=None, method=self.Method.get())
+
+        #Create a rotator object
         rotator = Rotator()
 
-        self.printObject.AppendPObject(fa.get_communalities(),'')
+        self.printObject.AppendPObject(fa.get_communalities(), '')
         self.printObject.AppendPObject(ev, '')
         if (bool(self.ShowCorrMatrix)):
             self.printObject.AppendPObject(CMatrix, "Korelaciona matrica:")
@@ -477,7 +501,8 @@ class ApplicationGUI(Frame):
             if (self.RotationMethod == None):
                 RotatedM = (fa.loadings, 0)
             else:
-                RotatedM = rotator.rotate(fa.loadings, method = self.RotationMethod)
+                RotatedM = rotator.rotate(fa.loadings, method=self.RotationMethod,
+                                          **{"max_iter" : int(self.RotationIterationNumber.get())})
 
             self.printObject.AppendPObject(RotatedM[0], 'Rotirani faktori:')
 
