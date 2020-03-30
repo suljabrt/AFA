@@ -3,7 +3,9 @@ from tkinter import filedialog as fd
 import io
 import pandas as pd
 import scipy as sp
+import numpy as np
 from factor_analyzer import *
+import matplotlib.pyplot as plt
 import csv
 
 class FormattedPrint():
@@ -11,7 +13,7 @@ class FormattedPrint():
     def __init__(self, PObject, Text):
         self.PObject = PObject
         self.Text = Text
-        self.Output  = ''
+        self.Output = ''
         self.Output += str(Text) + '\n\n'
         self.Output += str(PObject) + '\n\n'
 
@@ -424,7 +426,9 @@ class ApplicationGUI(Frame):
         def SaveResults():
             with open('Results.csv', 'a') as f:
                 w = csv.writer(f, quoting=csv.QUOTE_ALL)
-                w.writerow(text.get("1.0",END))
+                w.writerow(text.get("1.0", END))
+            plt.savefig('ScreePlot.png')
+
 
         SaveButton = Button(frame5, text="Sačuvaj", bg="red", fg="white", command=SaveResults)
         SaveButton.pack(side=RIGHT, fill=BOTH)
@@ -474,12 +478,12 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(self.IterationNumber.get(), 'Uneseni broj iteracija za ekstrakciju:')
 
         #Kaiser-Gutman rule for number of factors
-        if ((self.GutmanKaiser).get()):
+        if self.GutmanKaiser.get():
             # Get Kaiser-Gutman number of factors
-            (self.NumberOfFactors).set((EV > 1).sum())
+            self.NumberOfFactors.set((EV > 1).sum())
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Kaiser-Gutman broj faktora:')
         else:
-            if (int((self.NumberOfFactors).get()) > len(self.ListOfSelctedVariables)):
+            if int(self.NumberOfFactors.get()) > len(self.ListOfSelctedVariables):
                 return ('Broj faktora mora biti manji od broja varijabli!')
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Uneseni broj faktora:')
 
@@ -488,17 +492,34 @@ class ApplicationGUI(Frame):
 
         fa.analyze(SelectedDF, int(self.NumberOfFactors.get()), rotation=None, method=self.Method.get())
 
+        # Create scree plot using matplotlib
+        plt.scatter(range(1, int(self.NumberOfFactors.get()) + 1),
+                    ev[:int(self.NumberOfFactors.get())],
+                    facecolor='green')
+        plt.scatter(range(int(self.NumberOfFactors.get()) + 1, SelectedDF.shape[1] + 1),
+                 ev[int(self.NumberOfFactors.get()):])
+        plt.plot(range(1, SelectedDF.shape[1] + 1), np.ones(len(ev)), 'r')
+        plt.title('Scree Plot')
+        plt.xlabel('Factors')
+        plt.ylabel('Eigenvalue')
+        plt.legend(('Eigenvalue = 1', 'Chosen factors', 'Remaining variables'))
+        plt.grid()
+
+        #If Show Scree Plot is selected
+        if self.ShowScreePlot:
+            plt.show(block=False)
+
         #Create a rotator object
         rotator = Rotator()
 
         self.printObject.AppendPObject(fa.get_communalities(), '')
         self.printObject.AppendPObject(ev, '')
-        if (bool(self.ShowCorrMatrix)):
+        if self.ShowCorrMatrix:
             self.printObject.AppendPObject(CMatrix, "Korelaciona matrica:")
-        if (bool(self.ShowUnrotatedFS)):
+        if self.ShowUnrotatedFS:
             self.printObject.AppendPObject(fa.loadings, "Ekstraktovani faktori bez rotacije:")
-        if (self.ShowRotatedFS):
-            if (self.RotationMethod == None):
+        if self.ShowRotatedFS:
+            if self.RotationMethod == None:
                 RotatedM = (fa.loadings, 0)
             else:
                 RotatedM = rotator.rotate(fa.loadings, method=self.RotationMethod,
@@ -513,7 +534,7 @@ if __name__ == '__main__':
     root.title("Aplikacija za faktorsku analizu podataka")
     labelfont = ('times', 10, 'bold')
     root.geometry("500x200")
-    AppObject = ApplicationGUI(root, initialdir=r"/home/haris/Desktop/Teza") #r"/home"
+    AppObject = ApplicationGUI(root, initialdir=r"/home")  # r"/home/haris/Desktop/Teza"
     AppObject.pack(fill='y')
 
     root.mainloop()
