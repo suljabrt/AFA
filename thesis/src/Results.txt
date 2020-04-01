@@ -1,0 +1,423 @@
+Ispis aplikacije za faktorsku analizu
+
+_____________________________________
+
+Podaci su statistički značajni i adekvatni po Bartlett testu!
+
+0.0
+
+Podaci su adekvatni po Kaiser-Meyer-Olkin testu!
+
+0.802050150314374
+
+Metoda ekstrakcije faktora:
+
+minres
+
+Uneseni broj iteracija za ekstrakciju:
+
+25
+
+Uneseni broj faktora:
+
+7
+
+Metoda rotacije:
+
+quartimax
+
+Uneseni broj iteracija za rotaciju:
+
+30
+
+
+
+                                                    Communalities
+My interactions with the virtual environment se...       0.311100
+The visual aspects of the virtual environment i...       0.386557
+The devices (controllers) which controlled my m...       0.528311
+I could actively survey the virtual environment...       0.491975
+The sense of moving around inside the virtual e...       0.422690
+I could examine objects closely.                         0.482235
+I could examine objects from multiple viewpoints.        0.426633
+I was involved in the virtual environment exper...       0.451024
+I felt proficient in moving and interacting wit...       0.342747
+I could concentrate on the assigned tasks rathe...       0.315633
+I correctly identified sounds produced by the v...       0.307246
+I correctly localized sounds produced by the vi...       0.460568
+I felt stimulated by the virtual environment.            0.322022
+I become so involved in the virtual environment...       0.557643
+I become so involved in the virtual environment...       0.625813
+I felt physically fit in the virtual environment.        0.385436
+I become so involved in the virtual environment...       0.540036
+I felt I could perfectly control my actions.             0.538906
+At each step I knew what to do.                          0.361307
+I felt I controlled the situation.                       0.479424
+Time seemed to flow differently than usual.              0.690231
+Time seemed to speed up.                                 0.662507
+I was losing the sense of time.                          0.740873
+I was not worried about what other people would...       0.123651
+I felt I was experiencing an exciting moment.            0.508266
+This experience was giving me a great sense of ...       0.719143
+When I mention the experience in the virtual en...       0.453770
+I enjoyed being in this virtual environment.             0.606666
+It was so exciting that I could stay in the vir...       0.613534
+I enjoyed the experience so much that I feel en...       0.765997
+I felt nervous in the virtual environment.               0.437435
+I felt like distracting myself in order to redu...       0.351237
+I found my mind wandering while I was in the vi...       0.308592
+The interaction devices (controllers) bored me ...       0.217030
+When my actions were going well, it gave me a r...       0.260350
+While using the interaction devices (controller...       0.392750
+I enjoyed the challenge of learning the virtual...       0.516889
+I enjoyed dealing with the interaction devices ...       0.610598
+Personally, I would say the virtual environment...       0.470642
+Personally, I would say the virtual environment...       0.339019
+Personally, I would say the virtual environment...       0.246295
+I found that this virtual environment was lame           0.383900
+I found this virtual environment amateurish.             0.343821
+I found this virtual environment classy.                 0.331378
+I found this virtual environment presentable.            0.530187
+I found that this virtual environment is ugly.           0.251914
+I found that this virtual environment is likeable.       0.540120
+I suffered from fatigue during my interaction w...       0.529747
+I suffered from headache during my interaction ...       0.514357
+I suffered from eyestrain during my interaction...       0.321758
+I felt an increase of my salivation during my i...       0.271826
+I suffered from nausea during my interaction wi...       0.671329
+I suffered from “fullness of the head” during m...       0.584079
+I suffered from dizziness with eye open during ...       0.583603
+I suffered from vertigo during my interaction w...       0.516450
+If I use again the same virtual environment, my...       0.385344
+It would be easy for me to become skillful at u...       0.538001
+Learning to operate the virtual environment wou...       0.552430
+Using the interaction devices (controllers) is ...       0.263257
+I would like to work with the interaction devic...       0.432209
+
+
+
+    Originalne svojstvene vrijednosti:
+0                            13.566146
+1                             5.102262
+2                             3.602502
+3                             2.729254
+4                             2.148887
+5                             2.019234
+6                             1.838221
+7                             1.737476
+8                             1.609082
+9                             1.541857
+10                            1.473596
+11                            1.257923
+12                            1.194635
+13                            1.118544
+14                            1.087157
+15                            0.968028
+16                            0.935783
+17                            0.889695
+18                            0.843697
+19                            0.836183
+20                            0.807370
+21                            0.726382
+22                            0.691136
+23                            0.662961
+24                            0.630753
+25                            0.626831
+26                            0.597620
+27                            0.543104
+28                            0.520997
+29                            0.512156
+30                            0.471280
+31                            0.465018
+32                            0.417484
+33                            0.393144
+34                            0.380108
+35                            0.355959
+36                            0.339123
+37                            0.326175
+38                            0.302502
+39                            0.290088
+40                            0.281007
+41                            0.270773
+42                            0.262365
+43                            0.244037
+44                            0.241239
+45                            0.221347
+46                            0.218249
+47                            0.201599
+48                            0.186922
+49                            0.178833
+50                            0.173327
+51                            0.159102
+52                            0.138528
+53                            0.127343
+54                            0.113324
+55                            0.105745
+56                            0.101730
+57                            0.087580
+58                            0.066736
+59                            0.059865
+
+Korelaciona matrica:
+
+                                                    My interactions with the virtual environment seemed natural.  ...  I would like to work with the interaction devices (controllers) during my work.
+My interactions with the virtual environment se...                                           1.000000             ...                                           0.197907                              
+The visual aspects of the virtual environment i...                                           0.481771             ...                                           0.225980                              
+The devices (controllers) which controlled my m...                                           0.459958             ...                                           0.374735                              
+I could actively survey the virtual environment...                                           0.266194             ...                                           0.141856                              
+The sense of moving around inside the virtual e...                                           0.316277             ...                                           0.204673                              
+I could examine objects closely.                                                             0.393125             ...                                           0.103978                              
+I could examine objects from multiple viewpoints.                                            0.159277             ...                                           0.171991                              
+I was involved in the virtual environment exper...                                           0.352159             ...                                           0.244179                              
+I felt proficient in moving and interacting wit...                                           0.248584             ...                                           0.252360                              
+I could concentrate on the assigned tasks rathe...                                           0.100790             ...                                           0.262403                              
+I correctly identified sounds produced by the v...                                           0.161965             ...                                           0.116657                              
+I correctly localized sounds produced by the vi...                                           0.314959             ...                                           0.246737                              
+I felt stimulated by the virtual environment.                                                0.198818             ...                                           0.114437                              
+I become so involved in the virtual environment...                                           0.338404             ...                                           0.150122                              
+I become so involved in the virtual environment...                                           0.371113             ...                                           0.305526                              
+I felt physically fit in the virtual environment.                                            0.280050             ...                                           0.306381                              
+I become so involved in the virtual environment...                                           0.306681             ...                                           0.403510                              
+I felt I could perfectly control my actions.                                                 0.337480             ...                                           0.357228                              
+At each step I knew what to do.                                                              0.256376             ...                                           0.279415                              
+I felt I controlled the situation.                                                           0.326734             ...                                           0.316336                              
+Time seemed to flow differently than usual.                                                  0.081247             ...                                           0.197852                              
+Time seemed to speed up.                                                                     0.118890             ...                                           0.067636                              
+I was losing the sense of time.                                                              0.115663             ...                                           0.185126                              
+I was not worried about what other people would...                                           0.101952             ...                                           0.067493                              
+I felt I was experiencing an exciting moment.                                                0.149288             ...                                           0.361918                              
+This experience was giving me a great sense of ...                                           0.311426             ...                                           0.476247                              
+When I mention the experience in the virtual en...                                           0.227828             ...                                           0.423052                              
+I enjoyed being in this virtual environment.                                                 0.314103             ...                                           0.483902                              
+It was so exciting that I could stay in the vir...                                           0.448748             ...                                           0.487742                              
+I enjoyed the experience so much that I feel en...                                           0.367750             ...                                           0.544581                              
+I felt nervous in the virtual environment.                                                  -0.149016             ...                                          -0.118705                              
+I felt like distracting myself in order to redu...                                          -0.019694             ...                                          -0.044803                              
+I found my mind wandering while I was in the vi...                                          -0.086644             ...                                          -0.094513                              
+The interaction devices (controllers) bored me ...                                          -0.215711             ...                                          -0.115787                              
+When my actions were going well, it gave me a r...                                           0.152262             ...                                           0.240673                              
+While using the interaction devices (controller...                                           0.099283             ...                                          -0.178358                              
+I enjoyed the challenge of learning the virtual...                                           0.143595             ...                                           0.340665                              
+I enjoyed dealing with the interaction devices ...                                           0.156604             ...                                           0.457848                              
+Personally, I would say the virtual environment...                                           0.398784             ...                                           0.411741                              
+Personally, I would say the virtual environment...                                          -0.224168             ...                                          -0.189506                              
+Personally, I would say the virtual environment...                                           0.085426             ...                                           0.178300                              
+I found that this virtual environment was lame                                              -0.167979             ...                                          -0.108847                              
+I found this virtual environment amateurish.                                                -0.191761             ...                                          -0.038013                              
+I found this virtual environment classy.                                                     0.150974             ...                                           0.159216                              
+I found this virtual environment presentable.                                                0.228205             ...                                           0.178404                              
+I found that this virtual environment is ugly.                                              -0.278245             ...                                          -0.188603                              
+I found that this virtual environment is likeable.                                           0.277443             ...                                           0.188482                              
+I suffered from fatigue during my interaction w...                                          -0.083597             ...                                          -0.064628                              
+I suffered from headache during my interaction ...                                          -0.082354             ...                                          -0.106845                              
+I suffered from eyestrain during my interaction...                                          -0.192112             ...                                          -0.161583                              
+I felt an increase of my salivation during my i...                                           0.018482             ...                                          -0.127608                              
+I suffered from nausea during my interaction wi...                                          -0.265480             ...                                          -0.212034                              
+I suffered from “fullness of the head” during m...                                          -0.141055             ...                                          -0.246820                              
+I suffered from dizziness with eye open during ...                                          -0.196779             ...                                          -0.191283                              
+I suffered from vertigo during my interaction w...                                          -0.238101             ...                                          -0.057669                              
+If I use again the same virtual environment, my...                                           0.162355             ...                                           0.180889                              
+It would be easy for me to become skillful at u...                                           0.138555             ...                                           0.270320                              
+Learning to operate the virtual environment wou...                                           0.126664             ...                                           0.328564                              
+Using the interaction devices (controllers) is ...                                          -0.169603             ...                                          -0.360969                              
+I would like to work with the interaction devic...                                           0.197907             ...                                           1.000000                              
+
+[60 rows x 60 columns]
+
+Ekstraktovani faktori bez rotacije:
+
+                                                     Factor1  ...   Factor7
+My interactions with the virtual environment se...  0.497001  ... -0.008050
+The visual aspects of the virtual environment i...  0.513657  ...  0.048382
+The devices (controllers) which controlled my m...  0.619796  ... -0.237623
+I could actively survey the virtual environment...  0.462590  ... -0.174948
+The sense of moving around inside the virtual e...  0.556728  ... -0.019609
+I could examine objects closely.                    0.465247  ...  0.191170
+I could examine objects from multiple viewpoints.   0.475316  ...  0.166544
+I was involved in the virtual environment exper...  0.622840  ...  0.059810
+I felt proficient in moving and interacting wit...  0.464934  ... -0.185772
+I could concentrate on the assigned tasks rathe...  0.399963  ... -0.271675
+I correctly identified sounds produced by the v...  0.371985  ...  0.055824
+I correctly localized sounds produced by the vi...  0.456027  ...  0.107815
+I felt stimulated by the virtual environment.       0.492061  ... -0.036459
+I become so involved in the virtual environment...  0.415208  ...  0.145490
+I become so involved in the virtual environment...  0.592836  ...  0.168440
+I felt physically fit in the virtual environment.   0.533779  ...  0.093008
+I become so involved in the virtual environment...  0.564038  ... -0.107198
+I felt I could perfectly control my actions.        0.583626  ... -0.173858
+At each step I knew what to do.                     0.486184  ... -0.056411
+I felt I controlled the situation.                  0.595656  ... -0.143920
+Time seemed to flow differently than usual.         0.277957  ... -0.249163
+Time seemed to speed up.                            0.176591  ... -0.271951
+I was losing the sense of time.                     0.307757  ... -0.301004
+I was not worried about what other people would...  0.280834  ... -0.124104
+I felt I was experiencing an exciting moment.       0.630249  ...  0.212835
+This experience was giving me a great sense of ...  0.720837  ...  0.209694
+When I mention the experience in the virtual en...  0.563380  ...  0.093335
+I enjoyed being in this virtual environment.        0.743564  ...  0.125006
+It was so exciting that I could stay in the vir...  0.685473  ...  0.043617
+I enjoyed the experience so much that I feel en...  0.763874  ...  0.054077
+I felt nervous in the virtual environment.         -0.155905  ... -0.005342
+I felt like distracting myself in order to redu... -0.174970  ...  0.077753
+I found my mind wandering while I was in the vi... -0.145015  ...  0.331429
+The interaction devices (controllers) bored me ... -0.261733  ...  0.296298
+When my actions were going well, it gave me a r...  0.295289  ... -0.022992
+While using the interaction devices (controller... -0.122510  ...  0.208590
+I enjoyed the challenge of learning the virtual...  0.503694  ...  0.292249
+I enjoyed dealing with the interaction devices ...  0.562324  ...  0.267773
+Personally, I would say the virtual environment...  0.629981  ... -0.105409
+Personally, I would say the virtual environment... -0.326021  ...  0.096534
+Personally, I would say the virtual environment...  0.270445  ...  0.023612
+I found that this virtual environment was lame     -0.357529  ...  0.115010
+I found this virtual environment amateurish.       -0.336556  ...  0.066624
+I found this virtual environment classy.            0.441133  ...  0.038694
+I found this virtual environment presentable.       0.519421  ... -0.063677
+I found that this virtual environment is ugly.     -0.348389  ... -0.091220
+I found that this virtual environment is likeable.  0.542119  ...  0.051127
+I suffered from fatigue during my interaction w... -0.252202  ...  0.015189
+I suffered from headache during my interaction ... -0.349656  ...  0.024088
+I suffered from eyestrain during my interaction... -0.331594  ... -0.189965
+I felt an increase of my salivation during my i... -0.157733  ... -0.006620
+I suffered from nausea during my interaction wi... -0.369826  ... -0.123090
+I suffered from “fullness of the head” during m... -0.375922  ...  0.007313
+I suffered from dizziness with eye open during ... -0.320459  ... -0.022870
+I suffered from vertigo during my interaction w... -0.350944  ... -0.018722
+If I use again the same virtual environment, my...  0.502544  ... -0.007370
+It would be easy for me to become skillful at u...  0.553909  ... -0.049806
+Learning to operate the virtual environment wou...  0.543179  ... -0.109411
+Using the interaction devices (controllers) is ... -0.371286  ...  0.178774
+I would like to work with the interaction devic...  0.542769  ... -0.005524
+
+[60 rows x 7 columns]
+
+Rotirani faktori:
+
+                                                     Factor1  ...   Factor7
+My interactions with the virtual environment se...  0.416132  ... -0.026137
+The visual aspects of the virtual environment i...  0.384289  ...  0.119227
+The devices (controllers) which controlled my m...  0.548782  ... -0.235135
+I could actively survey the virtual environment...  0.258895  ... -0.112360
+The sense of moving around inside the virtual e...  0.426989  ...  0.030070
+I could examine objects closely.                    0.350789  ...  0.265192
+I could examine objects from multiple viewpoints.   0.385773  ...  0.225239
+I was involved in the virtual environment exper...  0.533231  ...  0.081571
+I felt proficient in moving and interacting wit...  0.347624  ... -0.209297
+I could concentrate on the assigned tasks rathe...  0.357255  ... -0.291216
+I correctly identified sounds produced by the v...  0.292717  ... -0.011981
+I correctly localized sounds produced by the vi...  0.394753  ...  0.061222
+I felt stimulated by the virtual environment.       0.384419  ... -0.055919
+I become so involved in the virtual environment...  0.444937  ... -0.006305
+I become so involved in the virtual environment...  0.627767  ...  0.032328
+I felt physically fit in the virtual environment.   0.535939  ... -0.046173
+I become so involved in the virtual environment...  0.593476  ... -0.114034
+I felt I could perfectly control my actions.        0.529272  ... -0.112255
+At each step I knew what to do.                     0.465001  ... -0.060318
+I felt I controlled the situation.                  0.503217  ... -0.103588
+Time seemed to flow differently than usual.         0.293461  ...  0.033398
+Time seemed to speed up.                            0.169827  ...  0.064734
+I was losing the sense of time.                     0.289570  ... -0.046995
+I was not worried about what other people would...  0.214591  ... -0.107296
+I felt I was experiencing an exciting moment.       0.665715  ...  0.025894
+This experience was giving me a great sense of ...  0.821147  ...  0.082631
+When I mention the experience in the virtual en...  0.609384  ...  0.094492
+I enjoyed being in this virtual environment.        0.735717  ...  0.048844
+It was so exciting that I could stay in the vir...  0.691769  ... -0.038150
+I enjoyed the experience so much that I feel en...  0.811021  ... -0.025218
+I felt nervous in the virtual environment.         -0.087482  ...  0.201192
+I felt like distracting myself in order to redu... -0.084374  ...  0.288586
+I found my mind wandering while I was in the vi... -0.057214  ...  0.480391
+The interaction devices (controllers) bored me ... -0.204326  ...  0.359572
+When my actions were going well, it gave me a r...  0.293836  ...  0.110059
+While using the interaction devices (controller... -0.043049  ...  0.470854
+I enjoyed the challenge of learning the virtual...  0.612155  ...  0.152169
+I enjoyed dealing with the interaction devices ...  0.690208  ...  0.113214
+Personally, I would say the virtual environment...  0.615906  ... -0.203083
+Personally, I would say the virtual environment... -0.245372  ...  0.275340
+Personally, I would say the virtual environment...  0.129674  ...  0.062912
+I found that this virtual environment was lame     -0.254363  ...  0.246327
+I found this virtual environment amateurish.       -0.263656  ...  0.115854
+I found this virtual environment classy.            0.395219  ...  0.041618
+I found this virtual environment presentable.       0.449961  ... -0.017583
+I found that this virtual environment is ugly.     -0.390042  ...  0.050617
+I found that this virtual environment is likeable.  0.513304  ... -0.074940
+I suffered from fatigue during my interaction w... -0.047282  ...  0.075741
+I suffered from headache during my interaction ... -0.187012  ...  0.133130
+I suffered from eyestrain during my interaction... -0.251902  ... -0.134002
+I felt an increase of my salivation during my i... -0.053726  ...  0.145231
+I suffered from nausea during my interaction wi... -0.193658  ... -0.100106
+I suffered from “fullness of the head” during m... -0.220918  ...  0.052462
+I suffered from dizziness with eye open during ... -0.145833  ... -0.061086
+I suffered from vertigo during my interaction w... -0.125065  ... -0.048119
+If I use again the same virtual environment, my...  0.412734  ...  0.003691
+It would be easy for me to become skillful at u...  0.404343  ...  0.019315
+Learning to operate the virtual environment wou...  0.409776  ... -0.060034
+Using the interaction devices (controllers) is ... -0.365700  ...  0.315013
+I would like to work with the interaction devic...  0.606789  ... -0.135255
+
+[60 rows x 7 columns]
+
+Preslikavanje varijabli na faktore:
+
+My interactions with the virtual environment seemed natural.                                                                                     Factor1
+I was not worried about what other people would think of me.                                                                                     Factor1
+I felt I was experiencing an exciting moment.                                                                                                    Factor1
+This experience was giving me a great sense of well-being                                                                                        Factor1
+When I mention the experience in the virtual environment I feel emotions I would like to share.                                                  Factor1
+I enjoyed being in this virtual environment.                                                                                                     Factor1
+It was so exciting that I could stay in the virtual environment for hours.                                                                       Factor1
+I felt I controlled the situation.                                                                                                               Factor1
+Using the interaction devices (controllers) is a bad idea.                                                                                       Factor1
+I enjoyed the challenge of learning the virtual reality interaction devices (controllers).                                                       Factor1
+I enjoyed dealing with the interaction devices (controllers).                                                                                    Factor1
+Personally, I would say the virtual environment is practical                                                                                     Factor1
+I found this virtual environment classy.                                                                                                         Factor1
+I found that this virtual environment is ugly.                                                                                                   Factor1
+If I use again the same virtual environment, my interaction with the environment would be clear and understandable for me.                       Factor1
+When my actions were going well, it gave me a rush.                                                                                              Factor1
+At each step I knew what to do.                                                                                                                  Factor1
+I enjoyed the experience so much that I feel energized.                                                                                          Factor1
+I become so involved in the virtual environment that I lose all track of time.                                                                   Factor1
+The visual aspects of the virtual environment involved me.                                                                                       Factor1
+The devices (controllers) which controlled my movement in the virtual environment seemed natural.                                                Factor1
+I felt I could perfectly control my actions.                                                                                                     Factor1
+I could examine objects closely.                                                                                                                 Factor1
+I was involved in the virtual environment experience.                                                                                            Factor1
+I could concentrate on the assigned tasks rather than on the devices (controllers).                                                              Factor1
+The sense of moving around inside the virtual environment was compelling.                                                                        Factor1
+I would like to work with the interaction devices (controllers) during my work.                                                                  Factor1
+I felt stimulated by the virtual environment.                                                                                                    Factor1
+I become so involved in the virtual environment that it is if I was inside the game rather than manipulating a gamepad and watching a screen.    Factor1
+I felt physically fit in the virtual environment.                                                                                                Factor1
+I suffered from dizziness with eye open during my interaction with the virtual environment                                                       Factor2
+I felt nervous in the virtual environment.                                                                                                       Factor2
+I felt like distracting myself in order to reduce my anxiety.                                                                                    Factor2
+I suffered from “fullness of the head” during my interaction with the virtual environment                                                        Factor2
+I suffered from nausea during my interaction with the virtual environment                                                                        Factor2
+I felt an increase of my salivation during my interaction with the virtual environment.                                                          Factor2
+I suffered from eyestrain during my interaction with the virtual environment                                                                     Factor2
+I suffered from headache during my interaction with the virtual environment                                                                      Factor2
+I suffered from fatigue during my interaction with the virtual environment                                                                       Factor2
+I suffered from vertigo during my interaction with the virtual environment                                                                       Factor2
+I was losing the sense of time.                                                                                                                  Factor3
+Time seemed to speed up.                                                                                                                         Factor3
+Personally, I would say the virtual environment is confusing.                                                                                    Factor3
+Time seemed to flow differently than usual.                                                                                                      Factor3
+I correctly localized sounds produced by the virtual environment.                                                                                Factor4
+I become so involved in the virtual environment that I was not aware of things happening around me.                                              Factor4
+I correctly identified sounds produced by the virtual environment.                                                                               Factor4
+I found that this virtual environment is likeable.                                                                                               Factor5
+I found that this virtual environment was lame                                                                                                   Factor5
+I found this virtual environment presentable.                                                                                                    Factor5
+I found this virtual environment amateurish.                                                                                                     Factor5
+I could actively survey the virtual environment using vision.                                                                                    Factor6
+Personally, I would say the virtual environment is manageable.                                                                                   Factor6
+I could examine objects from multiple viewpoints.                                                                                                Factor6
+I felt proficient in moving and interacting with the virtual environment at the end of the experience.                                           Factor6
+It would be easy for me to become skillful at using the virtual environment.                                                                     Factor6
+Learning to operate the virtual environment would be easy for me                                                                                 Factor6
+While using the interaction devices (controllers), I felt like time was dragging.                                                                Factor7
+The interaction devices (controllers) bored me to death.                                                                                         Factor7
+I found my mind wandering while I was in the virtual environment.                                                                                Factor7
+dtype: object
+
+

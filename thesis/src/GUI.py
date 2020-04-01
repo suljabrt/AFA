@@ -424,9 +424,9 @@ class ApplicationGUI(Frame):
         BackButton.pack(side=LEFT, fill=BOTH)
 
         def SaveResults():
-            with open('Results.csv', 'a') as f:
-                w = csv.writer(f, quoting=csv.QUOTE_ALL)
-                w.writerow(text.get("1.0", END))
+            file = open('Results.txt', 'w')
+            file.write(text.get("1.0", END))
+            file.close()
             plt.savefig('ScreePlot.png')
 
 
@@ -518,18 +518,23 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(CMatrix, "Korelaciona matrica:")
         if self.ShowUnrotatedFS:
             self.printObject.AppendPObject(fa.loadings, "Ekstraktovani faktori bez rotacije:")
-        if self.ShowRotatedFS:
-            if self.RotationMethod == None:
-                RotatedM = (fa.loadings, 0)
-            else:
-                RotatedM = rotator.rotate(fa.loadings, method=self.RotationMethod,
-                                          **{"max_iter" : int(self.RotationIterationNumber.get())})
 
-            self.printObject.AppendPObject(RotatedM[0], 'Rotirani faktori:')
+        RotatedM = (fa.loadings, 0)
+
+        if self.RotationMethod != None:
+            RotatedM = rotator.rotate(fa.loadings, method=self.RotationMethod,
+                                      **{"max_iter": int(self.RotationIterationNumber.get())})
+            if self.ShowRotatedFS:
+                self.printObject.AppendPObject(RotatedM[0], 'Rotirani faktori:')
+
+        self.printObject.AppendPObject(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
+                                       'Preslikavanje varijabli na faktore:')
 
         return self.printObject.getOutput()
 
+
 if __name__ == '__main__':
+
     root = Tk()
     root.title("Aplikacija za faktorsku analizu podataka")
     labelfont = ('times', 10, 'bold')
