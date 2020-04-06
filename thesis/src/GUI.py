@@ -7,8 +7,12 @@ import numpy as np
 from factor_analyzer import *
 import matplotlib.pyplot as plt
 import csv
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import FactorAnalysis
 
-class FormattedPrint():
+
+class FormattedPrint:
 
     def __init__(self, PObject, Text):
         self.PObject = PObject
@@ -24,6 +28,7 @@ class FormattedPrint():
     def getOutput(self):
         return self.Output
 
+
 class ApplicationGUI(Frame):
 
     def __init__(self, master, initialdir):
@@ -34,7 +39,7 @@ class ApplicationGUI(Frame):
         self._display_widgets()
         self.newwin = NONE
         self.ListOfSelctedVariables = [] #selected variables for factor analysis
-        self.Method=StringVar() #PCA, PAF or ML
+        self.Method = StringVar() #PCA, PAF or ML
         self.Method.set('minres')
         self.CheckboxList = [] #What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
         self.FactorExtractionNumber = 1 #treshold for the extraction of factors
@@ -44,8 +49,8 @@ class ApplicationGUI(Frame):
         self.RotationIterationNumber = StringVar()
         self.RotationIterationNumber.set(30) #rotation iteration number
         self.df = [] #Data frame
-        self.printObject = FormattedPrint( '_____________________________________',
-                                           'Ispis aplikacije za faktorsku analizu')
+        self.printObject = FormattedPrint('_____________________________________',
+                                          'Ispis aplikacije za faktorsku analizu')
         self.ShowCorrMatrix = 1
         self.ShowUnrotatedFS = 1
         self.ShowScreePlot = 1
@@ -68,7 +73,6 @@ class ApplicationGUI(Frame):
         self._label = Label(self, text="Učitaj csv fajl", fg="black", height=3,
                                font=("bold", 14))
 
-
     def _display_widgets(self):
         self._label.pack(fill='y')
         self._entry.pack(fill='x', expand=True)
@@ -81,14 +85,13 @@ class ApplicationGUI(Frame):
     def DataWindow(self):
         self.retrieve_input()
         self.df = pd.read_csv(self.filepath)
-        #print(self.newwin)
+
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
 
         self.newwin.title("Faktorska analiza: Odabir varijabli")
         self.newwin.geometry("500x300")
-        #label = Label(newwin, text="Faktorska analiza", fg="black", height=3, font=("bold", 14))
 
         frame1 = Frame(self.newwin, bg="white", width=180, height=200)
         frame1.place(x=40, y=30)
@@ -96,9 +99,11 @@ class ApplicationGUI(Frame):
         label1.pack()
         scrollbar1 = Scrollbar(frame1)
         scrollbar1.pack(side=RIGHT, fill=Y)
+
         def SelectAllL1():
             listbox1.select_set(0, END)
             listbox1.event_generate("<<ListboxSelect>>")
+
         def SelectAllL2():
             listbox2.select_set(0, END)
             listbox2.event_generate("<<ListboxSelect>>")
@@ -118,8 +123,6 @@ class ApplicationGUI(Frame):
         scrollbar2 = Scrollbar(frame2)
         scrollbar2.pack(side=RIGHT, fill=Y)
         listbox2 = Listbox(frame2, yscrollcommand=scrollbar2.set)
-        #for i in range(len(self.ListOfSelctedVariables)):
-         #   listbox2.insert(END, str(i))
         listbox2.pack(side=LEFT, fill=BOTH)
         listbox2.bind("<Control-a>", lambda x: SelectAllL2())
         scrollbar2.config(command=listbox2.yview)
@@ -132,20 +135,18 @@ class ApplicationGUI(Frame):
         frame3.place(x=160, y=250)
 
         backButton = Button(frame3, text="  Nazad  ", bg="red", fg="white", command=self.newwin.destroy)
-        #backButton.place(x=40, y=250)
         backButton.pack(side=LEFT)
 
         nextButton = Button(frame3, text="Nastavi", bg="red", fg="white", command=self.ExtractionWindow)
-        # backButton.place(x=40, y=250)
         nextButton.pack(side=LEFT)
 
-        frameMiddle=Frame(self.newwin, width=58, height=40)
+        frameMiddle = Frame(self.newwin, width=58, height=40)
         frameMiddle.place(x=225, y=120)
 
         def ForwardVariables():
             if listbox1.curselection():
                 for i in listbox1.curselection():
-                    if  not (listbox1.get(i) in self.ListOfSelctedVariables):
+                    if not (listbox1.get(i) in self.ListOfSelctedVariables):
                         listbox2.insert(END, str(listbox1.get(i)))
                         self.ListOfSelctedVariables.append(listbox1.get(i))
 
@@ -155,7 +156,7 @@ class ApplicationGUI(Frame):
                 end = listbox2.curselection()[-1]
                 for i in listbox2.curselection():
                     self.ListOfSelctedVariables.remove(listbox2.get(i))
-                listbox2.delete(start,end)
+                listbox2.delete(start, end)
 
 
         forwardButton = Button(frameMiddle, text=" > ", bg="red", fg="white", command=ForwardVariables)
@@ -172,7 +173,6 @@ class ApplicationGUI(Frame):
         self.newwin = Toplevel(root)
         self.newwin.title("Faktorska analiza: Ekstrakcija")
         self.newwin.geometry("500x300")
-        # label = Label(newwin, text="Faktorska analiza", fg="black", height=3, font=("bold", 14))
 
         frame1=Frame(self.newwin, width=500, height=300)
         frame1.pack(side=TOP)
@@ -181,8 +181,9 @@ class ApplicationGUI(Frame):
         tkvar = StringVar(self.newwin)
 
         # Dictionary with options
-        choices = {'Principal Components Analysis', 'Principal Axis Factoring            ', 'Maximum Likelihood                '}
-        tkvar.set('Principal Components Analysis')  # set the default option
+        choices = {'Principal Components Analysis', 'Minimum Residual',
+                   'Maximum Likelihood'}
+        tkvar.set('Minimum Residual')  # set the default option
 
         popupMenu = OptionMenu(frame1, tkvar, *choices)
         Label(frame1, text="Odaberi metodu:").pack(side=LEFT)
@@ -191,11 +192,13 @@ class ApplicationGUI(Frame):
         # on change dropdown value
         def updateMethod(*args):
             tempMethod = tkvar.get()
-            if (tempMethod == 'Minimum Residual'):
+            if tempMethod == 'Minimum Residual':
                 self.Method.set('minres')
-            elif (tempMethod == 'Principal Axis Factoring            '):
-                self.Method.set('principal')
-            elif (tempMethod == 'Maximum Likelihood                '):
+
+            elif tempMethod == 'Principal Components Analysis':
+                self.Method.set('pca')
+
+            elif tempMethod == 'Maximum Likelihood':
                 self.Method.set('ml')
 
         # link function to change dropdown
@@ -205,20 +208,22 @@ class ApplicationGUI(Frame):
         if self.Method.get() == 'minres':
             tkvar.set('Minimum Residual')
             popupMenu = OptionMenu(frame1, tkvar, *choices)
-        elif self.Method.get() == 'principal':
-            tkvar.set('Principal Axis Factoring            ')
+        elif self.Method.get() == 'pca':
+            tkvar.set('Principal Components Analysis')
             popupMenu = OptionMenu(frame1, tkvar, *choices)
         elif self.Method.get() == 'ml':
-            tkvar.set('Maximum Likelihood                ')
+            tkvar.set('Maximum Likelihood')
             popupMenu = OptionMenu(frame1, tkvar, *choices)
 
         frame2 = Frame(self.newwin)
         frame2.pack(side=TOP)
         Label(frame2, text="Prikaži sljedeće:").grid(row=1, column=0)
+
         def updateSelection():
             self.ShowCorrMatrix = CorrelationMDisplay.get()
             self.ShowUnrotatedFS = UnrotatedFSDisplay.get()
             self.ShowScreePlot = ScreePlotDisplay.get()
+
         CorrelationMDisplay = BooleanVar()
         Button1 = Checkbutton(frame2, text="Korelaciona matrica               ",
                               variable = CorrelationMDisplay, command = updateSelection)
@@ -247,15 +252,13 @@ class ApplicationGUI(Frame):
             if self.GutmanKaiser.get():
                 secondOption.deselect()
                 self.NumberOfFactors.set(0)
-                #self.ManualInput.set(False)
-
 
         def updateExtractionOption2(): #defining the extraction rule (N first values)
             if self.ManualInput.get():
                 firstOption.deselect()
                 self.GutmanKaiser.set(False)
 
-        def callback(P):  # making sure that the entry is a positive interger
+        def callback(P):  #making sure that the entry is a positive integer
             if str.isdigit(P) or P == "":
                 return True
             else:
@@ -381,7 +384,8 @@ class ApplicationGUI(Frame):
 
         vcmd2 = (frame3.register(callback1))
 
-        IterationNumber2 = Entry(frame3, validate='all', validatecommand=(vcmd2, '%P'), textvariable=self.RotationIterationNumber)
+        IterationNumber2 = Entry(frame3, validate='all', validatecommand=(vcmd2, '%P'),
+                                 textvariable=self.RotationIterationNumber)
         IterationNumber2.grid(row=0, column=1)
 
         frame5 = Frame(self.newwin, width=300, height=5)
@@ -449,7 +453,7 @@ class ApplicationGUI(Frame):
     def FactorProcessing(self):
         #Create a data frame of only selected variables
         SelectedDF = self.df[self.ListOfSelctedVariables]
-        SelectedDF.fillna(SelectedDF.mean())
+        SelectedDF = SelectedDF.fillna(SelectedDF.mean().round(0))
 
         #Testing the adequacy of the data frame
         #Bartlett's adequacy test
@@ -466,21 +470,24 @@ class ApplicationGUI(Frame):
         else:
             self.printObject.AppendPObject(kmo_model, 'Podaci su adekvatni po Kaiser-Meyer-Olkin testu!')
 
-        fa = FactorAnalyzer()
         #Get correlation matrix with Pearson method
         CMatrix = SelectedDF.corr()
 
         #Get Eigenvalues
-        EV, _ = sp.linalg.eigh(CMatrix)
-        ev = pd.DataFrame(EV[::-1], columns=['Originalne svojstvene vrijednosti:'])
+        eigenvalues, eigenvectors = sp.linalg.eigh(CMatrix)
+        evals_order = np.argsort(-eigenvalues)
+        eigenvalues = eigenvalues[evals_order]
+        eigenvectors = eigenvectors[:, evals_order]
 
-        self.printObject.AppendPObject((self.Method).get(), 'Metoda ekstrakcije faktora:')
+        ev = pd.DataFrame(eigenvalues, columns=['Originalne svojstvene vrijednosti:'])
+
+        self.printObject.AppendPObject(self.Method.get(), 'Metoda ekstrakcije faktora:')
         self.printObject.AppendPObject(self.IterationNumber.get(), 'Uneseni broj iteracija za ekstrakciju:')
 
         #Kaiser-Gutman rule for number of factors
         if self.GutmanKaiser.get():
             # Get Kaiser-Gutman number of factors
-            self.NumberOfFactors.set((EV > 1).sum())
+            self.NumberOfFactors.set((eigenvalues > 1).sum())
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Kaiser-Gutman broj faktora:')
         else:
             if int(self.NumberOfFactors.get()) > len(self.ListOfSelctedVariables):
@@ -490,14 +497,27 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
         self.printObject.AppendPObject(self.RotationIterationNumber.get(), 'Uneseni broj iteracija za rotaciju:')
 
+        fa = FactorAnalyzer()
         fa.analyze(SelectedDF, int(self.NumberOfFactors.get()), rotation=None, method=self.Method.get())
+        Loadings = fa.loadings
+
+        if self.Method.get() == 'pca':
+            #A - Loadings matrix
+            #lambda - eigenvalues vector
+            #U - eigenvector matrix
+            # A[i,j] = sqrt(lambda[j])*U[i,j]
+            temp = eigenvectors
+            for i in range(len(eigenvalues)):
+                temp[:, i] *= ((-1) ** (i + 1)) * np.sqrt(eigenvalues[i])
+            temp = temp[:, :int(self.NumberOfFactors.get())]
+            Loadings = pd.DataFrame(temp, index=Loadings.index, columns=Loadings.columns)
 
         # Create scree plot using matplotlib
         plt.scatter(range(1, int(self.NumberOfFactors.get()) + 1),
                     ev[:int(self.NumberOfFactors.get())],
                     facecolor='green')
         plt.scatter(range(int(self.NumberOfFactors.get()) + 1, SelectedDF.shape[1] + 1),
-                 ev[int(self.NumberOfFactors.get()):])
+                    ev[int(self.NumberOfFactors.get()):])
         plt.plot(range(1, SelectedDF.shape[1] + 1), np.ones(len(ev)), 'r')
         plt.title('Scree Plot')
         plt.xlabel('Factors')
@@ -509,23 +529,22 @@ class ApplicationGUI(Frame):
         if self.ShowScreePlot:
             plt.show(block=False)
 
-        #Create a rotator object
-        rotator = Rotator()
-
-        self.printObject.AppendPObject(fa.get_communalities(), '')
-        self.printObject.AppendPObject(ev, '')
+        #self.printObject.AppendPObject(fa.get_communalities().to_string(), '')
+        self.printObject.AppendPObject(ev.to_string(), '')
         if self.ShowCorrMatrix:
-            self.printObject.AppendPObject(CMatrix, "Korelaciona matrica:")
+            self.printObject.AppendPObject(CMatrix.to_string(), "Korelaciona matrica:")
         if self.ShowUnrotatedFS:
-            self.printObject.AppendPObject(fa.loadings, "Ekstraktovani faktori bez rotacije:")
+            self.printObject.AppendPObject(Loadings, "Ekstraktovani faktori bez rotacije:")
 
-        RotatedM = (fa.loadings, 0)
+        RotatedM = (Loadings, 0)
 
         if self.RotationMethod != None:
-            RotatedM = rotator.rotate(fa.loadings, method=self.RotationMethod,
+            # Create a rotator object
+            rotator = Rotator()
+            RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod,
                                       **{"max_iter": int(self.RotationIterationNumber.get())})
             if self.ShowRotatedFS:
-                self.printObject.AppendPObject(RotatedM[0], 'Rotirani faktori:')
+                self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
 
         self.printObject.AppendPObject(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
                                        'Preslikavanje varijabli na faktore:')
@@ -539,7 +558,7 @@ if __name__ == '__main__':
     root.title("Aplikacija za faktorsku analizu podataka")
     labelfont = ('times', 10, 'bold')
     root.geometry("500x200")
-    AppObject = ApplicationGUI(root, initialdir=r"/home")  # r"/home/haris/Desktop/Teza"
+    AppObject = ApplicationGUI(root, initialdir=r"/home/haris/Desktop/Teza/data")  #
     AppObject.pack(fill='y')
 
     root.mainloop()
