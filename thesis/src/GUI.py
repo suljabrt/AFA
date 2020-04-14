@@ -38,17 +38,17 @@ class ApplicationGUI(Frame):
         self._create_widgets()
         self._display_widgets()
         self.newwin = NONE
-        self.ListOfSelctedVariables = [] #selected variables for factor analysis
-        self.Method = StringVar() #PCA, PAF or ML
+        self.ListOfSelctedVariables = [] # selected variables for factor analysis
+        self.Method = StringVar() # PCA, PAF or ML
         self.Method.set('minres')
-        self.CheckboxList = [] #What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
-        self.FactorExtractionNumber = 1 #treshold for the extraction of factors
+        self.CheckboxList = [] # What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
+        self.FactorExtractionNumber = 1 # treshold for the extraction of factors
         self.IterationNumber = StringVar()
-        self.IterationNumber.set(25) #number of iterations for extraction
-        self.RotationMethod = None  #None, Varimax, Quartimax or Equimax
+        self.IterationNumber.set(25) # number of iterations for extraction
+        self.RotationMethod = None  # None, Varimax, Quartimax, Equamax, Promax of Oblimin
         self.RotationIterationNumber = StringVar()
-        self.RotationIterationNumber.set(30) #rotation iteration number
-        self.df = [] #Data frame
+        self.RotationIterationNumber.set(30) # rotation iteration number
+        self.df = [] # Data frame
         self.printObject = FormattedPrint('_____________________________________',
                                           'Ispis aplikacije za faktorsku analizu')
         self.ShowCorrMatrix = 1
@@ -308,75 +308,62 @@ class ApplicationGUI(Frame):
         frame1.pack(side=TOP)
 
         Label(frame1, text="Odaberi metodu rotacije:").pack(side=TOP)
-        def updateRotationMethod1(): #settin the Rotation Method to "None"
-            if RotationMethod1Check.get():
-                secondOption.deselect()
-                thirdOption.deselect()
-                fourthOption.deselect()
-                self.RotationMethod = None
-
-        def updateRotationMethod2(): #settin the Rotation Method to "Varimax"
-            if RotationMethod2Check.get():
-                firstOption.deselect()
-                thirdOption.deselect()
-                fourthOption.deselect()
-                self.RotationMethod = "varimax"
-
-        def updateRotationMethod3(): #settin the Rotation Method to "Quartimax"
-            if RotationMethod3Check.get():
-                secondOption.deselect()
-                firstOption.deselect()
-                fourthOption.deselect()
-                self.RotationMethod = "quartimax"
-
-        def updateRotationMethod4(): #settin the Rotation Method to "Equimax"
-            if RotationMethod4Check.get():
-                secondOption.deselect()
-                thirdOption.deselect()
-                firstOption.deselect()
-                self.RotationMethod = "equamax"
 
         RotationMethod1Check = BooleanVar()
-        firstOption = Checkbutton(frame1, text="None         ",
-                    variable=RotationMethod1Check, command=updateRotationMethod1)
+        firstOption = Checkbutton(frame1, text="None",
+                    variable=RotationMethod1Check, command=lambda: updateRotationMethod(0))
 
         RotationMethod2Check = BooleanVar()
-        secondOption = Checkbutton(frame1, text="Varimax   ",
-                    variable=RotationMethod2Check, command=updateRotationMethod2)
+        secondOption = Checkbutton(frame1, text="Varimax",
+                    variable=RotationMethod2Check, command=lambda: updateRotationMethod(1))
 
         RotationMethod3Check = BooleanVar()
         thirdOption = Checkbutton(frame1, text="Quartimax",
-                    variable=RotationMethod3Check, command=updateRotationMethod3)
+                    variable=RotationMethod3Check, command=lambda: updateRotationMethod(2))
 
         RotationMethod4Check = BooleanVar()
-        fourthOption = Checkbutton(frame1, text="Equamax   ",
-                    variable=RotationMethod4Check, command=updateRotationMethod4)
+        fourthOption = Checkbutton(frame1, text="Equamax",
+                    variable=RotationMethod4Check, command=lambda: updateRotationMethod(3))
 
-        #Reinitialize checkbox
-        if self.RotationMethod == None:
-            firstOption.select()
-        elif self.RotationMethod == 'varimax':
-            secondOption.select()
-        elif self.RotationMethod == 'quartimax':
-            thirdOption.select()
-        elif self.RotationMethod == 'equamax':
-            fourthOption.select()
+        RotationMethod5Check = BooleanVar()
+        fifthOption = Checkbutton(frame1, text="Promax",
+                    variable=RotationMethod5Check, command=lambda: updateRotationMethod(4))
 
-        firstOption.pack(side=TOP)
-        secondOption.pack(side=TOP)
-        thirdOption.pack(side=TOP)
-        fourthOption.pack(side=TOP)
+        RotationMethod6Check = BooleanVar()
+        sixthOption = Checkbutton(frame1, text="Oblimin",
+                    variable=RotationMethod6Check, command=lambda: updateRotationMethod(5))
+
+        CBtnList = [firstOption, secondOption, thirdOption, fourthOption, fifthOption, sixthOption]
+        RMList = [None, 'varimax', 'quartimax', 'equamax', 'promax', 'oblimin']
+
+        def updateRotationMethod(index):
+
+            for i in range(len(RMList)):
+                if i != index:
+                    CBtnList[i].deselect()
+
+            self.RotationMethod = RMList[index]
+
+        # Reinitialize checkbox
+        CBtnList[RMList.index(self.RotationMethod)].select()
+
+        firstOption.pack(side=TOP, anchor=W)
+        secondOption.pack(side=TOP, anchor=W)
+        thirdOption.pack(side=TOP, anchor=W)
+        fourthOption.pack(side=TOP, anchor=W)
+        fifthOption.pack(side=TOP, anchor=W)
+        sixthOption.pack(side=TOP, anchor=W)
 
         frame2 = Frame(self.newwin)
-        frame2.place(x=150, y=120)
+        frame2.place(x=150, y=180)
         Checkbutton(frame2, text="Prikaži rotirana rješenja",
                                    variable=self.ShowRotatedFS).pack()
 
         frame3 = Frame(self.newwin)
-        frame3.place(x=80, y=150)
+        frame3.place(x=80, y=180)
         Label(frame3, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
 
-        def callback1(P):  # making sure that the entry is a positive interger
+        def callback1(P):  # making sure that the entry is a positive integer
             if str.isdigit(P) or P == "":
                 return True
             else:
@@ -415,7 +402,7 @@ class ApplicationGUI(Frame):
 
         buffer = self.FactorProcessing()
 
-        text=Text(frame1,width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-300)
+        text = Text(frame1, width=self.newwin.winfo_screenwidth()-80, height=self.newwin.winfo_screenheight()-300)
         text.insert(END, buffer)
         text.config(state=DISABLED)
         text.pack()
@@ -432,7 +419,6 @@ class ApplicationGUI(Frame):
             file.write(text.get("1.0", END))
             file.close()
             plt.savefig('ScreePlot.png')
-
 
         SaveButton = Button(frame5, text="Sačuvaj", bg="red", fg="white", command=SaveResults)
         SaveButton.pack(side=RIGHT, fill=BOTH)
@@ -525,11 +511,11 @@ class ApplicationGUI(Frame):
         plt.legend(('Eigenvalue = 1', 'Chosen factors', 'Remaining variables'))
         plt.grid()
 
-        #If Show Scree Plot is selected
+        # If Show Scree Plot is selected
         if self.ShowScreePlot:
             plt.show(block=False)
 
-        #self.printObject.AppendPObject(fa.get_communalities().to_string(), '')
+        # self.printObject.AppendPObject(fa.get_communalities().to_string(), '')
         self.printObject.AppendPObject(ev.to_string(), '')
         if self.ShowCorrMatrix:
             self.printObject.AppendPObject(CMatrix.to_string(), "Korelaciona matrica:")
@@ -541,8 +527,12 @@ class ApplicationGUI(Frame):
         if self.RotationMethod != None:
             # Create a rotator object
             rotator = Rotator()
-            RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod,
-                                      **{"max_iter": int(self.RotationIterationNumber.get())})
+            if self.RotationMethod != 'promax':
+                RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod,
+                                          **{"max_iter": int(self.RotationIterationNumber.get())})
+            else:
+                RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod)
+
             if self.ShowRotatedFS:
                 self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
 
