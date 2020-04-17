@@ -6,6 +6,7 @@ import scipy as sp
 import numpy as np
 from factor_analyzer import *
 import matplotlib.pyplot as plt
+from sklearn.metrics import explained_variance_score
 import csv
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -355,12 +356,12 @@ class ApplicationGUI(Frame):
         sixthOption.pack(side=TOP, anchor=W)
 
         frame2 = Frame(self.newwin)
-        frame2.place(x=150, y=180)
+        frame2.place(x=150, y=165)
         Checkbutton(frame2, text="Prikaži rotirana rješenja",
                                    variable=self.ShowRotatedFS).pack()
 
         frame3 = Frame(self.newwin)
-        frame3.place(x=80, y=180)
+        frame3.place(x=80, y=200)
         Label(frame3, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
 
         def callback1(P):  # making sure that the entry is a positive integer
@@ -465,8 +466,6 @@ class ApplicationGUI(Frame):
         eigenvalues = eigenvalues[evals_order]
         eigenvectors = eigenvectors[:, evals_order]
 
-        ev = pd.DataFrame(eigenvalues, columns=['Originalne svojstvene vrijednosti:'])
-
         self.printObject.AppendPObject(self.Method.get(), 'Metoda ekstrakcije faktora:')
         self.printObject.AppendPObject(self.IterationNumber.get(), 'Uneseni broj iteracija za ekstrakciju:')
 
@@ -500,11 +499,11 @@ class ApplicationGUI(Frame):
 
         # Create scree plot using matplotlib
         plt.scatter(range(1, int(self.NumberOfFactors.get()) + 1),
-                    ev[:int(self.NumberOfFactors.get())],
+                    eigenvalues[:int(self.NumberOfFactors.get())],
                     facecolor='green')
         plt.scatter(range(int(self.NumberOfFactors.get()) + 1, SelectedDF.shape[1] + 1),
-                    ev[int(self.NumberOfFactors.get()):])
-        plt.plot(range(1, SelectedDF.shape[1] + 1), np.ones(len(ev)), 'r')
+                    eigenvalues[int(self.NumberOfFactors.get()):])
+        plt.plot(range(1, SelectedDF.shape[1] + 1), np.ones(len(eigenvalues)), 'r')
         plt.title('Scree Plot')
         plt.xlabel('Factors')
         plt.ylabel('Eigenvalue')
@@ -515,12 +514,10 @@ class ApplicationGUI(Frame):
         if self.ShowScreePlot:
             plt.show(block=False)
 
-        # self.printObject.AppendPObject(fa.get_communalities().to_string(), '')
-        self.printObject.AppendPObject(ev.to_string(), '')
-        if self.ShowCorrMatrix:
-            self.printObject.AppendPObject(CMatrix.to_string(), "Korelaciona matrica:")
-        if self.ShowUnrotatedFS:
-            self.printObject.AppendPObject(Loadings, "Ekstraktovani faktori bez rotacije:")
+        # Calculate communalities for given loadings df
+        communalities = (Loadings ** 2).sum(axis=1)
+        communalities = pd.DataFrame(communalities,
+                                     columns=['Communalities'])
 
         RotatedM = (Loadings, 0)
 
@@ -533,8 +530,51 @@ class ApplicationGUI(Frame):
             else:
                 RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod)
 
-            if self.ShowRotatedFS:
-                self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
+            RotationSums = np.array((np.power(RotatedM[0].to_numpy(), 2)).sum(axis=0))
+            Percentage3 = RotationSums * 100 / len(eigenvalues)
+            CumulativeP3 = []
+
+            for i in range(len(eigenvalues)):
+                CumulativeP3.append(sum(Percentage3[:i + 1]))
+                if i >= int(self.NumberOfFactors.get()):
+                    RotationSums = np.append(RotationSums, 0)
+                    Percentage3 = np.append(Percentage3, 0)
+
+        ExtractionSums = np.array((np.power(Loadings.to_numpy(), 2)).sum(axis=0))
+
+        Percentage1 = eigenvalues * 100 / len(eigenvalues)
+        Percentage2 = ExtractionSums * 100 / len(eigenvalues)
+        CumulativeP1 = []
+        CumulativeP2 = []
+
+
+        for i in range(len(eigenvalues)):
+            CumulativeP1.append(sum(Percentage1[:i + 1]))
+            CumulativeP2.append(sum(Percentage2[:i + 1]))
+            if i >= int(self.NumberOfFactors.get()):
+                ExtractionSums = np.append(ExtractionSums, 0)
+                Percentage2 = np.append(Percentage2, 0)
+
+        VarianceFrame = [eigenvalues, Percentage1, CumulativeP1, ExtractionSums, Percentage2, CumulativeP2,
+                         ExtractionSums, Percentage2, CumulativeP2]
+
+        if self.RotationMethod != None:
+            VarianceFrame = [eigenvalues, Percentage1, CumulativeP1, ExtractionSums, Percentage2, CumulativeP2,
+                             RotationSums, Percentage3, CumulativeP3]
+
+        ev = pd.DataFrame(np.transpose(VarianceFrame), columns=['Svojstvene vrijednosti:',
+                                                                '% varijanse:', 'Kumulativni %:', 'Nakon ekstrakcije:',
+                                                                '% varijanse:', 'Kumulativni %:', 'Nakon rotacije:',
+                                                                '% varijanse:', 'Kumulativni %:'])
+
+        self.printObject.AppendPObject(communalities.to_string(), '')
+        self.printObject.AppendPObject(ev.to_string(), '')
+        if self.ShowCorrMatrix:
+            self.printObject.AppendPObject(CMatrix.to_string(), "Korelaciona matrica:")
+        if self.ShowUnrotatedFS:
+            self.printObject.AppendPObject(Loadings, "Ekstraktovani faktori bez rotacije:")
+        if self.ShowRotatedFS:
+            self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
 
         self.printObject.AppendPObject(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
                                        'Preslikavanje varijabli na faktore:')
