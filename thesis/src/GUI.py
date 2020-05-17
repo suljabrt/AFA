@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import filedialog as fd
-import io
 import pandas as pd
 import scipy as sp
 import numpy as np
@@ -8,12 +7,6 @@ from factor_analyzer import *
 import matplotlib.pyplot as plt
 import copy
 
-from scipy.stats import shapiro
-from sklearn.metrics import explained_variance_score
-import csv
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import FactorAnalysis
 
 def Cronbach(N, Cov, Std):
     CovSum = 0
@@ -22,6 +15,7 @@ def Cronbach(N, Cov, Std):
     alpha = ((N**2)*(CovSum/float((N**2 - N)/2)))/float(np.sum(np.square(Std)) + CovSum*2)
 
     return alpha
+
 
 class FormattedPrint:
 
@@ -49,17 +43,13 @@ class ApplicationGUI(Frame):
         self._create_widgets()
         self._display_widgets()
         self.newwin = NONE
-        self.ListOfSelctedVariables = [] # selected variables for factor analysis
-        self.Method = StringVar() # PCA, PAF or ML
+        self.ListOfSelctedVariables = []  # selected variables for factor analysis
+        self.Method = StringVar()  # PCA, MINRES or ML
         self.Method.set('minres')
-        self.CheckboxList = [] # What needs to be displayed: Correlation matrix, Unrotated factor solutions and Scree plot
-        self.FactorExtractionNumber = 1 # treshold for the extraction of factors
-        self.IterationNumber = StringVar()
-        self.IterationNumber.set(25) # number of iterations for extraction
         self.RotationMethod = None  # None, Varimax, Quartimax, Equamax, Promax of Oblimin
         self.RotationIterationNumber = StringVar()
-        self.RotationIterationNumber.set(30) # rotation iteration number
-        self.df = [] # Data frame
+        self.RotationIterationNumber.set(30)  # rotation iteration number
+        self.df = pd.DataFrame  # Data frame
         self.printObject = FormattedPrint('_____________________________________',
                                           'Ispis aplikacije za faktorsku analizu')
         self.ShowCorrMatrix = 1
@@ -266,7 +256,7 @@ class ApplicationGUI(Frame):
         def updateExtractionOption2(): #defining the extraction rule (N first values)
             if self.ManualInput.get():
                 firstOption.deselect()
-                self.GutmanKaiser.set(False)
+                self.GutmanKaiser.set(0)
 
         def callback(P):  #making sure that the entry is a positive integer
             if str.isdigit(P) or P == "":
@@ -288,13 +278,6 @@ class ApplicationGUI(Frame):
 
         NumberOfFactors = Entry(frame3, validate='all', validatecommand=(vcmd, '%P'), textvariable=self.NumberOfFactors)
         NumberOfFactors.grid(row=2, column=1)
-
-        frame4 = Frame(self.newwin)
-        frame4.pack(side=TOP)
-        Label(frame4, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
-
-        IterationNumber1 = Entry(frame4, validate='all', validatecommand=(vcmd, '%P'), textvariable=self.IterationNumber)
-        IterationNumber1.grid(row=0, column=1)
 
         frame5 = Frame(self.newwin, width=300, height=5)
         frame5.place(x=175, y=250)
@@ -477,7 +460,6 @@ class ApplicationGUI(Frame):
         eigenvectors = eigenvectors[:, evals_order]
 
         self.printObject.AppendPObject(self.Method.get(), 'Metoda ekstrakcije faktora:')
-        self.printObject.AppendPObject(self.IterationNumber.get(), 'Uneseni broj iteracija za ekstrakciju:')
 
         #Kaiser-Gutman rule for number of factors
         if self.GutmanKaiser.get():
