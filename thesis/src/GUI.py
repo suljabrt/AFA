@@ -6,12 +6,22 @@ import scipy as sp
 import numpy as np
 from factor_analyzer import *
 import matplotlib.pyplot as plt
+import copy
+
+from scipy.stats import shapiro
 from sklearn.metrics import explained_variance_score
 import csv
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import FactorAnalysis
 
+def Cronbach(N, Cov, Std):
+    CovSum = 0
+    for i in range(N-1):
+        CovSum += np.sum(Cov.iloc[i, i+1:])
+    alpha = ((N**2)*(CovSum/float((N**2 - N)/2)))/float(np.sum(np.square(Std)) + CovSum*2)
+
+    return alpha
 
 class FormattedPrint:
 
@@ -158,7 +168,6 @@ class ApplicationGUI(Frame):
                 for i in listbox2.curselection():
                     self.ListOfSelctedVariables.remove(listbox2.get(i))
                 listbox2.delete(start, end)
-
 
         forwardButton = Button(frameMiddle, text=" > ", bg="red", fg="white", command=ForwardVariables)
         forwardButton.pack()
@@ -410,7 +419,6 @@ class ApplicationGUI(Frame):
 
         frame5 = Frame(self.newwin, width=300, height=5)
         frame5.place(x=0.42*(self.newwin.winfo_screenwidth()-3), y=(self.newwin.winfo_screenheight()-3)*0.85)
-        #print( self.newwin.winfo_screenwidth()-3)
 
         BackButton = Button(frame5, text="  Nazad ", bg="red", fg="white", command=self.RotationWindow)
         BackButton.pack(side=LEFT, fill=BOTH)
@@ -433,14 +441,16 @@ class ApplicationGUI(Frame):
         self.newwin.mainloop()
 
     def browse(self):
-
         self.filepath.set(fd.askopenfilename(initialdir=self._initaldir,
                                              filetypes=self._filetypes))
 
     def FactorProcessing(self):
         #Create a data frame of only selected variables
         SelectedDF = self.df[self.ListOfSelctedVariables]
-        SelectedDF = SelectedDF.fillna(SelectedDF.mean().round(0))
+        if SelectedDF.isnull().values.any():
+            self.printObject.AppendPObject('Podaci koji nedostaju su popunjeni zaokruženom srednjom vrijednošću', '')
+            SelectedDF = SelectedDF.fillna(SelectedDF.mean().round(decimals=0))
+            #SelectedDF.to_csv(r'/home/haris/Desktop/Teza/data/NoMiss.csv', index=False)
 
         #Testing the adequacy of the data frame
         #Bartlett's adequacy test
@@ -458,10 +468,10 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(kmo_model, 'Podaci su adekvatni po Kaiser-Meyer-Olkin testu!')
 
         #Get correlation matrix with Pearson method
-        CMatrix = SelectedDF.corr()
+        CorrMatrix = SelectedDF.corr()
 
         #Get Eigenvalues
-        eigenvalues, eigenvectors = sp.linalg.eigh(CMatrix)
+        eigenvalues, eigenvectors = sp.linalg.eigh(CorrMatrix)
         evals_order = np.argsort(-eigenvalues)
         eigenvalues = eigenvalues[evals_order]
         eigenvectors = eigenvectors[:, evals_order]
@@ -483,7 +493,8 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(self.RotationIterationNumber.get(), 'Uneseni broj iteracija za rotaciju:')
 
         fa = FactorAnalyzer()
-        fa.analyze(SelectedDF, int(self.NumberOfFactors.get()), rotation=None, method=self.Method.get())
+        fa.analyze(SelectedDF, n_factors=int(self.NumberOfFactors.get()), rotation=None,
+                   method=self.Method.get())
         Loadings = fa.loadings
 
         if self.Method.get() == 'pca':
@@ -491,9 +502,9 @@ class ApplicationGUI(Frame):
             #lambda - eigenvalues vector
             #U - eigenvector matrix
             # A[i,j] = sqrt(lambda[j])*U[i,j]
-            temp = eigenvectors
+            temp = copy.deepcopy(eigenvectors)
             for i in range(len(eigenvalues)):
-                temp[:, i] *= ((-1) ** (i + 1)) * np.sqrt(eigenvalues[i])
+                temp[:, i] *= np.sqrt(eigenvalues[i])
             temp = temp[:, :int(self.NumberOfFactors.get())]
             Loadings = pd.DataFrame(temp, index=Loadings.index, columns=Loadings.columns)
 
@@ -547,7 +558,6 @@ class ApplicationGUI(Frame):
         CumulativeP1 = []
         CumulativeP2 = []
 
-
         for i in range(len(eigenvalues)):
             CumulativeP1.append(sum(Percentage1[:i + 1]))
             CumulativeP2.append(sum(Percentage2[:i + 1]))
@@ -558,7 +568,7 @@ class ApplicationGUI(Frame):
         VarianceFrame = [eigenvalues, Percentage1, CumulativeP1, ExtractionSums, Percentage2, CumulativeP2,
                          ExtractionSums, Percentage2, CumulativeP2]
 
-        if self.RotationMethod != None:
+        if self.RotationMethod is not None:
             VarianceFrame = [eigenvalues, Percentage1, CumulativeP1, ExtractionSums, Percentage2, CumulativeP2,
                              RotationSums, Percentage3, CumulativeP3]
 
@@ -570,14 +580,26 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(communalities.to_string(), '')
         self.printObject.AppendPObject(ev.to_string(), '')
         if self.ShowCorrMatrix:
-            self.printObject.AppendPObject(CMatrix.to_string(), "Korelaciona matrica:")
+            self.printObject.AppendPObject(CorrMatrix.to_string(), "Korelaciona matrica:")
         if self.ShowUnrotatedFS:
-            self.printObject.AppendPObject(Loadings, "Ekstraktovani faktori bez rotacije:")
+            self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
         if self.ShowRotatedFS:
             self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
 
-        self.printObject.AppendPObject(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
-                                       'Preslikavanje varijabli na faktore:')
+        SortedVariables = pd.DataFrame(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
+                                       columns=['Faktori'])
+        self.printObject.AppendPObject(SortedVariables.to_string(), 'Preslikavanje varijabli na faktore:')
+
+        CronbachAlphaDF = pd.DataFrame()
+        for i in range(1, int(self.NumberOfFactors.get())+1):
+            tempDF = SortedVariables.loc[SortedVariables['Faktori'] == ('Factor'+str(i))]
+            VariableClusterDF = SelectedDF[tempDF.index.values]
+            CovMatrix = VariableClusterDF.cov()
+            StdMatrix = VariableClusterDF.std()
+            CronbachAlphaDF = CronbachAlphaDF.append({'Factor': 'factor'+str(i),
+            'Cronbachs alpha': Cronbach(len(VariableClusterDF.columns), CovMatrix, StdMatrix)}, ignore_index=True)
+
+        self.printObject.AppendPObject(CronbachAlphaDF.to_string(), 'Mjera interne konzistentnosti varijabli')
 
         return self.printObject.getOutput()
 
