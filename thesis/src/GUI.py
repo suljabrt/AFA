@@ -9,7 +9,11 @@ import copy
 
 
 def Cronbach(N, Cov, Std):
+
     CovSum = 0
+    if N < 2:
+        return 1
+
     for i in range(N-1):
         CovSum += np.sum(Cov.iloc[i, i+1:])
     alpha = ((N**2)*(CovSum/float((N**2 - N)/2)))/float(np.sum(np.square(Std)) + CovSum*2)
