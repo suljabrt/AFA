@@ -449,6 +449,8 @@ class ApplicationGUI(Frame):
 
         # Kaiser-Meyer-Olkin adequacy test
         kmo_all, kmo_model = calculate_kmo(SelectedDF)
+        if not (kmo_all[kmo_all < 0.5]).dropna().empty:
+           self.printObject.AppendPObject(kmo_all, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
         if (kmo_model < 0.6):
             self.printObject.AppendPObject(kmo_model, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
         else:
