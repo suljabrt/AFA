@@ -94,7 +94,7 @@ class ApplicationGUI(Frame):
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
-
+        self.newwin.resizable(width=False, height=False)
         self.newwin.title("Faktorska analiza: Odabir varijabli")
         self.newwin.geometry("500x300")
 
@@ -175,6 +175,7 @@ class ApplicationGUI(Frame):
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
+        self.newwin.resizable(width=False, height=False)
         self.newwin.title("Faktorska analiza: Ekstrakcija")
         self.newwin.geometry("500x300")
 
@@ -298,6 +299,7 @@ class ApplicationGUI(Frame):
         if self.newwin != NONE:
             self.newwin.destroy()
         self.newwin = Toplevel(root)
+        self.newwin.resizable(width=False, height=False)
         self.newwin.title("Faktorska analiza: Rotacija")
         self.newwin.geometry("500x300")
 
@@ -404,11 +406,12 @@ class ApplicationGUI(Frame):
         text.config(state=DISABLED)
         text.pack()
 
-        frame5 = Frame(self.newwin, width=300, height=5)
-        frame5.place(x=0.42*(self.newwin.winfo_screenwidth()-3), y=(self.newwin.winfo_screenheight()-3)*0.85)
-
-        BackButton = Button(frame5, text="  Nazad ", bg="red", fg="white", command=self.RotationWindow)
-        BackButton.pack(side=LEFT, fill=BOTH)
+        frame4 = Frame(self.newwin, width=0, height=5)
+        frame4.place(relx=0.6, rely=0.9)
+        frame5 = Frame(self.newwin, width=30, height=5)
+        frame5.place(relx=0.67, rely=0.9)
+        BackButton = Button(frame4, text="  Nazad ", bg="red", fg="white", command=self.RotationWindow)
+        BackButton.pack()
 
         def SaveResults():
             file = open('Results.txt', 'w')
@@ -417,10 +420,10 @@ class ApplicationGUI(Frame):
             plt.savefig('ScreePlot.png')
 
         SaveButton = Button(frame5, text="Sačuvaj", bg="red", fg="white", command=SaveResults)
-        SaveButton.pack(side=RIGHT, fill=BOTH)
+        SaveButton.pack()
 
         frame6 = Frame(self.newwin, width=30, height=5)
-        frame6.place(x=0.84 * (self.newwin.winfo_screenwidth() - 3), y=(self.newwin.winfo_screenheight() - 3) * 0.85)
+        frame6.place(relx=0.9, rely=0.9)
 
         ExitButton = Button(frame6, text="   Izađi   ", bg="red", fg="white", command=self.newwin.destroy)
         ExitButton.pack(fill=BOTH)
@@ -474,7 +477,7 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Kaiser-Gutman broj faktora:')
         else:
             if int(self.NumberOfFactors.get()) > len(self.ListOfSelctedVariables):
-                return ('Broj faktora mora biti manji od broja varijabli!')
+                return ('Broj faktora ne smije biti veći od broja varijabli!')
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Uneseni broj faktora:')
 
         self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
@@ -497,16 +500,13 @@ class ApplicationGUI(Frame):
             Loadings = pd.DataFrame(temp, index=Loadings.index, columns=Loadings.columns)
 
         # Create scree plot using matplotlib
-        plt.scatter(range(1, int(self.NumberOfFactors.get()) + 1),
-                    eigenvalues[:int(self.NumberOfFactors.get())],
-                    facecolor='green')
-        plt.scatter(range(int(self.NumberOfFactors.get()) + 1, SelectedDF.shape[1] + 1),
-                    eigenvalues[int(self.NumberOfFactors.get()):])
-        plt.plot(range(1, SelectedDF.shape[1] + 1), np.ones(len(eigenvalues)), 'r')
+        plt.plot(range(0, SelectedDF.shape[1]),
+                    eigenvalues, marker='o')
+        plt.plot(range(0, SelectedDF.shape[1]), np.ones(len(eigenvalues)), '--')
         plt.title('Scree Plot')
-        plt.xlabel('Factors')
-        plt.ylabel('Eigenvalue')
-        plt.legend(('Eigenvalue = 1', 'Chosen factors', 'Remaining variables'))
+        plt.xlabel('Variables')
+        plt.ylabel('Eigenvalues')
+        plt.legend(('Eigenvalues', 'Eigenvalues = 1'))
         plt.grid()
 
         # If Show Scree Plot is selected
@@ -516,7 +516,7 @@ class ApplicationGUI(Frame):
         # Calculate communalities for given loadings df
         communalities = (Loadings ** 2).sum(axis=1)
         communalities = pd.DataFrame(communalities,
-                                     columns=['Communalities'])
+                                     columns=['Komunaliteti'])
 
         RotatedM = (Loadings, 0)
 
@@ -568,7 +568,7 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(communalities.to_string(), '')
         self.printObject.AppendPObject(ev.to_string(), '')
         if self.ShowCorrMatrix:
-            self.printObject.AppendPObject(CorrMatrix.to_string(), "Korelaciona matrica:")
+            self.printObject.AppendPObject(CorrMatrix, "Korelaciona matrica:")
         if self.ShowUnrotatedFS:
             self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
         if self.ShowRotatedFS:
@@ -585,7 +585,7 @@ class ApplicationGUI(Frame):
             CovMatrix = VariableClusterDF.cov()
             StdMatrix = VariableClusterDF.std()
             CronbachAlphaDF = CronbachAlphaDF.append({'Factor': 'factor'+str(i),
-            'Cronbachs alpha': Cronbach(len(VariableClusterDF.columns), CovMatrix, StdMatrix)}, ignore_index=True)
+            'Cronbachova alfa': Cronbach(len(VariableClusterDF.columns), CovMatrix, StdMatrix)}, ignore_index=True)
 
         self.printObject.AppendPObject(CronbachAlphaDF.to_string(), 'Mjera interne konzistentnosti varijabli')
 
@@ -598,6 +598,7 @@ if __name__ == '__main__':
     root.title("Aplikacija za faktorsku analizu podataka")
     labelfont = ('times', 10, 'bold')
     root.geometry("500x200")
+    root.resizable(width=False, height=False)
     AppObject = ApplicationGUI(root, initialdir=r"/home/haris/Desktop/Teza/data")  #
     AppObject.pack(fill='y')
 
