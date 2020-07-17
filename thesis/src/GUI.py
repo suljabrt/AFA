@@ -48,18 +48,20 @@ class ApplicationGUI(Frame):
     def __init__(self, master, initialdir):
         super().__init__(master)
         self.filepath = StringVar()
-        self._initaldir = initialdir
+        self._initialdir = initialdir
         self._create_widgets()
         self._display_widgets()
         self.newwin = NONE
         self.ListOfSelctedVariables = []  # selected variables for factor analysis
-        self.Method = StringVar()  # PCA, MINRES or ML
+        self.Method = StringVar()  # PCA, MINRES, ML or PAF
         self.Method.set('minres')
-        self.RotationMethod = None  # None, Varimax, Quartimax, Equamax, Promax of Oblimin
+        self.RotationMethod = None  # None, Varimax, Quartimax, Equamax, Promax or Oblimin
         self.RotationIterationNumber = StringVar()
         self.RotationIterationNumber.set(30)  # rotation iteration number
         self.df = pd.DataFrame  # Data frame
-        self.printObject = FormattedPrint('_____________________________________',
+        self.printObject = FormattedPrint('_________________________'
+                                          '_________________________'
+                                          '_________________________',
                                           'Ispis aplikacije za faktorsku analizu')
         self.ShowCorrMatrix = 1
         self.ShowUnrotatedFS = 1
@@ -110,19 +112,19 @@ class ApplicationGUI(Frame):
         scrollbar1 = Scrollbar(frame1)
         scrollbar1.pack(side=RIGHT, fill=Y)
 
-        def SelectAllL1():
-            listbox1.select_set(0, END)
-            listbox1.event_generate("<<ListboxSelect>>")
-
-        def SelectAllL2():
-            listbox2.select_set(0, END)
-            listbox2.event_generate("<<ListboxSelect>>")
+        def SelectAll(i):
+            if i == 1:
+                listbox1.select_set(0, END)
+                listbox1.event_generate("<<ListboxSelect>>")
+            else:
+                listbox2.select_set(0, END)
+                listbox2.event_generate("<<ListboxSelect>>")
 
         listbox1 = Listbox(frame1, yscrollcommand=scrollbar1.set, selectmode=EXTENDED)
         for i in self.df.columns:
             listbox1.insert(END, str(i))
         listbox1.pack(side=LEFT, fill=BOTH)
-        listbox1.bind("<Control-a>", lambda x: SelectAllL1())
+        listbox1.bind("<Control-a>", lambda x: SelectAll(1))
 
         scrollbar1.config(command=listbox1.yview)
 
@@ -134,7 +136,7 @@ class ApplicationGUI(Frame):
         scrollbar2.pack(side=RIGHT, fill=Y)
         listbox2 = Listbox(frame2, yscrollcommand=scrollbar2.set)
         listbox2.pack(side=LEFT, fill=BOTH)
-        listbox2.bind("<Control-a>", lambda x: SelectAllL2())
+        listbox2.bind("<Control-a>", lambda x: SelectAll(2))
         scrollbar2.config(command=listbox2.yview)
 
         if self.ListOfSelctedVariables:
@@ -184,7 +186,7 @@ class ApplicationGUI(Frame):
         self.newwin.title("Faktorska analiza: Ekstrakcija")
         self.newwin.geometry("500x300")
 
-        frame1=Frame(self.newwin, width=500, height=300)
+        frame1 = Frame(self.newwin, width=500, height=300)
         frame1.pack(side=TOP)
 
         # Create a Tkinter variable
@@ -192,7 +194,7 @@ class ApplicationGUI(Frame):
 
         # Dictionary with options
         choices = {'Principal Components Analysis', 'Minimum Residual',
-                   'Maximum Likelihood'}
+                   'Maximum Likelihood', 'Principal Axis Factoring'}
         tkvar.set('Minimum Residual')  # set the default option
 
         popupMenu = OptionMenu(frame1, tkvar, *choices)
@@ -211,6 +213,9 @@ class ApplicationGUI(Frame):
             elif tempMethod == 'Maximum Likelihood':
                 self.Method.set('ml')
 
+            elif tempMethod == 'Principal Axis Factoring':
+                self.Method.set('principal')
+
         # link function to change dropdown
         tkvar.trace('w', updateMethod)
 
@@ -223,6 +228,9 @@ class ApplicationGUI(Frame):
             popupMenu = OptionMenu(frame1, tkvar, *choices)
         elif self.Method.get() == 'ml':
             tkvar.set('Maximum Likelihood')
+            popupMenu = OptionMenu(frame1, tkvar, *choices)
+        elif self.Method.get() == 'principal':
+            tkvar.set('Principal Axis Factoring')
             popupMenu = OptionMenu(frame1, tkvar, *choices)
 
         frame2 = Frame(self.newwin)
@@ -258,24 +266,22 @@ class ApplicationGUI(Frame):
         frame3.pack(side=TOP)
         Label(frame3, text="Faktori koji će biti ekstraktovani:").grid(row=0, column=0)
 
-        def updateExtractionOption1(): #defining the extraction rule (eigenvalue>1)
-            if self.GutmanKaiser.get():
+        def updateExtractionOption(i): #defining the extraction rule (N first values)
+            if i == 1 and self.GutmanKaiser.get():
                 secondOption.deselect()
                 self.NumberOfFactors.set(0)
-
-        def updateExtractionOption2(): #defining the extraction rule (N first values)
-            if self.ManualInput.get():
+            elif i == 2 and self.ManualInput.get():
                 firstOption.deselect()
                 self.GutmanKaiser.set(0)
 
         #EigenValueCheck = BooleanVar()
         firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
-                    variable=self.GutmanKaiser, command=updateExtractionOption1) #extract all the factors whose eigenvalue is greter than 1
+                    variable=self.GutmanKaiser, command=lambda: updateExtractionOption(1)) #extract all the factors whose eigenvalue is greter than 1
         firstOption.grid(row=0, column=1)
 
         #ConcreteValueCheck = BooleanVar()
         secondOption = Checkbutton(frame3, text="Unos broja faktora koji će biti zadržani",
-                    variable=self.ManualInput, command=updateExtractionOption2)
+                    variable=self.ManualInput, command=lambda: updateExtractionOption(2))
         secondOption.grid(row=1, column=1)
 
         vcmd = (frame3.register(callback))
@@ -434,7 +440,7 @@ class ApplicationGUI(Frame):
         self.newwin.mainloop()
 
     def browse(self):
-        self.filepath.set(fd.askopenfilename(initialdir=self._initaldir,
+        self.filepath.set(fd.askopenfilename(initialdir=self._initialdir,
                                              filetypes=self._filetypes))
 
     def FactorProcessing(self):
@@ -454,13 +460,13 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(p_value, 'Podaci su statistički značajni i adekvatni po Bartlett testu!')
 
         # Kaiser-Meyer-Olkin adequacy test
-        kmo_all, kmo_model = calculate_kmo(SelectedDF)
-        if not (kmo_all[kmo_all < 0.5]).dropna().empty:
-           self.printObject.AppendPObject(kmo_all, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
-        if (kmo_model < 0.6):
-            self.printObject.AppendPObject(kmo_model, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
+        kmo_per_item, kmo_total = calculate_kmo(SelectedDF)
+        if (kmo_per_item[kmo_per_item < 0.5]).size != 0:
+           self.printObject.AppendPObject(kmo_per_item, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
+        if (kmo_total < 0.6):
+            self.printObject.AppendPObject(kmo_total, 'Podaci nisu adekvatni po Kaiser-Meyer-Olkin testu!')
         else:
-            self.printObject.AppendPObject(kmo_model, 'Podaci su adekvatni po Kaiser-Meyer-Olkin testu!')
+            self.printObject.AppendPObject(kmo_total, 'Podaci su adekvatni po Kaiser-Meyer-Olkin testu!')
 
         #Get correlation matrix with Pearson method
         CorrMatrix = SelectedDF.corr()
@@ -486,11 +492,19 @@ class ApplicationGUI(Frame):
         self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
         self.printObject.AppendPObject(self.RotationIterationNumber.get(), 'Uneseni broj iteracija za rotaciju:')
 
-        fa = FactorAnalyzer()
-        fa.analyze(SelectedDF, n_factors=int(self.NumberOfFactors.get()), rotation=None,
-                   method=self.Method.get())
-        Loadings = fa.loadings
-
+        method = self.Method.get()
+        #making a dummy fa object with a valid method instead of pca
+        if method == 'pca':
+            method = 'ml'
+        fa = FactorAnalyzer(impute='mean', is_corr_matrix=False,
+                method=method, n_factors=int(self.NumberOfFactors.get()),
+                            rotation=None, rotation_kwargs={}, use_smc=True)
+        fa.fit(SelectedDF)
+        columns = []
+        for i in range(1, int(self.NumberOfFactors.get()) + 1):
+            columns.append('Factor'+str(i))
+        Loadings = pd.DataFrame(fa.loadings_, index=SelectedDF.columns,
+                                columns=columns)
         if self.Method.get() == 'pca':
             #A - Loadings matrix
             #lambda - eigenvalues vector
@@ -505,7 +519,7 @@ class ApplicationGUI(Frame):
         # Create scree plot using matplotlib
         plt.plot(range(0, SelectedDF.shape[1]),
                     eigenvalues, marker='o')
-        plt.plot(range(0, SelectedDF.shape[1]), np.ones(len(eigenvalues)), '--')
+        plt.plot(range(0, SelectedDF.shape[1]), np.ones(len(eigenvalues)), 'r--')
         plt.title('Scree Plot')
         plt.xlabel('Variables')
         plt.ylabel('Eigenvalues')
@@ -526,14 +540,12 @@ class ApplicationGUI(Frame):
 
         if self.RotationMethod != None:
             # Create a rotator object
-            rotator = Rotator()
-            if self.RotationMethod != 'promax':
-                RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod,
-                                          **{"max_iter": int(self.RotationIterationNumber.get())})
-            else:
-                RotatedM = rotator.rotate(RotatedM[0], method=self.RotationMethod)
+            rotator = Rotator(method=self.RotationMethod,
+                              max_iter=int(self.RotationIterationNumber.get()))
+            RotatedM = pd.DataFrame(rotator.fit_transform(Loadings), index=Loadings.index,
+                                    columns=Loadings.columns)
 
-            RotationSums = np.array((np.power(RotatedM[0].to_numpy(), 2)).sum(axis=0))
+            RotationSums = np.array((np.power(RotatedM.to_numpy(), 2)).sum(axis=0))
             Percentage3 = RotationSums * 100 / len(eigenvalues)
             CumulativeP3 = []
 
@@ -576,11 +588,11 @@ class ApplicationGUI(Frame):
         if self.ShowUnrotatedFS:
             self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
         if self.ShowRotatedFS:
-            self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
-            self.printObject.AppendPObject((RotatedM[0].where(np.abs(RotatedM[0].values) > 0.45, '')).
+            self.printObject.AppendPObject(RotatedM.to_string(), 'Rotirani faktori:')
+            self.printObject.AppendPObject((RotatedM.where(np.abs(RotatedM.values) > 0.45, '')).
                                            to_string(), 'Rotirani faktori > 0.45:')
 
-        SortedVariables = pd.DataFrame(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
+        SortedVariables = pd.DataFrame(RotatedM.abs().idxmax(axis=1).sort_values(axis=0),
                                        columns=['Faktori'])
         self.printObject.AppendPObject(SortedVariables.to_string(), 'Preslikavanje varijabli na faktore:')
 
