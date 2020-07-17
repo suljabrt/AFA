@@ -13,12 +13,17 @@ def Cronbach(N, Cov, Std):
     CovSum = 0
     if N < 2:
         return 1
-
     for i in range(N-1):
         CovSum += np.sum(Cov.iloc[i, i+1:])
     alpha = ((N**2)*(CovSum/float((N**2 - N)/2)))/float(np.sum(np.square(Std)) + CovSum*2)
-
     return alpha
+
+
+def callback(P):  # making sure that the entry is a positive integer
+    if str.isdigit(P) or P == "":
+        return True
+    else:
+        return False
 
 
 class FormattedPrint:
@@ -231,15 +236,15 @@ class ApplicationGUI(Frame):
 
         CorrelationMDisplay = BooleanVar()
         Button1 = Checkbutton(frame2, text="Korelaciona matrica               ",
-                              variable = CorrelationMDisplay, command = updateSelection)
+                              variable=CorrelationMDisplay, command=updateSelection)
         Button1.grid(row=1, column=1)
         UnrotatedFSDisplay = BooleanVar()
         Button2 = Checkbutton(frame2, text="Nerotirana faktorska rješenja",
-                              variable = UnrotatedFSDisplay, command = updateSelection)
+                              variable=UnrotatedFSDisplay, command=updateSelection)
         Button2.grid(row=2, column=1)
         ScreePlotDisplay = BooleanVar()
         Button3 = Checkbutton(frame2, text="Scree plot                               ",
-                              variable = ScreePlotDisplay, command = updateSelection)
+                              variable=ScreePlotDisplay, command=updateSelection)
         Button3.grid(row=3, column=1)
         #Reinitialize checkbox
         if self.ShowCorrMatrix == 1:
@@ -262,12 +267,6 @@ class ApplicationGUI(Frame):
             if self.ManualInput.get():
                 firstOption.deselect()
                 self.GutmanKaiser.set(0)
-
-        def callback(P):  #making sure that the entry is a positive integer
-            if str.isdigit(P) or P == "":
-                return True
-            else:
-                return False
 
         #EigenValueCheck = BooleanVar()
         firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
@@ -355,24 +354,28 @@ class ApplicationGUI(Frame):
 
         frame2 = Frame(self.newwin)
         frame2.place(x=150, y=165)
-        Checkbutton(frame2, text="Prikaži rotirana rješenja",
-                                   variable=self.ShowRotatedFS).pack()
+
+        def updateSelection():
+            self.ShowRotatedFS = RotatedMDisplay.get()
+
+        RotatedMDisplay = BooleanVar()
+        Button1 = Checkbutton(frame2, text="Prikaži rotirana rješenja",
+                              variable=RotatedMDisplay, command=updateSelection)
+        Button1.grid(row=1, column=1)
+
+        # Reinitialize checkbox
+        if self.ShowRotatedFS == 1:
+            Button1.select()
 
         frame3 = Frame(self.newwin)
         frame3.place(x=80, y=200)
         Label(frame3, text="Broj iteracija za konvergenciju:").grid(row=0, column=0)
 
-        def callback1(P):  # making sure that the entry is a positive integer
-            if str.isdigit(P) or P == "":
-                return True
-            else:
-                return False
+        vcmd2 = (frame3.register(callback))
 
-        vcmd2 = (frame3.register(callback1))
-
-        IterationNumber2 = Entry(frame3, validate='all', validatecommand=(vcmd2, '%P'),
+        IterationNumber = Entry(frame3, validate='all', validatecommand=(vcmd2, '%P'),
                                  textvariable=self.RotationIterationNumber)
-        IterationNumber2.grid(row=0, column=1)
+        IterationNumber.grid(row=0, column=1)
 
         frame5 = Frame(self.newwin, width=300, height=5)
         frame5.place(x=175, y=250)
@@ -515,8 +518,9 @@ class ApplicationGUI(Frame):
 
         # Calculate communalities for given loadings df
         communalities = (Loadings ** 2).sum(axis=1)
-        communalities = pd.DataFrame(communalities,
-                                     columns=['Komunaliteti'])
+        communalities = (pd.DataFrame(communalities,
+                                     columns=['Komunaliteti'])).\
+                                     sort_values(by ='Komunaliteti' , ascending=False)
 
         RotatedM = (Loadings, 0)
 
@@ -573,6 +577,8 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
         if self.ShowRotatedFS:
             self.printObject.AppendPObject(RotatedM[0].to_string(), 'Rotirani faktori:')
+            self.printObject.AppendPObject((RotatedM[0].where(np.abs(RotatedM[0].values) > 0.45, '')).
+                                           to_string(), 'Rotirani faktori > 0.45:')
 
         SortedVariables = pd.DataFrame(RotatedM[0].abs().idxmax(axis=1).sort_values(axis=0),
                                        columns=['Faktori'])
