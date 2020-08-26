@@ -234,7 +234,7 @@ class ApplicationGUI(Frame):
             popupMenu = OptionMenu(frame1, tkvar, *choices)
 
         frame2 = Frame(self.newwin)
-        frame2.pack(side=TOP)
+        frame2.place(relx=0.18, rely=0.2)
         Label(frame2, text="Prikaži sljedeće:").grid(row=1, column=0)
 
         def updateSelection():
@@ -263,16 +263,23 @@ class ApplicationGUI(Frame):
             Button3.select()
 
         frame3 = Frame(self.newwin)
-        frame3.pack(side=TOP)
-        Label(frame3, text="Faktori koji će biti ekstraktovani:").grid(row=0, column=0)
+        frame3.place(relx=0.2, rely=0.5)
+        Label(frame3, text="    Broj faktora:").grid(row=0, column=0)
 
         def updateExtractionOption(i): #defining the extraction rule (N first values)
-            if i == 1 and self.GutmanKaiser.get():
-                secondOption.deselect()
-                self.NumberOfFactors.set(0)
-            elif i == 2 and self.ManualInput.get():
-                firstOption.deselect()
-                self.GutmanKaiser.set(0)
+            if i == 1:
+                if self.GutmanKaiser.get():
+                    secondOption.deselect()
+                    self.NumberOfFactors.set(0)
+                else:
+                    secondOption.select()
+            elif i == 2:
+                if self.ManualInput.get():
+                    firstOption.deselect()
+                    self.GutmanKaiser.set(0)
+                else:
+                    firstOption.select()
+                    self.GutmanKaiser.set(1)
 
         #EigenValueCheck = BooleanVar()
         firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
