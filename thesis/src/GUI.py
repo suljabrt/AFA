@@ -247,7 +247,7 @@ class ApplicationGUI(Frame):
                               variable=CorrelationMDisplay, command=updateSelection)
         Button1.grid(row=1, column=1)
         UnrotatedFSDisplay = BooleanVar()
-        Button2 = Checkbutton(frame2, text="Nerotirana faktorska rješenja",
+        Button2 = Checkbutton(frame2, text="Nerotirana faktorska rjesenja",
                               variable=UnrotatedFSDisplay, command=updateSelection)
         Button2.grid(row=2, column=1)
         ScreePlotDisplay = BooleanVar()
@@ -276,7 +276,8 @@ class ApplicationGUI(Frame):
 
         #EigenValueCheck = BooleanVar()
         firstOption = Checkbutton(frame3, text="Gutman-Kaiser pravilo                           ",
-                    variable=self.GutmanKaiser, command=lambda: updateExtractionOption(1)) #extract all the factors whose eigenvalue is greter than 1
+                    variable=self.GutmanKaiser, command=lambda: updateExtractionOption(1))
+                    #extract all the factors whose eigenvalue is greter than 1
         firstOption.grid(row=0, column=1)
 
         #ConcreteValueCheck = BooleanVar()
@@ -326,7 +327,7 @@ class ApplicationGUI(Frame):
                     variable=RotationMethod3Check, command=lambda: updateRotationMethod(2))
 
         RotationMethod4Check = BooleanVar()
-        fourthOption = Checkbutton(frame1, text="Equamax",
+        fourthOption = Checkbutton(frame1, text="Equimax",
                     variable=RotationMethod4Check, command=lambda: updateRotationMethod(3))
 
         RotationMethod5Check = BooleanVar()
@@ -401,7 +402,8 @@ class ApplicationGUI(Frame):
         self.newwin.title("Faktorska analiza: Rezultati")
         self.newwin.geometry("{0}x{1}+0+0".format(
             self.newwin.winfo_screenwidth()-3, self.newwin.winfo_screenheight()-3))
-        frame1 = Frame(self.newwin, width=self.newwin.winfo_screenwidth()-300, height=self.newwin.winfo_screenheight()-300)
+        frame1 = Frame(self.newwin, width=self.newwin.winfo_screenwidth()-300,
+                       height=self.newwin.winfo_screenheight()-300)
         frame1.pack(fill=BOTH)
         label1 = Label(frame1, text="Rezultati", fg="black")
         label1.pack(fill=BOTH)
@@ -486,7 +488,7 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Kaiser-Gutman broj faktora:')
         else:
             if int(self.NumberOfFactors.get()) > len(self.ListOfSelctedVariables):
-                return ('Broj faktora ne smije biti veći od broja varijabli!')
+                return ('Broj faktora ne smije biti veci od broja varijabli!')
             self.printObject.AppendPObject(self.NumberOfFactors.get(), 'Uneseni broj faktora:')
 
         self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
@@ -534,7 +536,7 @@ class ApplicationGUI(Frame):
         communalities = (Loadings ** 2).sum(axis=1)
         communalities = (pd.DataFrame(communalities,
                                      columns=['Komunaliteti'])).\
-                                     sort_values(by ='Komunaliteti' , ascending=False)
+                                     sort_values(by='Komunaliteti', ascending=False)
 
         RotatedM = (Loadings, 0)
 
@@ -589,8 +591,8 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
         if self.ShowRotatedFS:
             self.printObject.AppendPObject(RotatedM.to_string(), 'Rotirani faktori:')
-            self.printObject.AppendPObject((RotatedM.where(np.abs(RotatedM.values) > 0.45, '')).
-                                           to_string(), 'Rotirani faktori > 0.45:')
+            #self.printObject.AppendPObject((RotatedM.where(np.abs(RotatedM.values) > 0.45, '')).
+            #                               to_string(), 'Rotirani faktori > 0.45:')
 
         SortedVariables = pd.DataFrame(RotatedM.abs().idxmax(axis=1).sort_values(axis=0),
                                        columns=['Faktori'])
@@ -617,7 +619,7 @@ if __name__ == '__main__':
     labelfont = ('times', 10, 'bold')
     root.geometry("500x200")
     root.resizable(width=False, height=False)
-    AppObject = ApplicationGUI(root, initialdir=r"/home/haris/Desktop/Teza/data")  #
+    AppObject = ApplicationGUI(root, initialdir=r"~/")
     AppObject.pack(fill='y')
 
     root.mainloop()
