@@ -247,7 +247,7 @@ class ApplicationGUI(Frame):
                               variable=CorrelationMDisplay, command=updateSelection)
         Button1.grid(row=1, column=1)
         UnrotatedFSDisplay = BooleanVar()
-        Button2 = Checkbutton(frame2, text="Nerotirana faktorska rjesenja",
+        Button2 = Checkbutton(frame2, text="Nerotirana faktorska rješenja",
                               variable=UnrotatedFSDisplay, command=updateSelection)
         Button2.grid(row=2, column=1)
         ScreePlotDisplay = BooleanVar()
@@ -334,7 +334,7 @@ class ApplicationGUI(Frame):
                     variable=RotationMethod3Check, command=lambda: updateRotationMethod(2))
 
         RotationMethod4Check = BooleanVar()
-        fourthOption = Checkbutton(frame1, text="Equimax",
+        fourthOption = Checkbutton(frame1, text="Equamax",
                     variable=RotationMethod4Check, command=lambda: updateRotationMethod(3))
 
         RotationMethod5Check = BooleanVar()
