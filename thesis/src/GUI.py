@@ -596,12 +596,12 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(CorrMatrix, "Korelaciona matrica:")
         if self.ShowUnrotatedFS:
             self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
+        lightRM = (RotatedM.where(np.abs(RotatedM.values) > 0.45)).dropna(axis=0, how='all')
         if self.ShowRotatedFS:
             self.printObject.AppendPObject(RotatedM.to_string(), 'Rotirani faktori:')
-            #self.printObject.AppendPObject((RotatedM.where(np.abs(RotatedM.values) > 0.45, '')).
-            #                               to_string(), 'Rotirani faktori > 0.45:')
+            self.printObject.AppendPObject(lightRM.to_string(), 'Rotirani faktori > 0.45:')
 
-        SortedVariables = pd.DataFrame(RotatedM.abs().idxmax(axis=1).sort_values(axis=0),
+        SortedVariables = pd.DataFrame(lightRM.abs().idxmax(axis=1).sort_values(axis=0),
                                        columns=['Faktori'])
         self.printObject.AppendPObject(SortedVariables.to_string(), 'Preslikavanje varijabli na faktore:')
 
