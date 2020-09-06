@@ -460,6 +460,12 @@ class ApplicationGUI(Frame):
             SelectedDF = SelectedDF.fillna(SelectedDF.mean().round(decimals=0))
             #SelectedDF.to_csv(r'/home/haris/Desktop/Teza/data/NoMiss.csv', index=False)
 
+        #Descriptive statistics
+        dscStatsDF = pd.DataFrame({"Srednja vrijednost": SelectedDF.mean(axis=0),
+                                   "Standardna dev.": SelectedDF.std(axis=0),
+                                   "Kosost": SelectedDF.skew(axis=0),
+                                   "Kurtoza": SelectedDF.kurtosis(axis=0)})
+
         #Testing the adequacy of the data frame
         #Bartlett's adequacy test
         chi_square_value, p_value = calculate_bartlett_sphericity(SelectedDF)
@@ -467,6 +473,9 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(p_value, 'Podaci nisu statistički značajni ni adekvatni po Bartlett testu!')
         else:
             self.printObject.AppendPObject(p_value, 'Podaci su statistički značajni i adekvatni po Bartlett testu!')
+
+        #Chi squared value
+        self.printObject.AppendPObject(chi_square_value, '\u03C7 ^2 - test nezavisnosti varijabli:')
 
         # Kaiser-Meyer-Olkin adequacy test
         kmo_per_item, kmo_total = calculate_kmo(SelectedDF)
@@ -500,6 +509,8 @@ class ApplicationGUI(Frame):
 
         self.printObject.AppendPObject(self.RotationMethod, 'Metoda rotacije:')
         self.printObject.AppendPObject(self.RotationIterationNumber.get(), 'Uneseni broj iteracija za rotaciju:')
+
+        self.printObject.AppendPObject(dscStatsDF.to_string(), 'Deskriptivna statistika podataka:')
 
         method = self.Method.get()
         #making a dummy fa object with a valid method instead of pca
@@ -614,7 +625,7 @@ class ApplicationGUI(Frame):
             CronbachAlphaDF = CronbachAlphaDF.append({'Factor': 'factor'+str(i),
             'Cronbachova alfa': Cronbach(len(VariableClusterDF.columns), CovMatrix, StdMatrix)}, ignore_index=True)
 
-        self.printObject.AppendPObject(CronbachAlphaDF.to_string(), 'Mjera interne konzistentnosti varijabli')
+        self.printObject.AppendPObject(CronbachAlphaDF.to_string(), 'Mjera interne konzistentnosti varijabli:')
 
         return self.printObject.getOutput()
 
