@@ -435,7 +435,8 @@ class ApplicationGUI(Frame):
             file = open('Results.txt', 'w')
             file.write(text.get("1.0", END))
             file.close()
-            plt.savefig('ScreePlot.png')
+            if self.ShowScreePlot:
+                plt.savefig('ScreePlot.png')
 
         SaveButton = Button(frame5, text="Sačuvaj", bg="red", fg="white", command=SaveResults)
         SaveButton.pack()
@@ -456,9 +457,9 @@ class ApplicationGUI(Frame):
         #Create a data frame of only selected variables
         SelectedDF = self.df[self.ListOfSelctedVariables]
         if SelectedDF.isnull().values.any():
-            self.printObject.AppendPObject('Podaci koji nedostaju su popunjeni zaokruženom srednjom vrijednošću', '')
+            self.printObject.AppendPObject(np.sum(SelectedDF.isnull().values),'Broj podataka koji nedostaju:')
+            self.printObject.AppendPObject('', 'Podaci koji nedostaju su popunjeni zaokruženom srednjom vrijednošću!')
             SelectedDF = SelectedDF.fillna(SelectedDF.mean().round(decimals=0))
-            #SelectedDF.to_csv(r'/home/haris/Desktop/Teza/data/NoMiss.csv', index=False)
 
         #Descriptive statistics
         dscStatsDF = pd.DataFrame({"Srednja vrijednost": SelectedDF.mean(axis=0),
@@ -470,12 +471,14 @@ class ApplicationGUI(Frame):
         #Bartlett's adequacy test
         chi_square_value, p_value = calculate_bartlett_sphericity(SelectedDF)
         if (p_value > 0.05):
-            self.printObject.AppendPObject(p_value, 'Podaci nisu statistički značajni ni adekvatni po Bartlett testu!')
+            self.printObject.AppendPObject(p_value, 'Podaci nisu statistički '
+                                                    'značajni ni adekvatni po Bartlett testu! p vrijednost:')
         else:
-            self.printObject.AppendPObject(p_value, 'Podaci su statistički značajni i adekvatni po Bartlett testu!')
+            self.printObject.AppendPObject(p_value, 'Podaci su statistički značajni'
+                                                    ' i adekvatni po Bartlett testu! p vrijednost:')
 
         #Chi squared value
-        self.printObject.AppendPObject(chi_square_value, '\u03C7 ^2 - test nezavisnosti varijabli:')
+        self.printObject.AppendPObject(chi_square_value, 'Test nezavisnosti varijabli korelacione matrice \u03C7^2:')
 
         # Kaiser-Meyer-Olkin adequacy test
         kmo_per_item, kmo_total = calculate_kmo(SelectedDF)
@@ -487,7 +490,7 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(kmo_total, 'Podaci su adekvatni po Kaiser-Meyer-Olkin testu!')
 
         #Get correlation matrix with Pearson method
-        CorrMatrix = SelectedDF.corr()
+        CorrMatrix = SelectedDF.corr(method="pearson")
 
         #Get Eigenvalues
         eigenvalues, eigenvectors = sp.linalg.eigh(CorrMatrix)
@@ -536,18 +539,17 @@ class ApplicationGUI(Frame):
             temp = temp[:, :int(self.NumberOfFactors.get())]
             Loadings = pd.DataFrame(temp, index=Loadings.index, columns=Loadings.columns)
 
-        # Create scree plot using matplotlib
-        plt.plot(range(0, SelectedDF.shape[1]),
-                    eigenvalues, marker='o')
-        plt.plot(range(0, SelectedDF.shape[1]), np.ones(len(eigenvalues)), 'r--')
-        plt.title('Scree Plot')
-        plt.xlabel('Variables')
-        plt.ylabel('Eigenvalues')
-        plt.legend(('Eigenvalues', 'Eigenvalues = 1'))
-        plt.grid()
-
         # If Show Scree Plot is selected
         if self.ShowScreePlot:
+            # Create scree plot using matplotlib
+            plt.plot(range(0, SelectedDF.shape[1]),
+                     eigenvalues, marker='o')
+            plt.plot(range(0, SelectedDF.shape[1]), np.ones(len(eigenvalues)), 'r--')
+            plt.title('Scree Plot')
+            plt.xlabel('Variables')
+            plt.ylabel('Eigenvalues')
+            plt.legend(('Eigenvalues', 'Eigenvalues = 1'))
+            plt.grid()
             plt.show(block=False)
 
         # Calculate communalities for given loadings df
@@ -556,7 +558,7 @@ class ApplicationGUI(Frame):
                                      columns=['Komunaliteti'])).\
                                      sort_values(by='Komunaliteti', ascending=False)
 
-        RotatedM = (Loadings, 0)
+        RotatedM = Loadings
 
         if self.RotationMethod != None:
             # Create a rotator object
@@ -607,7 +609,13 @@ class ApplicationGUI(Frame):
             self.printObject.AppendPObject(CorrMatrix, "Korelaciona matrica:")
         if self.ShowUnrotatedFS:
             self.printObject.AppendPObject(Loadings.to_string(), "Ekstraktovani faktori bez rotacije:")
-        lightRM = (RotatedM.where(np.abs(RotatedM.values) > 0.45)).dropna(axis=0, how='all')
+
+        #dropping variables with non-salient loadings
+        if self.RotationMethod != None:
+            lightRM = (RotatedM.where(np.abs(RotatedM.values) > 0.45)).dropna(axis=0, how='all')
+        else:
+            lightRM = (Loadings.where(np.abs(Loadings.values) > 0.45)).dropna(axis=0, how='all')
+
         if self.ShowRotatedFS:
             self.printObject.AppendPObject(RotatedM.to_string(), 'Rotirani faktori:')
             self.printObject.AppendPObject(lightRM.to_string(), 'Rotirani faktori > 0.45:')
