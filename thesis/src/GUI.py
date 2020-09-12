@@ -612,9 +612,11 @@ class ApplicationGUI(Frame):
 
         #dropping variables with non-salient loadings
         if self.RotationMethod != None:
-            lightRM = (RotatedM.where(np.abs(RotatedM.values) > 0.45)).dropna(axis=0, how='all')
+            lightRM = (RotatedM.where(np.abs(RotatedM.values) >= 0.45)).dropna(axis=0, how='all')
         else:
-            lightRM = (Loadings.where(np.abs(Loadings.values) > 0.45)).dropna(axis=0, how='all')
+            lightRM = (Loadings.where(np.abs(Loadings.values) >= 0.45)).dropna(axis=0, how='all')
+        # dropping variables with multiple salient loadings
+        lightRM = lightRM[(lightRM.notnull().sum(axis=1) == 1)]
 
         if self.ShowRotatedFS:
             self.printObject.AppendPObject(RotatedM.to_string(), 'Rotirani faktori:')
