@@ -2,21 +2,25 @@ Ispis aplikacije za faktorsku analizu
 
 ___________________________________________________________________________
 
-Podaci su statistički značajni i adekvatni po Bartlett testu!
+Podaci su statistički značajni i adekvatni po Bartlett testu! p vrijednost:
 
 0.0
 
+Test nezavisnosti varijabli korelacione matrice χ^2:
+
+5492.169014029765
+
 Podaci su adekvatni po Kaiser-Meyer-Olkin testu!
 
-0.9301739808421337
+0.8022734310562093
 
 Metoda ekstrakcije faktora:
 
 principal
 
-Kaiser-Gutman broj faktora:
+Uneseni broj faktora:
 
-4
+5
 
 Metoda rotacije:
 
@@ -26,178 +30,495 @@ Uneseni broj iteracija za rotaciju:
 
 30
 
+Deskriptivna statistika podataka:
+
+                                                                                                                                          Srednja vrijednost  Standardna dev.    Kosost    Kurtoza
+Interakcija sa virtualnim okruženjem je djelovala prirodno.                                                                                         5.522581         1.135813 -0.352809  -0.689504
+Bio/la sam uključen/a u vizualne aspekte virtualnog okruženja.                                                                                      5.716129         1.375834 -1.202850   1.472880
+Uređaji (kontroleri), koji su upravljali mojim kretanjem u virtualnom okruženju, su djelovali prirodno.                                             5.709677         1.323944 -0.896062   0.329811
+Mogao/la sam ispitivati virtualno okruženje vizualnim putem.                                                                                        6.006452         1.084105 -0.942272   0.077006
+Osjećaj kretanja unutar virtualog okruženja je bio uvjerljiv.                                                                                       5.858065         1.147774 -0.788201   0.000541
+Mogao/la sam istražiti objekte detaljno.                                                                                                            5.825806         1.310043 -0.866261  -0.385569
+Mogao/la sam istražiti objekte iz više različitih uglova.                                                                                           6.232258         1.011745 -1.396033   1.777801
+Bio/la sam uključen/a u iskustvo virtualnog okruženja.                                                                                              6.096774         1.091729 -0.922291  -0.296639
+Pri kraju iskustva osjećao/la sam se vještim/om u kretanju i interakciji sa virtualnim okruženjem                                                   5.896774         1.111768 -0.885062   0.261574
+Mogao/la sam se koncentrisati na izvršavanje zadataka umjesto na uređaje (kontrolere).                                                              5.935484         1.091153 -0.994853   0.582808
+Uspješno sam identificirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                      6.161290         1.197855 -1.831694   4.008126
+Uspješno sam locirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                            5.767742         1.376139 -1.239034   1.257661
+Virtualno okruženje me stimulisalo.                                                                                                                 6.000000         1.110750 -1.238483   1.988169
+Toliko sam se uživio/la u virtualnom okruženju da nisam bio svjestan/na šta se dešava oko mene.                                                     5.374194         1.671567 -0.956584   0.064259
+Toliko sam se uživio/la u virtualnom okruženju da sam osjetio/la kao da sam unutar igre, a ne da manipulišem uređajima i gledam u ekran.            5.554839         1.495195 -0.951609   0.326633
+Unutar virtualnog okruženja osjećao/la sam se fizički spremnim.                                                                                     5.658065         1.402404 -1.230955   1.214406
+Toliko sam se uživio/la u virtualnom okruženju da sam izgubio/la pojam o vremenu.                                                                   5.154839         1.667652 -0.742568  -0.316121
+Osjećao/la sam da mogu savršeno da kontrolišem moje akcije.                                                                                         5.406452         1.356546 -0.708780  -0.034581
+U svakom trenutku znao/la sam šta da uradim.                                                                                                        5.612903         1.301284 -0.824495   0.337000
+Osjećao/la sam da vladam situacijom.                                                                                                                5.935484         1.114703 -0.954265   0.471146
+Vrijeme kao da je teklo drugačije nego inače.                                                                                                       4.993548         1.807261 -0.678989  -0.525850
+Vrijeme kao da je ubrzalo.                                                                                                                          4.406452         2.005501 -0.250103  -1.157273
+Gubio/la sam pojam o vremenu.                                                                                                                       4.580645         1.920061 -0.350652  -0.975840
+Nisam brinuo/la o tome šta bi drugi ljudi rekli o meni.                                                                                             5.961290         1.658837 -1.744913   2.209066
+Osjetio/la sam da proživljavam uzbudljiv trenutak.                                                                                                  6.077419         1.102155 -1.186712   0.912385
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                                                                           5.683871         1.313046 -0.773832  -0.035037
+Kada spomenem iskustvo u virtualnom okruženju, osjetim emocije koje bih da podijelim sa drugima.                                                    5.419355         1.650938 -1.062083   0.446837
+Uživao/la sam unutar virtualnog okruženja.                                                                                                          6.245161         1.112747 -1.501724   1.569421
+Bilo je toliko uzbudljivo da sam mogao/la ostati u virtualnom okruženju satima.                                                                     4.864516         1.809346 -0.501655  -0.752023
+Uživao/la sam u iskustvu toliko da se osjećam energično.                                                                                            4.948387         1.708624 -0.662521  -0.376207
+Osjetio/la sam nervozu u virtualnom okruženju.                                                                                                      2.458065         1.652384  1.067743   0.203766
+Poželio/la sam da odvratim pažnju kako bih smanjio/la svoju napetost.                                                                               2.374194         1.667677  1.158907   0.474194
+Misli bi mi zalutale dok sam bio/la u virtualnom okruženju.                                                                                         3.180645         1.985241  0.457519  -1.028706
+Uređaji za interakciju (kontroleri) su mi baš dosadili.                                                                                             1.554839         0.940723  2.044063   4.626069
+Kada bih uspješno izvršio/la zadatke, osjetio/la bih uzbuđenost.                                                                                    4.561290         1.747294 -0.429278  -0.651355
+Dok sam koristio/la uređaje za interakciju (kontrolere), osjetio/la sam da se vrijeme oteglo.                                                       2.574194         1.582979  0.688108  -0.530623
+Uživao/la sam u izazovu savladavanja uređaja za interakciju (kontrolera).                                                                           5.825806         1.437659 -1.084454   0.214691
+Uživao/la sam u korištenju uređaja za interakciju (kontrolera).                                                                                     5.464516         1.473918 -0.743213   0.030413
+Lično, rekao/la bih da je virtualno okruženje praktično.                                                                                            6.096774         1.220891 -1.488532   2.025954
+Lično, rekao/la bih da virtualno okruženje nije zbunjujuće.                                                                                         5.787097         1.357935 -1.166782   0.497257
+Lično, rekao/la bih da je moguće ovladati virtualnim okruženjem.                                                                                    5.632258         1.391156 -1.237544   1.463911
+Po mom mišljenju ovo virtualno okruženje nije bezveze.                                                                                              6.354839         1.036615 -1.713140   2.561115
+Po mom mišljenju ovo virtualno okruženje nije amatersko.                                                                                            6.206452         1.246797 -1.661893   2.005627
+Po mom mišljenju ovo virtualno okruženje je vrhunsko.                                                                                               5.012903         1.750648 -0.755604  -0.247888
+Po mom mišljenju lako je nekome predstaviti ovo virtualno okruženje.                                                                                5.941935         1.270232 -1.237954   1.324512
+Po mom mišljenju ovo virtualno okruženje je ružno.                                                                                                  1.329032         0.814716  3.705099  18.056082
+Po mom mišljenju ovo virtualno okruženje je dopadljivo.                                                                                             5.987097         1.216697 -1.158433   0.993217
+Osjetio/la sam zamor tokom interakcije sa virtualnim okruženjem.                                                                                    1.993548         1.605578  1.660391   1.869939
+Osjetio/la sam glavobolju tokom interakcije sa virtualnim okruženjem.                                                                               1.735484         1.428274  2.156571   3.993148
+Osjetio/la sam naprezanje očiju tokom interakcije sa virtualnim okruženjem.                                                                         2.174194         1.538039  1.102579   0.050607
+Osjetio/la sam pojačano lučenje pljuvačke tokom interakcije sa virtualnim okruženjem.                                                               1.754839         1.373884  1.791107   2.259859
+Osjetio/la sam mučninu tokom interakcije sa virtualnim okruženjem.                                                                                  1.819355         1.496624  1.997402   3.106381
+Osjetio/la sam “da mi je glava teška” tokom interakcije sa virtualnim okruženjem.                                                                   1.877419         1.543043  1.883881   2.585452
+Osjetio/la sam ošamućenost tokom interakcije sa virtualnim okruženjem.                                                                              2.161290         1.745063  1.494679   1.128870
+Osjetio/la sam vrtoglavicu tokom interakcije sa virtualnim okruženjem.                                                                              1.767742         1.357133  1.883246   2.721460
+Ako bih opet koristio/la virtualno okruženje, moja interakcija sa okruženjem bi bila jasna i razumljiva.                                            6.367742         1.099110 -2.050901   3.945465
+Za mene bilo bi jednostavno postati vješt/a u korištenju virtualnog okruženja.                                                                      6.212903         1.145216 -1.688417   2.883439
+Za mene bi bilo jednostavno naučiti upravljati virtualnim okruženjem.                                                                               6.174194         1.168573 -2.027059   4.989857
+Korištenje uređaja za interakciju (kontrolera) nije loša ideja.                                                                                     6.496774         0.969497 -2.481362   7.626220
+Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.                                                                         4.883871         1.947209 -0.599053  -0.828428
 
 
-     Komunaliteti
-q08      0.739322
-q11      0.690407
-q17      0.681557
-q06      0.654307
-q18      0.597484
-q21      0.555149
-q07      0.544767
-q13      0.536717
-q03      0.530111
-q12      0.512232
-q16      0.487696
-q14      0.487180
-q09      0.484062
-q20      0.482743
-q04      0.468034
-q22      0.463317
-q01      0.434018
-q02      0.415124
-q23      0.409608
-q15      0.377247
-q05      0.342276
-q19      0.342117
-q10      0.337067
+
+                                                                                                                                          Komunaliteti
+Uživao/la sam u iskustvu toliko da se osjećam energično.                                                                                      0.757346
+Osjetio/la sam mučninu tokom interakcije sa virtualnim okruženjem.                                                                            0.683394
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                                                                     0.670296
+Osjetio/la sam ošamućenost tokom interakcije sa virtualnim okruženjem.                                                                        0.627181
+Osjetio/la sam “da mi je glava teška” tokom interakcije sa virtualnim okruženjem.                                                             0.624405
+Bilo je toliko uzbudljivo da sam mogao/la ostati u virtualnom okruženju satima.                                                               0.617573
+Gubio/la sam pojam o vremenu.                                                                                                                 0.615420
+Vrijeme kao da je teklo drugačije nego inače.                                                                                                 0.613953
+Uživao/la sam unutar virtualnog okruženja.                                                                                                    0.607072
+Osjetio/la sam vrtoglavicu tokom interakcije sa virtualnim okruženjem.                                                                        0.571078
+Vrijeme kao da je ubrzalo.                                                                                                                    0.565577
+Po mom mišljenju lako je nekome predstaviti ovo virtualno okruženje.                                                                          0.561876
+Osjetio/la sam zamor tokom interakcije sa virtualnim okruženjem.                                                                              0.557965
+Toliko sam se uživio/la u virtualnom okruženju da sam izgubio/la pojam o vremenu.                                                             0.557159
+Osjetio/la sam glavobolju tokom interakcije sa virtualnim okruženjem.                                                                         0.556582
+Toliko sam se uživio/la u virtualnom okruženju da sam osjetio/la kao da sam unutar igre, a ne da manipulišem uređajima i gledam u ekran.      0.543380
+Po mom mišljenju ovo virtualno okruženje je dopadljivo.                                                                                       0.527451
+Uređaji (kontroleri), koji su upravljali mojim kretanjem u virtualnom okruženju, su djelovali prirodno.                                       0.511842
+Osjećao/la sam da mogu savršeno da kontrolišem moje akcije.                                                                                   0.511613
+Mogao/la sam istražiti objekte detaljno.                                                                                                      0.509836
+Lično, rekao/la bih da je virtualno okruženje praktično.                                                                                      0.499872
+Osjetio/la sam nervozu u virtualnom okruženju.                                                                                                0.498536
+Uživao/la sam u korištenju uređaja za interakciju (kontrolera).                                                                               0.496623
+Kada spomenem iskustvo u virtualnom okruženju, osjetim emocije koje bih da podijelim sa drugima.                                              0.488872
+Mogao/la sam ispitivati virtualno okruženje vizualnim putem.                                                                                  0.485930
+Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.                                                                   0.485189
+Bio/la sam uključen/a u iskustvo virtualnog okruženja.                                                                                        0.476488
+Osjetio/la sam da proživljavam uzbudljiv trenutak.                                                                                            0.466977
+Osjećaj kretanja unutar virtualog okruženja je bio uvjerljiv.                                                                                 0.466935
+Uspješno sam locirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                      0.458937
+Osjećao/la sam da vladam situacijom.                                                                                                          0.451605
+Za mene bilo bi jednostavno postati vješt/a u korištenju virtualnog okruženja.                                                                0.443240
+Uživao/la sam u izazovu savladavanja uređaja za interakciju (kontrolera).                                                                     0.431320
+Za mene bi bilo jednostavno naučiti upravljati virtualnim okruženjem.                                                                         0.423449
+Bio/la sam uključen/a u vizualne aspekte virtualnog okruženja.                                                                                0.420483
+Lično, rekao/la bih da virtualno okruženje nije zbunjujuće.                                                                                   0.417025
+Toliko sam se uživio/la u virtualnom okruženju da nisam bio svjestan/na šta se dešava oko mene.                                               0.412115
+Unutar virtualnog okruženja osjećao/la sam se fizički spremnim.                                                                               0.404971
+Po mom mišljenju ovo virtualno okruženje je vrhunsko.                                                                                         0.404314
+Poželio/la sam da odvratim pažnju kako bih smanjio/la svoju napetost.                                                                         0.400659
+Po mom mišljenju ovo virtualno okruženje nije bezveze.                                                                                        0.397278
+U svakom trenutku znao/la sam šta da uradim.                                                                                                  0.387697
+Ako bih opet koristio/la virtualno okruženje, moja interakcija sa okruženjem bi bila jasna i razumljiva.                                      0.379931
+Mogao/la sam istražiti objekte iz više različitih uglova.                                                                                     0.375075
+Pri kraju iskustva osjećao/la sam se vještim/om u kretanju i interakciji sa virtualnim okruženjem                                             0.353571
+Virtualno okruženje me stimulisalo.                                                                                                           0.348672
+Osjetio/la sam naprezanje očiju tokom interakcije sa virtualnim okruženjem.                                                                   0.347345
+Po mom mišljenju ovo virtualno okruženje nije amatersko.                                                                                      0.346770
+Mogao/la sam se koncentrisati na izvršavanje zadataka umjesto na uređaje (kontrolere).                                                        0.335917
+Interakcija sa virtualnim okruženjem je djelovala prirodno.                                                                                   0.331745
+Uspješno sam identificirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                0.330292
+Kada bih uspješno izvršio/la zadatke, osjetio/la bih uzbuđenost.                                                                              0.318920
+Korištenje uređaja za interakciju (kontrolera) nije loša ideja.                                                                               0.314742
+Osjetio/la sam pojačano lučenje pljuvačke tokom interakcije sa virtualnim okruženjem.                                                         0.313024
+Lično, rekao/la bih da je moguće ovladati virtualnim okruženjem.                                                                              0.309499
+Dok sam koristio/la uređaje za interakciju (kontrolere), osjetio/la sam da se vrijeme oteglo.                                                 0.296499
+Po mom mišljenju ovo virtualno okruženje je ružno.                                                                                            0.289879
+Misli bi mi zalutale dok sam bio/la u virtualnom okruženju.                                                                                   0.213053
+Uređaji za interakciju (kontroleri) su mi baš dosadili.                                                                                       0.154160
+Nisam brinuo/la o tome šta bi drugi ljudi rekli o meni.                                                                                       0.116089
 
 
 
-    Svojstvene vrijednosti:  % varijanse:  ...  % varijanse:  Kumulativni %:
-0                  7.290047     31.695857  ...     14.510999       14.510999
-1                  1.738829      7.560125  ...      7.762401       22.273400
-2                  1.316752      5.725007  ...     15.795292       38.068692
-3                  1.227198      5.335644  ...     10.265666       48.334357
-4                  0.987878      4.295121  ...      0.000000       48.334357
-5                  0.895330      3.892741  ...      0.000000       48.334357
-6                  0.805560      3.502436  ...      0.000000       48.334357
-7                  0.782820      3.403565  ...      0.000000       48.334357
-8                  0.750971      3.265092  ...      0.000000       48.334357
-9                  0.716958      3.117207  ...      0.000000       48.334357
-10                 0.683588      2.972121  ...      0.000000       48.334357
-11                 0.669502      2.910876  ...      0.000000       48.334357
-12                 0.611998      2.660859  ...      0.000000       48.334357
-13                 0.577738      2.511903  ...      0.000000       48.334357
-14                 0.549188      2.387772  ...      0.000000       48.334357
-15                 0.523150      2.274567  ...      0.000000       48.334357
-16                 0.508396      2.210418  ...      0.000000       48.334357
-17                 0.455940      1.982347  ...      0.000000       48.334357
-18                 0.423804      1.842624  ...      0.000000       48.334357
-19                 0.407791      1.773004  ...      0.000000       48.334357
-20                 0.379480      1.649912  ...      0.000000       48.334357
-21                 0.364022      1.582705  ...      0.000000       48.334357
-22                 0.333062      1.448095  ...      0.000000       48.334357
-
-[23 rows x 9 columns]
+    Svojstvene vrijednosti:  % varijanse:  Kumulativni %:  Nakon ekstrakcije:  % varijanse:  Kumulativni %:  Nakon rotacije:  % varijanse:  Kumulativni %:
+0                 13.519449     22.532415       22.532415           13.519449     22.532415       22.532415         6.098805     10.164675       10.164675
+1                  5.092432      8.487386       31.019801            5.092432      8.487386       31.019801         5.745830      9.576383       19.741058
+2                  3.594945      5.991575       37.011376            3.594945      5.991575       37.011376         5.048533      8.414222       28.155280
+3                  2.725386      4.542309       41.553686            2.725386      4.542309       41.553685         4.862601      8.104334       36.259615
+4                  2.152493      3.587489       45.141175            2.152486      3.587476       45.141162         4.074217      6.790361       43.049976
+5                  2.009412      3.349019       48.490194            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+6                  1.833478      3.055796       51.545990            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+7                  1.733614      2.889357       54.435347            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+8                  1.603605      2.672675       57.108022            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+9                  1.544007      2.573345       59.681368            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+10                 1.466359      2.443932       62.125300            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+11                 1.256263      2.093772       64.219072            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+12                 1.192807      1.988012       66.207084            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+13                 1.118037      1.863396       68.070480            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+14                 1.086644      1.811074       69.881554            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+15                 0.971876      1.619793       71.501347            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+16                 0.937547      1.562578       73.063925            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+17                 0.893465      1.489109       74.553034            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+18                 0.848103      1.413505       75.966539            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+19                 0.833774      1.389624       77.356163            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+20                 0.808314      1.347190       78.703354            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+21                 0.731736      1.219559       79.922913            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+22                 0.691902      1.153171       81.076084            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+23                 0.666263      1.110438       82.186522            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+24                 0.630564      1.050941       83.237463            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+25                 0.623976      1.039961       84.277423            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+26                 0.601461      1.002435       85.279858            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+27                 0.545830      0.909716       86.189574            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+28                 0.523967      0.873278       87.062852            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+29                 0.511893      0.853154       87.916006            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+30                 0.472470      0.787450       88.703456            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+31                 0.467421      0.779035       89.482491            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+32                 0.420177      0.700296       90.182787            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+33                 0.396588      0.660980       90.843767            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+34                 0.378996      0.631660       91.475427            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+35                 0.360782      0.601304       92.076731            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+36                 0.340751      0.567918       92.644649            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+37                 0.326518      0.544197       93.188846            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+38                 0.302677      0.504462       93.693308            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+39                 0.289426      0.482377       94.175685            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+40                 0.286424      0.477374       94.653058            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+41                 0.274165      0.456942       95.110001            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+42                 0.264115      0.440191       95.550192            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+43                 0.252075      0.420125       95.970317            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+44                 0.246266      0.410443       96.380760            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+45                 0.223780      0.372967       96.753727            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+46                 0.219030      0.365049       97.118777            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+47                 0.201665      0.336108       97.454885            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+48                 0.189347      0.315579       97.770464            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+49                 0.185562      0.309271       98.079734            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+50                 0.174820      0.291367       98.371101            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+51                 0.161083      0.268472       98.639573            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+52                 0.139557      0.232595       98.872168            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+53                 0.131592      0.219320       99.091488            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+54                 0.115537      0.192561       99.284048            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+55                 0.109092      0.181819       99.465868            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+56                 0.102341      0.170569       99.636437            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+57                 0.088496      0.147493       99.783930            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+58                 0.068409      0.114015       99.897945            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
+59                 0.061233      0.102055      100.000000            0.000000      0.000000       45.141162         0.000000      0.000000       43.049976
 
 Korelaciona matrica:
 
-          q01       q02       q03  ...       q21       q22       q23
-q01  1.000000 -0.098724 -0.336649  ...  0.329153 -0.104409 -0.004481
-q02 -0.098724  1.000000  0.318390  ... -0.204617  0.230875  0.099678
-q03 -0.336649  0.318390  1.000000  ... -0.417188  0.203657  0.150207
-q04  0.435860 -0.111860 -0.380460  ...  0.410293 -0.098383 -0.033818
-q05  0.402440 -0.119347 -0.310309  ...  0.334615 -0.132536 -0.041657
-q06  0.216734 -0.074210 -0.226740  ...  0.272333 -0.165135 -0.068687
-q07  0.305365 -0.159174 -0.381953  ...  0.483004 -0.168205 -0.070290
-q08  0.330738 -0.049623 -0.258634  ...  0.295718 -0.079173 -0.050238
-q09 -0.092339  0.314641  0.299804  ... -0.135943  0.256846  0.170774
-q10  0.213682 -0.084003 -0.193389  ...  0.193136 -0.130908 -0.061918
-q11  0.356786 -0.143830 -0.350640  ...  0.346434 -0.161989 -0.086373
-q12  0.345381 -0.194869 -0.409951  ...  0.440638 -0.167286 -0.046425
-q13  0.354646 -0.142740 -0.317919  ...  0.374431 -0.195356 -0.052983
-q14  0.337880 -0.164700 -0.370755  ...  0.399389 -0.169838 -0.048474
-q15  0.245753 -0.164996 -0.312397  ...  0.299716 -0.167906 -0.062007
-q16  0.498618 -0.167552 -0.418648  ...  0.420543 -0.155794 -0.081522
-q17  0.370551 -0.086995 -0.327371  ...  0.363491 -0.126291 -0.091672
-q18  0.347118 -0.163894 -0.375233  ...  0.430104 -0.159826 -0.080417
-q19 -0.189011  0.203297  0.341574  ... -0.274898  0.233923  0.122434
-q20  0.213898 -0.201594 -0.324834  ...  0.467704 -0.099702 -0.034665
-q21  0.329153 -0.204617 -0.417188  ...  1.000000 -0.129021 -0.067664
-q22 -0.104409  0.230875  0.203657  ... -0.129021  1.000000  0.230369
-q23 -0.004481  0.099678  0.150207  ... -0.067664  0.230369  1.000000
+                                                    Interakcija sa virtualnim okruženjem je djelovala prirodno.  ...  Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.
+Interakcija sa virtualnim okruženjem je djelova...                                           1.000000            ...                                           0.197907                          
+Bio/la sam uključen/a u vizualne aspekte virtua...                                           0.481992            ...                                           0.220302                          
+Uređaji (kontroleri), koji su upravljali mojim ...                                           0.459958            ...                                           0.374735                          
+Mogao/la sam ispitivati virtualno okruženje viz...                                           0.266194            ...                                           0.141856                          
+Osjećaj kretanja unutar virtualog okruženja je ...                                           0.316277            ...                                           0.204673                          
+Mogao/la sam istražiti objekte detaljno.                                                     0.393241            ...                                           0.104023                          
+Mogao/la sam istražiti objekte iz više različit...                                           0.159277            ...                                           0.171991                          
+Bio/la sam uključen/a u iskustvo virtualnog okr...                                           0.351703            ...                                           0.243578                          
+Pri kraju iskustva osjećao/la sam se vještim/om...                                           0.248689            ...                                           0.252386                          
+Mogao/la sam se koncentrisati na izvršavanje za...                                           0.100733            ...                                           0.262340                          
+Uspješno sam identificirao/la zvukove koje je p...                                           0.161965            ...                                           0.116657                          
+Uspješno sam locirao/la zvukove koje je proizvo...                                           0.314959            ...                                           0.246737                          
+Virtualno okruženje me stimulisalo.                                                          0.195587            ...                                           0.114086                          
+Toliko sam se uživio/la u virtualnom okruženju ...                                           0.337539            ...                                           0.149097                          
+Toliko sam se uživio/la u virtualnom okruženju ...                                           0.371113            ...                                           0.305526                          
+Unutar virtualnog okruženja osjećao/la sam se f...                                           0.280050            ...                                           0.306381                          
+Toliko sam se uživio/la u virtualnom okruženju ...                                           0.306681            ...                                           0.403510                          
+Osjećao/la sam da mogu savršeno da kontrolišem ...                                           0.337480            ...                                           0.357228                          
+U svakom trenutku znao/la sam šta da uradim.                                                 0.256376            ...                                           0.279415                          
+Osjećao/la sam da vladam situacijom.                                                         0.324271            ...                                           0.313638                          
+Vrijeme kao da je teklo drugačije nego inače.                                                0.080738            ...                                           0.197223                          
+Vrijeme kao da je ubrzalo.                                                                   0.119950            ...                                           0.068701                          
+Gubio/la sam pojam o vremenu.                                                                0.113050            ...                                           0.183149                          
+Nisam brinuo/la o tome šta bi drugi ljudi rekli...                                           0.100413            ...                                           0.066950                          
+Osjetio/la sam da proživljavam uzbudljiv trenutak.                                           0.149022            ...                                           0.361247                          
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                    0.307423            ...                                           0.473176                          
+Kada spomenem iskustvo u virtualnom okruženju, ...                                           0.228664            ...                                           0.423273                          
+Uživao/la sam unutar virtualnog okruženja.                                                   0.314134            ...                                           0.483736                          
+Bilo je toliko uzbudljivo da sam mogao/la ostat...                                           0.445441            ...                                           0.485766                          
+Uživao/la sam u iskustvu toliko da se osjećam e...                                           0.365318            ...                                           0.542720                          
+Osjetio/la sam nervozu u virtualnom okruženju.                                              -0.145672            ...                                          -0.116559                          
+Poželio/la sam da odvratim pažnju kako bih sman...                                          -0.018202            ...                                          -0.042522                          
+Misli bi mi zalutale dok sam bio/la u virtualno...                                          -0.085334            ...                                          -0.093645                          
+Uređaji za interakciju (kontroleri) su mi baš d...                                          -0.218430            ...                                          -0.117028                          
+Kada bih uspješno izvršio/la zadatke, osjetio/l...                                           0.152262            ...                                           0.240673                          
+Dok sam koristio/la uređaje za interakciju (kon...                                           0.099283            ...                                          -0.178358                          
+Uživao/la sam u izazovu savladavanja uređaja za...                                           0.143595            ...                                           0.340665                          
+Uživao/la sam u korištenju uređaja za interakci...                                           0.156604            ...                                           0.457848                          
+Lično, rekao/la bih da je virtualno okruženje p...                                           0.398784            ...                                           0.411741                          
+Lično, rekao/la bih da virtualno okruženje nije...                                           0.224168            ...                                           0.189506                          
+Lično, rekao/la bih da je moguće ovladati virtu...                                           0.085426            ...                                           0.178300                          
+Po mom mišljenju ovo virtualno okruženje nije b...                                           0.166877            ...                                           0.107406                          
+Po mom mišljenju ovo virtualno okruženje nije a...                                           0.189273            ...                                           0.036686                          
+Po mom mišljenju ovo virtualno okruženje je vrh...                                           0.150074            ...                                           0.158548                          
+Po mom mišljenju lako je nekome predstaviti ovo...                                           0.228205            ...                                           0.178404                          
+Po mom mišljenju ovo virtualno okruženje je ružno.                                          -0.278245            ...                                          -0.188603                          
+Po mom mišljenju ovo virtualno okruženje je dop...                                           0.277443            ...                                           0.188482                          
+Osjetio/la sam zamor tokom interakcije sa virtu...                                          -0.083597            ...                                          -0.064628                          
+Osjetio/la sam glavobolju tokom interakcije sa ...                                          -0.082354            ...                                          -0.106845                          
+Osjetio/la sam naprezanje očiju tokom interakci...                                          -0.189980            ...                                          -0.157985                          
+Osjetio/la sam pojačano lučenje pljuvačke tokom...                                           0.016054            ...                                          -0.127220                          
+Osjetio/la sam mučninu tokom interakcije sa vir...                                          -0.264983            ...                                          -0.212240                          
+Osjetio/la sam “da mi je glava teška” tokom int...                                          -0.141055            ...                                          -0.246820                          
+Osjetio/la sam ošamućenost tokom interakcije sa...                                          -0.196779            ...                                          -0.191283                          
+Osjetio/la sam vrtoglavicu tokom interakcije sa...                                          -0.236694            ...                                          -0.056960                          
+Ako bih opet koristio/la virtualno okruženje, m...                                           0.162355            ...                                           0.180889                          
+Za mene bilo bi jednostavno postati vješt/a u k...                                           0.138555            ...                                           0.270320                          
+Za mene bi bilo jednostavno naučiti upravljati ...                                           0.126664            ...                                           0.328564                          
+Korištenje uređaja za interakciju (kontrolera) ...                                           0.169603            ...                                           0.360969                          
+Volio/la bih raditi sa uređajima za interakciju...                                           0.197907            ...                                           1.000000                          
 
-[23 rows x 23 columns]
+[60 rows x 60 columns]
 
 Ekstraktovani faktori bez rotacije:
 
-      Factor1   Factor2   Factor3   Factor4
-q01  0.586075  0.174896 -0.215004  0.117124
-q02 -0.302587  0.548769  0.149630  0.005380
-q03 -0.628943  0.290265  0.214886 -0.064123
-q04  0.634461  0.143477 -0.147414  0.152236
-q05  0.555546  0.101246 -0.071011  0.135464
-q06  0.561854  0.097265  0.571504 -0.050495
-q07  0.685185  0.038974  0.250072  0.105992
-q08  0.548905  0.400772 -0.322947 -0.416067
-q09 -0.283847  0.626442 -0.013010  0.104378
-q10  0.437080  0.034590  0.364599 -0.109085
-q11  0.652470  0.245617 -0.208510 -0.401106
-q12  0.668718 -0.047233  0.054318  0.244677
-q13  0.672989  0.076078  0.279182 -0.008481
-q14  0.655814  0.022317  0.196368  0.134275
-q15  0.592854  0.010260  0.116044 -0.110449
-q16  0.679303  0.014045 -0.138912  0.082155
-q17  0.643106  0.329493 -0.211989 -0.338330
-q18  0.701206  0.033216  0.298199  0.125572
-q19 -0.426811  0.389274  0.091344 -0.008500
-q20  0.435771 -0.205024 -0.402271  0.298311
-q21  0.657520 -0.055373 -0.189907  0.289285
-q22 -0.301614  0.465676 -0.111378  0.378268
-q23 -0.143940  0.366702 -0.018019  0.504078
+                                                                                                                                           Factor1   Factor2   Factor3   Factor4   Factor5
+Interakcija sa virtualnim okruženjem je djelovala prirodno.                                                                               0.515062  0.050056 -0.001226  0.245168 -0.061986
+Bio/la sam uključen/a u vizualne aspekte virtualnog okruženja.                                                                            0.529104 -0.044538  0.162554  0.281705 -0.181015
+Uređaji (kontroleri), koji su upravljali mojim kretanjem u virtualnom okruženju, su djelovali prirodno.                                   0.631551  0.131637  0.113812  0.208625  0.197936
+Mogao/la sam ispitivati virtualno okruženje vizualnim putem.                                                                              0.473304 -0.238398  0.321086  0.315498 -0.049446
+Osjećaj kretanja unutar virtualog okruženja je bio uvjerljiv.                                                                             0.571001  0.044415  0.103529  0.311603 -0.176367
+Mogao/la sam istražiti objekte detaljno.                                                                                                  0.477074  0.059643  0.321251  0.254239 -0.332927
+Mogao/la sam istražiti objekte iz više različitih uglova.                                                                                 0.488127 -0.051568  0.307012  0.078770 -0.183537
+Bio/la sam uključen/a u iskustvo virtualnog okruženja.                                                                                    0.636768  0.060668  0.187288  0.094919 -0.152468
+Pri kraju iskustva osjećao/la sam se vještim/om u kretanju i interakciji sa virtualnim okruženjem                                         0.481139 -0.180693  0.224765  0.116742  0.158989
+Mogao/la sam se koncentrisati na izvršavanje zadataka umjesto na uređaje (kontrolere).                                                    0.414173  0.029072  0.159736  0.117563  0.352414
+Uspješno sam identificirao/la zvukove koje je proizvodilo virtualno okruženje.                                                            0.385174  0.041550  0.276541  0.303351 -0.108210
+Uspješno sam locirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                  0.466361  0.178174  0.168542  0.408328 -0.120662
+Virtualno okruženje me stimulisalo.                                                                                                       0.508711  0.024009  0.194526  0.185406 -0.130743
+Toliko sam se uživio/la u virtualnom okruženju da nisam bio svjestan/na šta se dešava oko mene.                                           0.419621  0.300240  0.064620  0.374097  0.042022
+Toliko sam se uživio/la u virtualnom okruženju da sam osjetio/la kao da sam unutar igre, a ne da manipulišem uređajima i gledam u ekran.  0.598403  0.282774 -0.016349  0.309785  0.095386
+Unutar virtualnog okruženja osjećao/la sam se fizički spremnim.                                                                           0.550293  0.022033 -0.044438  0.227847  0.218574
+Toliko sam se uživio/la u virtualnom okruženju da sam izgubio/la pojam o vremenu.                                                         0.571899  0.324462 -0.333187 -0.005163  0.117367
+Osjećao/la sam da mogu savršeno da kontrolišem moje akcije.                                                                               0.595072  0.075086 -0.032232  0.288370  0.260133
+U svakom trenutku znao/la sam šta da uradim.                                                                                              0.499071  0.027098 -0.019719  0.258767  0.265596
+Osjećao/la sam da vladam situacijom.                                                                                                      0.608246 -0.010965  0.172054  0.180833  0.138632
+Vrijeme kao da je teklo drugačije nego inače.                                                                                             0.276950  0.491489 -0.531012 -0.069032 -0.094611
+Vrijeme kao da je ubrzalo.                                                                                                                0.175246  0.467566 -0.545456  0.018487 -0.135589
+Gubio/la sam pojam o vremenu.                                                                                                             0.305409  0.498660 -0.471169 -0.118872 -0.193270
+Nisam brinuo/la o tome šta bi drugi ljudi rekli o meni.                                                                                   0.287121  0.062757  0.039555 -0.073523 -0.150806
+Osjetio/la sam da proživljavam uzbudljiv trenutak.                                                                                        0.641140  0.044027 -0.019865 -0.230505  0.021234
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                                                                 0.720190  0.256645 -0.228564 -0.139911  0.118066
+Kada spomenem iskustvo u virtualnom okruženju, osjetim emocije koje bih da podijelim sa drugima.                                          0.576574  0.250204 -0.282825 -0.117594 -0.003734
+Uživao/la sam unutar virtualnog okruženja.                                                                                                0.754634  0.045993 -0.102926 -0.157609  0.006998
+Bilo je toliko uzbudljivo da sam mogao/la ostati u virtualnom okruženju satima.                                                           0.689895  0.143535 -0.338768  0.029947  0.073180
+Uživao/la sam u iskustvu toliko da se osjećam energično.                                                                                  0.760869  0.227687 -0.328532 -0.011002  0.136120
+Osjetio/la sam nervozu u virtualnom okruženju.                                                                                           -0.158859  0.613690  0.214895  0.077209 -0.211052
+Poželio/la sam da odvratim pažnju kako bih smanjio/la svoju napetost.                                                                    -0.180767  0.567069 -0.003805  0.123325 -0.176613
+Misli bi mi zalutale dok sam bio/la u virtualnom okruženju.                                                                              -0.150564  0.305181 -0.055874  0.256816 -0.167844
+Uređaji za interakciju (kontroleri) su mi baš dosadili.                                                                                  -0.273568  0.002588 -0.165857  0.174617 -0.145995
+Kada bih uspješno izvršio/la zadatke, osjetio/la bih uzbuđenost.                                                                          0.307756  0.352632  0.038498 -0.193237 -0.247050
+Dok sam koristio/la uređaje za interakciju (kontrolere), osjetio/la sam da se vrijeme oteglo.                                            -0.125821  0.368614 -0.274616  0.210923 -0.157764
+Uživao/la sam u izazovu savladavanja uređaja za interakciju (kontrolera).                                                                 0.511169  0.084015  0.000405 -0.388296  0.110427
+Uživao/la sam u korištenju uređaja za interakciju (kontrolera).                                                                           0.567733  0.072549 -0.030469 -0.330754  0.242307
+Lično, rekao/la bih da je virtualno okruženje praktično.                                                                                  0.642888  0.067709  0.044719 -0.243041  0.144616
+Lično, rekao/la bih da virtualno okruženje nije zbunjujuće.                                                                               0.337824 -0.410635  0.214017  0.009123  0.297310
+Lično, rekao/la bih da je moguće ovladati virtualnim okruženjem.                                                                          0.283442 -0.249214  0.266778 -0.066620 -0.302396
+Po mom mišljenju ovo virtualno okruženje nije bezveze.                                                                                    0.366294 -0.167835  0.326074 -0.330168 -0.140011
+Po mom mišljenju ovo virtualno okruženje nije amatersko.                                                                                  0.339567  0.103351  0.208333 -0.289835 -0.305574
+Po mom mišljenju ovo virtualno okruženje je vrhunsko.                                                                                     0.456364  0.119460  0.196767 -0.273557 -0.261197
+Po mom mišljenju lako je nekome predstaviti ovo virtualno okruženje.                                                                      0.528159  0.226898  0.198013 -0.310438 -0.309615
+Po mom mišljenju ovo virtualno okruženje je ružno.                                                                                       -0.362748 -0.093483 -0.073698  0.379449  0.011851
+Po mom mišljenju ovo virtualno okruženje je dopadljivo.                                                                                   0.550689  0.129494  0.229542 -0.345800 -0.187500
+Osjetio/la sam zamor tokom interakcije sa virtualnim okruženjem.                                                                         -0.255929  0.573674  0.310779 -0.124307  0.226555
+Osjetio/la sam glavobolju tokom interakcije sa virtualnim okruženjem.                                                                    -0.354997  0.592326  0.274156 -0.066445  0.011507
+Osjetio/la sam naprezanje očiju tokom interakcije sa virtualnim okruženjem.                                                              -0.345591  0.349481  0.276551  0.050898  0.163415
+Osjetio/la sam pojačano lučenje pljuvačke tokom interakcije sa virtualnim okruženjem.                                                    -0.155777  0.519062  0.087259  0.107913  0.008539
+Osjetio/la sam mučninu tokom interakcije sa virtualnim okruženjem.                                                                       -0.367594  0.502695  0.475678 -0.162129  0.207391
+Osjetio/la sam “da mi je glava teška” tokom interakcije sa virtualnim okruženjem.                                                        -0.378669  0.538958  0.431934 -0.009276  0.062344
+Osjetio/la sam ošamućenost tokom interakcije sa virtualnim okruženjem.                                                                   -0.323287  0.497357  0.483398 -0.036723  0.200700
+Osjetio/la sam vrtoglavicu tokom interakcije sa virtualnim okruženjem.                                                                   -0.355626  0.508605  0.256717 -0.097781  0.332361
+Ako bih opet koristio/la virtualno okruženje, moja interakcija sa okruženjem bi bila jasna i razumljiva.                                  0.517406 -0.135802  0.210985 -0.204324 -0.086695
+Za mene bilo bi jednostavno postati vješt/a u korištenju virtualnog okruženja.                                                            0.563014 -0.269647  0.155133 -0.135028 -0.106051
+Za mene bi bilo jednostavno naučiti upravljati virtualnim okruženjem.                                                                     0.551640 -0.300468  0.135695 -0.088729  0.050748
+Korištenje uređaja za interakciju (kontrolera) nije loša ideja.                                                                           0.384837 -0.024207  0.186618 -0.176540  0.316328
+Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.                                                               0.555620  0.047033 -0.153465 -0.127387  0.366720
 
 Rotirani faktori:
 
-      Factor1   Factor2   Factor3   Factor4
-q01  0.499517  0.143597  0.025320 -0.267459
-q02 -0.384053  0.507900  0.131094 -0.131591
-q03 -0.583589  0.287713  0.025165  0.069699
-q04  0.502761  0.132962  0.132863 -0.192100
-q05  0.400213  0.097976  0.187208 -0.118797
-q06 -0.275906 -0.004997  0.985371  0.098515
-q07  0.186750  0.017582  0.641821  0.046201
-q08  0.075691  0.023561 -0.161612 -0.908548
-q09 -0.178442  0.627235 -0.045225 -0.188525
-q10 -0.197533 -0.081273  0.650756 -0.008636
-q11  0.077943 -0.109839  0.010902 -0.769254
-q12  0.474587  0.024858  0.390047  0.102741
-q13  0.053722 -0.016472  0.664830 -0.053364
-q14  0.244647  0.022740  0.561456  0.055635
-q15  0.081387 -0.125616  0.400229 -0.181910
-q16  0.488320 -0.023490  0.137659 -0.188417
-q17  0.109028 -0.000544  0.021233 -0.760299
-q18  0.172277  0.023129  0.711797  0.090682
-q19 -0.367303  0.378232 -0.021896 -0.059559
-q20  0.823216 -0.057214 -0.310267  0.025256
-q21  0.708187  0.041482  0.078304  0.004970
-q22  0.158734  0.652744 -0.167585  0.083946
-q23  0.281772  0.625563  0.023113  0.262841
+                                                                                                                                           Factor1   Factor2   Factor3   Factor4   Factor5
+Interakcija sa virtualnim okruženjem je djelovala prirodno.                                                                               0.485054 -0.110886 -0.128322 -0.006450 -0.015692
+Bio/la sam uključen/a u vizualne aspekte virtualnog okruženja.                                                                            0.600457 -0.123074  0.047292  0.107753 -0.130202
+Uređaji (kontroleri), koji su upravljali mojim kretanjem u virtualnom okruženju, su djelovali prirodno.                                   0.527197  0.116415 -0.062634 -0.355155  0.057082
+Mogao/la sam ispitivati virtualno okruženje vizualnim putem.                                                                              0.643351 -0.102502  0.328345 -0.015845 -0.034031
+Osjećaj kretanja unutar virtualog okruženja je bio uvjerljiv.                                                                             0.632784 -0.104349 -0.057409  0.110018 -0.105566
+Mogao/la sam istražiti objekte detaljno.                                                                                                  0.643432  0.021636  0.113277  0.250759 -0.319496
+Mogao/la sam istražiti objekte iz više različitih uglova.                                                                                 0.436535 -0.002234  0.160307  0.008559 -0.319918
+Bio/la sam uključen/a u iskustvo virtualnog okruženja.                                                                                    0.475416 -0.017478 -0.032313 -0.053972 -0.294250
+Pri kraju iskustva osjećao/la sam se vještim/om u kretanju i interakciji sa virtualnim okruženjem                                         0.387539 -0.026270  0.220087 -0.318458  0.002155
+Mogao/la sam se koncentrisati na izvršavanje zadataka umjesto na uređaje (kontrolere).                                                    0.332118  0.181506  0.097181 -0.487415  0.156927
+Uspješno sam identificirao/la zvukove koje je proizvodilo virtualno okruženje.                                                            0.608424  0.079453  0.148120  0.078341 -0.079829
+Uspješno sam locirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                  0.720288  0.079705 -0.027432  0.126748 -0.011980
+Virtualno okruženje me stimulisalo.                                                                                                       0.508577 -0.014787  0.038789  0.012143 -0.178313
+Toliko sam se uživio/la u virtualnom okruženju da nisam bio svjestan/na šta se dešava oko mene.                                           0.616181  0.178851 -0.150869 -0.028572  0.117196
+Toliko sam se uživio/la u virtualnom okruženju da sam osjetio/la kao da sam unutar igre, a ne da manipulišem uređajima i gledam u ekran.  0.587205  0.099786 -0.253366 -0.169178  0.095500
+Unutar virtualnog okruženja osjećao/la sam se fizički spremnim.                                                                           0.431536 -0.057034 -0.116099 -0.315744  0.183304
+Toliko sam se uživio/la u virtualnom okruženju da sam izgubio/la pojam o vremenu.                                                         0.124143 -0.047835 -0.581153 -0.288142  0.013845
+Osjećao/la sam da mogu savršeno da kontrolišem moje akcije.                                                                               0.518584 -0.004977 -0.130382 -0.348617  0.232033
+U svakom trenutku znao/la sam šta da uradim.                                                                                              0.446460 -0.009629 -0.073852 -0.335071  0.242223
+Osjećao/la sam da vladam situacijom.                                                                                                      0.505279  0.029795  0.057480 -0.305764 -0.002802
+Vrijeme kao da je teklo drugačije nego inače.                                                                                            -0.112798 -0.076166 -0.816089  0.039216 -0.047646
+Vrijeme kao da je ubrzalo.                                                                                                               -0.072221 -0.108642 -0.787363  0.163070  0.021147
+Gubio/la sam pojam o vremenu.                                                                                                            -0.114542 -0.069110 -0.796785  0.100172 -0.185254
+Nisam brinuo/la o tome šta bi drugi ljudi rekli o meni.                                                                                   0.089667 -0.034075 -0.100558  0.012613 -0.260579
+Osjetio/la sam da proživljavam uzbudljiv trenutak.                                                                                        0.038996 -0.078634 -0.217447 -0.363651 -0.318570
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                                                                 0.088854 -0.044685 -0.505318 -0.421853 -0.152907
+Kada spomenem iskustvo u virtualnom okruženju, osjetim emocije koje bih da podijelim sa drugima.                                          0.038624 -0.109422 -0.531992 -0.223390 -0.163342
+Uživao/la sam unutar virtualnog okruženja.                                                                                                0.129425 -0.170014 -0.310494 -0.343891 -0.275608
+Bilo je toliko uzbudljivo da sam mogao/la ostati u virtualnom okruženju satima.                                                           0.195471 -0.236715 -0.518677 -0.267374  0.001044
+Uživao/la sam u iskustvu toliko da se osjećam energično.                                                                                  0.190775 -0.149590 -0.566979 -0.380290 -0.017053
+Osjetio/la sam nervozu u virtualnom okruženju.                                                                                            0.184180  0.569119 -0.131669  0.285839 -0.216876
+Poželio/la sam da odvratim pažnju kako bih smanjio/la svoju napetost.                                                                     0.121198  0.393607 -0.280051  0.310315 -0.062379
+Misli bi mi zalutale dok sam bio/la u virtualnom okruženju.                                                                               0.220858  0.138987 -0.172681  0.361020  0.084506
+Uređaji za interakciju (kontroleri) su mi baš dosadili.                                                                                   0.004578 -0.133059 -0.082686  0.359466  0.157381
+Kada bih uspješno izvršio/la zadatke, osjetio/la bih uzbuđenost.                                                                          0.016121  0.159019 -0.293504  0.049040 -0.456757
+Dok sam koristio/la uređaje za interakciju (kontrolere), osjetio/la sam da se vrijeme oteglo.                                             0.098379  0.038256 -0.407039  0.350143  0.129694
+Uživao/la sam u izazovu savladavanja uređaja za interakciju (kontrolera).                                                                -0.175176  0.041973 -0.196408 -0.487637 -0.344580
+Uživao/la sam u korištenju uređaja za interakciju (kontrolera).                                                                          -0.120377  0.047430 -0.201897 -0.614904 -0.211473
+Lično, rekao/la bih da je virtualno okruženje praktično.                                                                                  0.043220  0.034794 -0.156269 -0.508699 -0.268132
+Lično, rekao/la bih da virtualno okruženje nije zbunjujuće.                                                                               0.173009 -0.119717  0.377372 -0.460749  0.097482
+Lično, rekao/la bih da je moguće ovladati virtualnim okruženjem.                                                                          0.175474 -0.177760  0.242844  0.144546 -0.411000
+Po mom mišljenju ovo virtualno okruženje nije bezveze.                                                                                   -0.040755 -0.001609  0.223835 -0.189835 -0.537513
+Po mom mišljenju ovo virtualno okruženje nije amatersko.                                                                                 -0.015665  0.062961 -0.040269  0.029131 -0.609265
+Po mom mišljenju ovo virtualno okruženje je vrhunsko.                                                                                     0.043782  0.060295 -0.077308 -0.050749 -0.595137
+Po mom mišljenju lako je nekome predstaviti ovo virtualno okruženje.                                                                      0.054171  0.114498 -0.163588 -0.043998 -0.689571
+Po mom mišljenju ovo virtualno okruženje je ružno.                                                                                        0.185944 -0.080924  0.121466  0.311188  0.415431
+Po mom mišljenju ovo virtualno okruženje je dopadljivo.                                                                                   0.018289  0.107918 -0.073678 -0.201505 -0.633135
+Osjetio/la sam zamor tokom interakcije sa virtualnim okruženjem.                                                                         -0.074005  0.816107  0.041082 -0.246928 -0.053117
+Osjetio/la sam glavobolju tokom interakcije sa virtualnim okruženjem.                                                                    -0.048667  0.734196 -0.004811  0.047480 -0.127117
+Osjetio/la sam naprezanje očiju tokom interakcije sa virtualnim okruženjem.                                                               0.034861  0.594965  0.165471 -0.059641  0.092378
+Osjetio/la sam pojačano lučenje pljuvačke tokom interakcije sa virtualnim okruženjem.                                                     0.129863  0.489948 -0.153022  0.086944  0.022835
+Osjetio/la sam mučninu tokom interakcije sa virtualnim okruženjem.                                                                       -0.096942  0.894376  0.241159 -0.227058 -0.118571
+Osjetio/la sam “da mi je glava teška” tokom interakcije sa virtualnim okruženjem.                                                         0.054564  0.823036  0.182087  0.007977 -0.098664
+Osjetio/la sam ošamućenost tokom interakcije sa virtualnim okruženjem.                                                                    0.053302  0.873045  0.255053 -0.177620 -0.048927
+Osjetio/la sam vrtoglavicu tokom interakcije sa virtualnim okruženjem.                                                                   -0.131204  0.787147  0.073051 -0.301215  0.097573
+Ako bih opet koristio/la virtualno okruženje, moja interakcija sa okruženjem bi bila jasna i razumljiva.                                  0.102188 -0.077382  0.095390 -0.224997 -0.410448
+Za mene bilo bi jednostavno postati vješt/a u korištenju virtualnog okruženja.                                                            0.157653 -0.243571  0.114058 -0.180512 -0.348353
+Za mene bi bilo jednostavno naučiti upravljati virtualnim okruženjem.                                                                     0.171564 -0.220731  0.147532 -0.316017 -0.189051
+Korištenje uređaja za interakciju (kontrolera) nije loša ideja.                                                                           0.030138  0.176412  0.113384 -0.582592 -0.072450
+Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.                                                               0.013415 -0.024752 -0.246540 -0.626912  0.075702
+
+Rotirani faktori > 0.45:
+
+                                                                                                                                           Factor1   Factor2   Factor3   Factor4   Factor5
+Interakcija sa virtualnim okruženjem je djelovala prirodno.                                                                               0.485054       NaN       NaN       NaN       NaN
+Bio/la sam uključen/a u vizualne aspekte virtualnog okruženja.                                                                            0.600457       NaN       NaN       NaN       NaN
+Uređaji (kontroleri), koji su upravljali mojim kretanjem u virtualnom okruženju, su djelovali prirodno.                                   0.527197       NaN       NaN       NaN       NaN
+Mogao/la sam ispitivati virtualno okruženje vizualnim putem.                                                                              0.643351       NaN       NaN       NaN       NaN
+Osjećaj kretanja unutar virtualog okruženja je bio uvjerljiv.                                                                             0.632784       NaN       NaN       NaN       NaN
+Mogao/la sam istražiti objekte detaljno.                                                                                                  0.643432       NaN       NaN       NaN       NaN
+Bio/la sam uključen/a u iskustvo virtualnog okruženja.                                                                                    0.475416       NaN       NaN       NaN       NaN
+Mogao/la sam se koncentrisati na izvršavanje zadataka umjesto na uređaje (kontrolere).                                                         NaN       NaN       NaN -0.487415       NaN
+Uspješno sam identificirao/la zvukove koje je proizvodilo virtualno okruženje.                                                            0.608424       NaN       NaN       NaN       NaN
+Uspješno sam locirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                  0.720288       NaN       NaN       NaN       NaN
+Virtualno okruženje me stimulisalo.                                                                                                       0.508577       NaN       NaN       NaN       NaN
+Toliko sam se uživio/la u virtualnom okruženju da nisam bio svjestan/na šta se dešava oko mene.                                           0.616181       NaN       NaN       NaN       NaN
+Toliko sam se uživio/la u virtualnom okruženju da sam osjetio/la kao da sam unutar igre, a ne da manipulišem uređajima i gledam u ekran.  0.587205       NaN       NaN       NaN       NaN
+Toliko sam se uživio/la u virtualnom okruženju da sam izgubio/la pojam o vremenu.                                                              NaN       NaN -0.581153       NaN       NaN
+Osjećao/la sam da mogu savršeno da kontrolišem moje akcije.                                                                               0.518584       NaN       NaN       NaN       NaN
+Osjećao/la sam da vladam situacijom.                                                                                                      0.505279       NaN       NaN       NaN       NaN
+Vrijeme kao da je teklo drugačije nego inače.                                                                                                  NaN       NaN -0.816089       NaN       NaN
+Vrijeme kao da je ubrzalo.                                                                                                                     NaN       NaN -0.787363       NaN       NaN
+Gubio/la sam pojam o vremenu.                                                                                                                  NaN       NaN -0.796785       NaN       NaN
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                                                                      NaN       NaN -0.505318       NaN       NaN
+Kada spomenem iskustvo u virtualnom okruženju, osjetim emocije koje bih da podijelim sa drugima.                                               NaN       NaN -0.531992       NaN       NaN
+Bilo je toliko uzbudljivo da sam mogao/la ostati u virtualnom okruženju satima.                                                                NaN       NaN -0.518677       NaN       NaN
+Uživao/la sam u iskustvu toliko da se osjećam energično.                                                                                       NaN       NaN -0.566979       NaN       NaN
+Osjetio/la sam nervozu u virtualnom okruženju.                                                                                                 NaN  0.569119       NaN       NaN       NaN
+Kada bih uspješno izvršio/la zadatke, osjetio/la bih uzbuđenost.                                                                               NaN       NaN       NaN       NaN -0.456757
+Uživao/la sam u izazovu savladavanja uređaja za interakciju (kontrolera).                                                                      NaN       NaN       NaN -0.487637       NaN
+Uživao/la sam u korištenju uređaja za interakciju (kontrolera).                                                                                NaN       NaN       NaN -0.614904       NaN
+Lično, rekao/la bih da je virtualno okruženje praktično.                                                                                       NaN       NaN       NaN -0.508699       NaN
+Lično, rekao/la bih da virtualno okruženje nije zbunjujuće.                                                                                    NaN       NaN       NaN -0.460749       NaN
+Po mom mišljenju ovo virtualno okruženje nije bezveze.                                                                                         NaN       NaN       NaN       NaN -0.537513
+Po mom mišljenju ovo virtualno okruženje nije amatersko.                                                                                       NaN       NaN       NaN       NaN -0.609265
+Po mom mišljenju ovo virtualno okruženje je vrhunsko.                                                                                          NaN       NaN       NaN       NaN -0.595137
+Po mom mišljenju lako je nekome predstaviti ovo virtualno okruženje.                                                                           NaN       NaN       NaN       NaN -0.689571
+Po mom mišljenju ovo virtualno okruženje je dopadljivo.                                                                                        NaN       NaN       NaN       NaN -0.633135
+Osjetio/la sam zamor tokom interakcije sa virtualnim okruženjem.                                                                               NaN  0.816107       NaN       NaN       NaN
+Osjetio/la sam glavobolju tokom interakcije sa virtualnim okruženjem.                                                                          NaN  0.734196       NaN       NaN       NaN
+Osjetio/la sam naprezanje očiju tokom interakcije sa virtualnim okruženjem.                                                                    NaN  0.594965       NaN       NaN       NaN
+Osjetio/la sam pojačano lučenje pljuvačke tokom interakcije sa virtualnim okruženjem.                                                          NaN  0.489948       NaN       NaN       NaN
+Osjetio/la sam mučninu tokom interakcije sa virtualnim okruženjem.                                                                             NaN  0.894376       NaN       NaN       NaN
+Osjetio/la sam “da mi je glava teška” tokom interakcije sa virtualnim okruženjem.                                                              NaN  0.823036       NaN       NaN       NaN
+Osjetio/la sam ošamućenost tokom interakcije sa virtualnim okruženjem.                                                                         NaN  0.873045       NaN       NaN       NaN
+Osjetio/la sam vrtoglavicu tokom interakcije sa virtualnim okruženjem.                                                                         NaN  0.787147       NaN       NaN       NaN
+Korištenje uređaja za interakciju (kontrolera) nije loša ideja.                                                                                NaN       NaN       NaN -0.582592       NaN
+Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.                                                                    NaN       NaN       NaN -0.626912       NaN
 
 Preslikavanje varijabli na faktore:
 
-     Faktori
-q01  Factor1
-q21  Factor1
-q20  Factor1
-q16  Factor1
-q12  Factor1
-q03  Factor1
-q04  Factor1
-q05  Factor1
-q23  Factor2
-q02  Factor2
-q09  Factor2
-q19  Factor2
-q22  Factor2
-q18  Factor3
-q06  Factor3
-q13  Factor3
-q10  Factor3
-q07  Factor3
-q15  Factor3
-q14  Factor3
-q17  Factor4
-q11  Factor4
-q08  Factor4
+                                                                                                                                          Faktori
+Interakcija sa virtualnim okruženjem je djelovala prirodno.                                                                               Factor1
+Osjećao/la sam da vladam situacijom.                                                                                                      Factor1
+Osjećao/la sam da mogu savršeno da kontrolišem moje akcije.                                                                               Factor1
+Toliko sam se uživio/la u virtualnom okruženju da sam osjetio/la kao da sam unutar igre, a ne da manipulišem uređajima i gledam u ekran.  Factor1
+Virtualno okruženje me stimulisalo.                                                                                                       Factor1
+Uspješno sam locirao/la zvukove koje je proizvodilo virtualno okruženje.                                                                  Factor1
+Uspješno sam identificirao/la zvukove koje je proizvodilo virtualno okruženje.                                                            Factor1
+Toliko sam se uživio/la u virtualnom okruženju da nisam bio svjestan/na šta se dešava oko mene.                                           Factor1
+Bio/la sam uključen/a u iskustvo virtualnog okruženja.                                                                                    Factor1
+Mogao/la sam istražiti objekte detaljno.                                                                                                  Factor1
+Osjećaj kretanja unutar virtualog okruženja je bio uvjerljiv.                                                                             Factor1
+Mogao/la sam ispitivati virtualno okruženje vizualnim putem.                                                                              Factor1
+Uređaji (kontroleri), koji su upravljali mojim kretanjem u virtualnom okruženju, su djelovali prirodno.                                   Factor1
+Bio/la sam uključen/a u vizualne aspekte virtualnog okruženja.                                                                            Factor1
+Osjetio/la sam zamor tokom interakcije sa virtualnim okruženjem.                                                                          Factor2
+Osjetio/la sam ošamućenost tokom interakcije sa virtualnim okruženjem.                                                                    Factor2
+Osjetio/la sam “da mi je glava teška” tokom interakcije sa virtualnim okruženjem.                                                         Factor2
+Osjetio/la sam mučninu tokom interakcije sa virtualnim okruženjem.                                                                        Factor2
+Osjetio/la sam pojačano lučenje pljuvačke tokom interakcije sa virtualnim okruženjem.                                                     Factor2
+Osjetio/la sam naprezanje očiju tokom interakcije sa virtualnim okruženjem.                                                               Factor2
+Osjetio/la sam glavobolju tokom interakcije sa virtualnim okruženjem.                                                                     Factor2
+Osjetio/la sam vrtoglavicu tokom interakcije sa virtualnim okruženjem.                                                                    Factor2
+Osjetio/la sam nervozu u virtualnom okruženju.                                                                                            Factor2
+Bilo je toliko uzbudljivo da sam mogao/la ostati u virtualnom okruženju satima.                                                           Factor3
+Toliko sam se uživio/la u virtualnom okruženju da sam izgubio/la pojam o vremenu.                                                         Factor3
+Vrijeme kao da je teklo drugačije nego inače.                                                                                             Factor3
+Vrijeme kao da je ubrzalo.                                                                                                                Factor3
+Uživao/la sam u iskustvu toliko da se osjećam energično.                                                                                  Factor3
+Kada spomenem iskustvo u virtualnom okruženju, osjetim emocije koje bih da podijelim sa drugima.                                          Factor3
+Ovo iskustvo mi je pružalo dobar osjećaj.                                                                                                 Factor3
+Gubio/la sam pojam o vremenu.                                                                                                             Factor3
+Volio/la bih raditi sa uređajima za interakciju (kontrolerima) tokom posla.                                                               Factor4
+Uživao/la sam u izazovu savladavanja uređaja za interakciju (kontrolera).                                                                 Factor4
+Uživao/la sam u korištenju uređaja za interakciju (kontrolera).                                                                           Factor4
+Lično, rekao/la bih da je virtualno okruženje praktično.                                                                                  Factor4
+Lično, rekao/la bih da virtualno okruženje nije zbunjujuće.                                                                               Factor4
+Mogao/la sam se koncentrisati na izvršavanje zadataka umjesto na uređaje (kontrolere).                                                    Factor4
+Korištenje uređaja za interakciju (kontrolera) nije loša ideja.                                                                           Factor4
+Kada bih uspješno izvršio/la zadatke, osjetio/la bih uzbuđenost.                                                                          Factor5
+Po mom mišljenju ovo virtualno okruženje je vrhunsko.                                                                                     Factor5
+Po mom mišljenju ovo virtualno okruženje nije amatersko.                                                                                  Factor5
+Po mom mišljenju ovo virtualno okruženje nije bezveze.                                                                                    Factor5
+Po mom mišljenju lako je nekome predstaviti ovo virtualno okruženje.                                                                      Factor5
+Po mom mišljenju ovo virtualno okruženje je dopadljivo.                                                                                   Factor5
 
-Mjera interne konzistentnosti varijabli
+Mjera interne konzistentnosti varijabli:
 
    Cronbachova alfa   Factor
-0          0.605466  factor1
-1          0.569918  factor2
-2          0.823360  factor3
-3          0.819409  factor4
+0          0.877357  factor1
+1          0.867337  factor2
+2          0.880177  factor3
+3          0.752509  factor4
+4          0.737127  factor5
 
 
