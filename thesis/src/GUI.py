@@ -194,7 +194,7 @@ class ApplicationGUI(Frame):
 
         # Dictionary with options
         choices = {'Principal Components Analysis', 'Minimum Residual',
-                   'Maximum Likelihood', 'Principal Axis Factoring'}
+                   'Maximum Likelihood'}
         tkvar.set('Minimum Residual')  # set the default option
 
         popupMenu = OptionMenu(frame1, tkvar, *choices)
@@ -213,9 +213,6 @@ class ApplicationGUI(Frame):
             elif tempMethod == 'Maximum Likelihood':
                 self.Method.set('ml')
 
-            elif tempMethod == 'Principal Axis Factoring':
-                self.Method.set('principal')
-
         # link function to change dropdown
         tkvar.trace('w', updateMethod)
 
@@ -228,9 +225,6 @@ class ApplicationGUI(Frame):
             popupMenu = OptionMenu(frame1, tkvar, *choices)
         elif self.Method.get() == 'ml':
             tkvar.set('Maximum Likelihood')
-            popupMenu = OptionMenu(frame1, tkvar, *choices)
-        elif self.Method.get() == 'principal':
-            tkvar.set('Principal Axis Factoring')
             popupMenu = OptionMenu(frame1, tkvar, *choices)
 
         frame2 = Frame(self.newwin)
@@ -558,7 +552,7 @@ class ApplicationGUI(Frame):
                                      columns=['Komunaliteti'])).\
                                      sort_values(by='Komunaliteti', ascending=False)
 
-        RotatedM = Loadings
+        RotatedM = copy.deepcopy(Loadings)
 
         if self.RotationMethod != None:
             # Create a rotator object
@@ -625,6 +619,12 @@ class ApplicationGUI(Frame):
         SortedVariables = pd.DataFrame(lightRM.abs().idxmax(axis=1).sort_values(axis=0),
                                        columns=['Faktori'])
         self.printObject.AppendPObject(SortedVariables.to_string(), 'Preslikavanje varijabli na faktore:')
+
+        new_communalities = communalities.loc[SortedVariables.index, :]
+        self.printObject.AppendPObject(new_communalities.to_string(), '')
+
+        FinalLoadings = RotatedM.loc[SortedVariables.index, :]
+        self.printObject.AppendPObject(FinalLoadings.to_string(), 'Final sorted loadings')
 
         CronbachAlphaDF = pd.DataFrame()
         for i in range(1, int(self.NumberOfFactors.get())+1):
